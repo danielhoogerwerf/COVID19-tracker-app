@@ -57,7 +57,7 @@ const Router = require('./routes/index');
 app.use('/', Router);
 const adminRouter = require('./routes/admin-route');
 app.use('/admin', adminRouter);
-const authRoutes = require('./routes/mobile-route');
+const authRoutes = require('./routes/app-route');
 app.use('/app', authRoutes);
 
 module.exports = app;
