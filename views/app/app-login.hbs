@@ -1,0 +1,14 @@
+
+<h1>Login app</h1>
+<form action="/admin" method="post">
+<label>Username</label>
+<input type="text" name="username"><br><br>
+<label>Password</label>
+<input type="password" name="password">
+<p></p>
+{{#if message}}
+    <div class="error-message">{{ message }}</div>
+  {{/if}}
+<button type="submit">Send</button>
+</form>
+

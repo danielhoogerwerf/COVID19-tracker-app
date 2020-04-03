@@ -47,5 +47,5 @@ const UsersSchema = new Schema(
   }
 );
 
-const Users = mongoose.model('Audit', UsersSchema);
+const Users = mongoose.model('User', UsersSchema);
 module.exports = Users
