@@ -18,17 +18,17 @@ mongoose
   .then(() => {
     bcrypt.hash(process.env.ADMIN_PASSWORD, 10).then(hash => {
       Users.create({
-        username: "admin",
+        username: "admin2",
         password: hash,
         role: "ADMIN",
         region: "GGD Amsterdam"
       })
         .then(usr => {
           BSN.create({
-            bsnnumber: 123456789,
-            name: "Daniel Hoogerwerf",
-            birthdate: "1982-11-15",
-            age: 37,
+            bsnnumber: 123456799,
+            name: "Friso Homan",
+            birthdate: "1982-11-12",
+            age: 35,
             gender: "Male"
           }).then(bsn => {
             Patients.create({
