@@ -1,0 +1,5 @@
+# Ignore certain files for github commits
+.env
+.DS_Store
+node_modules
+npm-debug.log
