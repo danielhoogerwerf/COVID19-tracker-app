@@ -18,7 +18,7 @@ const UsersSchema = new Schema(
         "GGD Amsterdam",
         "GGD Brabant-Zuidoost",
         "GGD Drenthe",
-        "GGD Fryslân",
+        "GGD Fryslan",
         "GGD Gelderland-Zuid",
         "GGD Gooi en Vechtstreek",
         "GGD Groningen",
@@ -34,7 +34,7 @@ const UsersSchema = new Schema(
         "GGD Rotterdam-Rijnmond",
         "GGD Twente",
         "GGD West-Brabant",
-        "GGD Zaanstreek/Waterland",
+        "GGD Zaanstreek-Waterland",
         "GGD Zeeland",
         "GGD Zuid-Limburg",
         "Veiligheids- en Gezondheidsregio Gelderland-Midden"
