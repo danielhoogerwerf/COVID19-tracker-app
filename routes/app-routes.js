@@ -17,8 +17,11 @@ const Patients = require("../models/patients");
 
 // GET route Login page app
 mobileAppRouter.get("/", (req, res, next) => {
+  
   res.render("app/app-login", { message: req.flash("error") });
 });
+
+
 
 // POST route Login page app
 mobileAppRouter.post(
@@ -34,6 +37,7 @@ mobileAppRouter.post(
 
 // GET route home page
 mobileAppRouter.get("/home", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+
   res.render("app/app-home");
 });
 
@@ -57,11 +61,13 @@ mobileAppRouter.get("/lookup-person", ensureLogin.ensureLoggedIn("/app"), (req, 
 
 // GET route SignUp page
 mobileAppRouter.get("/signup", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+ 
   res.render("app/app-signup-patient");
 });
 
 // POST route SignUp page
 mobileAppRouter.post("/signup", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  
   res.render("app/app-signup-confirmation");
 });
 
