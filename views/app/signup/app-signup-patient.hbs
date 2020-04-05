@@ -1,0 +1,55 @@
+<h3> Signup patient page</h3>
+
+<form action="/app/signup/patient" method="post">
+
+<div><label>Name: </label><input type='text' name='name'></div>
+<div><label>Birthdate: </label><input type='date' name='birthdate'></div>
+<div><label>Age: </label><input type='text' name='age'></div>
+<div><label>Region: </label>
+<select name='region'>
+  <option name="Dienst Gezondheid & Jeugd Zuid-Holland Zuid">Dienst Gezondheid & Jeugd Zuid-Holland Zuid</option>
+  <option name="GGD Amsterdam">GGD Amsterdam</option>
+  <option name="GGD Brabant-Zuidoost">GGD Brabant-Zuidoost</option>
+  <option name="GGD Drenthe">GGD Drenthe</option>
+  <option name="GGD Fryslan">GGD Fryslan</option>
+  <option name="GGD Gelderland-Zuid">GGD Gelderland-Zuid</option>
+  <option name="GGD Gooi en Vechtstreek">GGD Gooi en Vechtstreek</option>
+  <option name="GGD Groningen">GGD Groningen</option>
+  <option name="GGD Haaglanden">GGD Haaglanden</option>
+  <option name="GGD Hart voor Brabant">GGD Hart voor Brabant</option>
+  <option name="GGD Hollands-Midden">GGD Hollands-Midden</option>
+  <option name="GGD Hollands-Noorden">GGD Hollands-Noorden</option>
+  <option name="GGD IJsselland">GGD IJsselland</option>
+  <option name="GGD Kennemerland">GGD Kennemerland</option>
+  <option name="GGD Limburg-Noord">GGD Limburg-Noord</option>
+  <option name="GGD Noord- en Oost-Gelderland">GGD Noord- en Oost-Gelderland</option>
+  <option name="GGD regio Utrecht">GGD regio Utrecht</option>
+  <option name="GGD Rotterdam-Rijnmond">GGD Rotterdam-Rijnmond</option>
+  <option name="GGD Twente">GGD Twente</option>
+  <option name="GGD West-Brabant">GGD West-Brabant</option>
+  <option name="GGD Zaanstreek-Waterland">GGD Zaanstreek-Waterland</option>
+  <option name="GGD Zeeland">GGD Zeeland</option>
+  <option name="GGD Zuid-Limburg">GGD Zuid-Limburg</option>
+  <option name="Veiligheids- en Gezondheidsregio Gelderland-Midden">Veiligheids- en Gezondheidsregio Gelderland-Midden</option>
+</select></div>
+<div>
+  <label>Gender: </label>
+  <input type="radio" name="gender" value="Male">
+  <label for="Male">Male</label>
+  <input type="radio" name="gender" value="Female">
+  <label for="Female">Female</label>
+  <input type="radio" name="gender" value="Other">
+  <label for="Other">Other</label>
+  </div>
+<div><label>BSN: </label><input name="bsn" type='text'></div>
+<div><label>Current status infection</label>
+<select name='status'>
+<option name='Home'>Home</option>
+<option name='Hospitalized'>Hospitalized</option>
+<option name='IC'>IC</option>
+<option name='Deceased'>Deceased</option>
+<option name='Recovered'>Recovered</option>
+</select>
+</div>
+<div><button type="submit">Preview your input</button></div>
+</form>
