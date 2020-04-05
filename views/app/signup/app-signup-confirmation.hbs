@@ -1,0 +1,16 @@
+<h3> Confirmation patient screen</h3>
+<br />
+<p>Please confirm the following entered details:</p>
+<br />
+<div class="confirmation-container">
+    <p>Name: {{patient.name}}</p>
+    <p>Birthdate: {{patient.birthdate}}</p>
+    <p>Age: {{patient.age}}</p>
+    <p>Region: {{patient.region}}</p>
+    <p>Gender: {{patient.gender}}</p>
+    <p>BSN: {{patient.bsn}}</p>
+    <p>Current Status: {{patient.status}}</p>
+</div>
+<br />
+<p>Are these details correct?</p>
+<p><a href="javascript:history.back()">No, edit the details</a> - <a href="/app/signup/confirmation">Yes, save the information</a></p>

@@ -9,7 +9,7 @@ const PatientsSchema = new Schema({
   healthcareworker: [{ type: Schema.Types.ObjectId, ref: "Users" }],
   status: {
     type: String,
-    enum: ["Home", "Hospitalized", "Intensive Care", "Dead", "Recovered"],
+    enum: ["Home", "Hospitalized", "IC", "Deceased", "Recovered"],
     required: true
   },
   region: {
@@ -19,7 +19,7 @@ const PatientsSchema = new Schema({
       "GGD Amsterdam",
       "GGD Brabant-Zuidoost",
       "GGD Drenthe",
-      "GGD Fryslân",
+      "GGD Fryslan",
       "GGD Gelderland-Zuid",
       "GGD Gooi en Vechtstreek",
       "GGD Groningen",
@@ -35,7 +35,7 @@ const PatientsSchema = new Schema({
       "GGD Rotterdam-Rijnmond",
       "GGD Twente",
       "GGD West-Brabant",
-      "GGD Zaanstreek/Waterland",
+      "GGD Zaanstreek-Waterland",
       "GGD Zeeland",
       "GGD Zuid-Limburg",
       "Veiligheids- en Gezondheidsregio Gelderland-Midden"
