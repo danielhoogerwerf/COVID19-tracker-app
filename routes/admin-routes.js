@@ -26,6 +26,19 @@ adminRouter.post(
     res.render('admin-dashboard/admin-home');
   });
 
+
+// get route for admin homepage
+adminRouter.get('/dashboard', (req, res, next) => {
+  res.render('admin-dashboard/admin-dashboard');
+});
+
+// get route for admin homepage
+adminRouter.get('/userlist', (req, res, next) => {
+  res.render('admin-dashboard/admin-list-users');
+});
+
+
+
   // GET route logout
 adminRouter.get('/logout', (req, res) => {
   req.logout();
