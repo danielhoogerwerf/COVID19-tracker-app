@@ -1,0 +1,16 @@
+<h3> Lookup person</h3>
+<br />
+{{#if patientIsRegistered}}
+<p>Patient is already registered!</p>
+<br />
+<a href="/app/lookup/patient/{{id}}"
+
+
+{{#if results}}
+{{#each results}}
+<p><a class="btn btn-info" href="/app/signup/lookup/{{id}}">Select</a>&nbsp; BSN: {{bsnnumber}} | Name: {{name}} | Birth Date: {{formatDate birthdate}} | Age: {{age}} | Gender: {{gender}}</p>
+<br />
+{{/each}}
+{{else}}
+<p>Patient not found</p>
+{{/if}}

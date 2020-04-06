@@ -1,0 +1,13 @@
+<h1>
+ Results of search   
+</h1>
+<h3>Select the patient you wish to check</h3>
+<br />
+{{#if results}}
+{{#each results}}
+<p><a class="btn btn-info" href="/app/lookup/patient/{{id}}">Select</a>&nbsp; BSN: {{bsnnumber}} | Name: {{name}} | Birth Date: {{formatDate birthdate}} | Age: {{age}} | Gender: {{gender}}</p>
+<br />
+{{/each}}
+{{else}}
+<p>Patient not found</p>
+{{/if}}

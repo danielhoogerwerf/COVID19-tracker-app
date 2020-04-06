@@ -1,0 +1,25 @@
+<h3>Lookup A Patient</h3>
+{{#if currentUser}}<h5>Current username: {{currentUser}}</h5>{{/if}}
+{{#if currentRegion}}<h5>Results restricted to region: {{currentRegion}}</h5>{{/if}}
+<br />
+
+<form action="/app/lookup/patient" method="post">
+
+<label>Name</label>
+<input type='text' name='name'>
+<label>Birthdate</label>
+<input type='date' name='birthdate'>
+<button type="submit">Search</button>
+</form>
+<br />
+<h3>Current active patients:</h3>
+{{#if results}}
+{{#each results}}
+<p><a class="btn btn-info" href="/app/lookup/patient/{{id}}">Select</a>&nbsp; BSN: {{bsn.0.bsnnumber}} | Name: {{bsn.0.name}} | Birth Date: {{formatDate bsn.0.birthdate}} | Age: {{bsn.0.age}} | Gender: {{bsn.0.gender}} || Status: {{status}} || Healthcare Worker: {{healthcareworker.0.username}}</p>
+<br />
+{{/each}}
+{{else}}
+<p>Patient not found</p>
+{{/if}}
+
+

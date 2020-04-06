@@ -1,0 +1,15 @@
+<h3>Selected Patient Information</h3>
+<br />
+{{#each results}}
+<p>BSN: {{bsn.0.bsnnumber}}</p>
+<p>Name: {{bsn.0.name}}</p>
+<p>Birth Date: {{formatDate bsn.0.birthdate}}</p>
+<p>Age: {{bsn.0.age}}</p>
+<p>Gender: {{bsn.0.gender}}</p>
+<p>Status: {{status}}</p>
+<p>Region: {{region}}</p>
+<p>Healthcare Worker: {{healthcareworker.0.username}}</p>
+<br />
+{{/each}}
+<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-danger">Edit status of patient</a></p>
+<p><a href="/app/lookup/patient" class="btn btn-primary">Back to search</a></p>

@@ -1,0 +1,24 @@
+<h3> Edit patient status</h3>
+
+{{#each results}}
+<form action="/app/lookup/patient/{{bsn.0.id}}/edit" method="POST"> 
+<p>BSN: {{bsn.0.bsnnumber}}</p>
+<p>Name: {{bsn.0.name}}</p>
+<label>Current status infection:</label>
+<select name='status'>
+<option value="{{status}}" hidden="hidden" selected="selected">{{status}}</option>
+<option name='Home'>Home</option>
+<option name='Hospitalized'>Hospitalized</option>
+<option name='IC'>IC</option>
+<option name='Deceased'>Deceased</option>
+<option name='Recovered'>Recovered</option>
+</select>
+<br />
+<br />
+<button type="submit" class="btn btn-danger">Submit results</button>
+</form>
+<br />
+{{/each}}
+<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}" class="btn btn-primary">Cancel changes and return to patient result</a></p>
+
+
