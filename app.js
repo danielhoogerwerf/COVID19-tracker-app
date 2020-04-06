@@ -11,6 +11,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("./auth/passport");
 const Mongostore = require("connect-mongo")(session);
+const moment = require("moment");
 
 mongoose
   .connect(process.env.MONGODB_URL, {
@@ -57,6 +58,16 @@ app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
+// Handlebars momentJS date helper
+hbs.registerHelper("formatDate", (datetime) => {
+  if (moment) {
+    return moment(datetime).format("DD MMMM YYYY");
+  } else {
+    return datetime;
+  }
+});
+
+// Routes
 const Router = require("./routes/index");
 app.use("/", Router);
 const adminRouter = require("./routes/admin-routes");

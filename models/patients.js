@@ -6,7 +6,7 @@ const PatientsSchema = new Schema({
   bsn: [{ type: Schema.Types.ObjectId, ref: "BSN" }],
   name: String,
   birthdate: Date,
-  healthcareworker: [{ type: Schema.Types.ObjectId, ref: "Users" }],
+  healthcareworker: [{ type: Schema.Types.ObjectId, ref: "User" }],
   status: {
     type: String,
     enum: ["Home", "Hospitalized", "IC", "Deceased", "Recovered"],

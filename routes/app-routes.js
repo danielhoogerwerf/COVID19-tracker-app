@@ -9,7 +9,7 @@ const passport = require("passport");
 const checkRoles = require("../auth/checkRoles");
 
 // Models declarations
-const User = require("../models/users");
+const Users = require("../models/users");
 const BSN = require("../models/bsn");
 const Patients = require("../models/patients");
 
@@ -41,29 +41,40 @@ mobileAppRouter.get("/home", ensureLogin.ensureLoggedIn("/app"), (req, res, next
 
 // GET route Lookup person page
 mobileAppRouter.get("/signup/lookup", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-  let userRole = { region: req.user.region };
-  if (req.user.role === "ADMIN") {
-    userRole = {};
-  }
-  User.find(userRole)
-    .then((users) => {
-      res.render("app/signup/app-lookup-person", {
-        users,
-        currentUser: req.user.username,
-      });
-    })
-    .catch((e) => next(e));
+  res.render("app/signup/app-signup-lookup-person");
 });
 
 // POST route Lookup person page
 mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   const { name, birthdate } = req.body;
-  User.find({})
-    .then((users) => {
-      res.render("app/signup/app-lookup-person", {
-        users,
-        currentUser: req.user.username,
-      });
+
+  BSN.find({ $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name + ".*", $options: "i" } }] }).then(
+    (data) => {
+      res.render("app/signup/app-signup-lookup-person-result", { results: data });
+    }
+  );
+});
+
+// GET route Lookup already patient?
+mobileAppRouter.get("/signup/lookup/:id", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  let patientIsRegistered
+  Patients.find({ bsn: req.params.id })
+    .populate("bsn")
+    .populate("healthcareworker")
+    .then((patientsResults) => {
+      patientIsRegistered = patientsResults[0].status;
+    })
+    .then(() => {
+      BSN.findById(req.params.id)
+        .then((bsnResults) => {
+          if (patientIsRegistered) {
+          res.render("app/signup/app-signup-lookup-person-result", { bsnResults, patientIsRegistered });
+          } else{
+            res.redirect("/app/home")
+          }
+          //res.send(bsnResults);
+        })
+        .catch((e) => next(e));
     })
     .catch((e) => next(e));
 });
@@ -74,7 +85,7 @@ mobileAppRouter.get("/signup/patient", ensureLogin.ensureLoggedIn("/app"), (req,
 });
 
 // POST route SignUp page
-let patient;
+let patient = {};
 mobileAppRouter.post("/signup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   patient = JSON.parse(JSON.stringify(req.body));
   res.render("app/signup/app-signup-confirmation", { patient });
@@ -107,32 +118,69 @@ mobileAppRouter.get("/signup/confirmation", ensureLogin.ensureLoggedIn("/app"), 
     .catch((err) => res.render("app/signup/app-signup-registration-fail", { err }));
 });
 
-// // GET route Lookup person page with ID
-// mobileAppRouter.get("/lookup-person/:id", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-//     User.findById(req.params.id)
-//       .then(user => {
-//         res.render("app/app-lookup-person-results", {
-//           user,
-//           currentUser: req.user.username
-//         });
-//       })
-//       .catch(e => next(e));
-// });
-
 // ## LOOKUP PATIENT PROCESS ##
 
 // GET route Lookup patient page
-mobileAppRouter.get("/lookup-patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-  res.render("app/app-lookup-patient");
+mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  // res.render("app/lookup/app-lookup-patient");
+  let userRole = { region: req.user.region };
+  if (req.user.role === "ADMIN") {
+    userRole = {};
+  }
+  Patients.find(userRole)
+    .populate("bsn")
+    .populate("healthcareworker")
+    .then((results) => {
+      res.render("app/lookup/app-lookup-patient", {
+        results,
+        currentUser: req.user.username,
+        currentRegion: req.user.region,
+      });
+    })
+    .catch((e) => next(e));
 });
 
 // POST route Lookup patient page
-mobileAppRouter.post("/lookup-patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-  if (succes) {
-    res.render("app/app-selected-patient");
-  } else {
-    console.log("patient not found");
-  }
+mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  const { name, birthdate } = req.body;
+
+  BSN.find({ $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name + ".*", $options: "i" } }] }).then(
+    (data) => {
+      res.render("app/lookup/app-lookup-results-patient", { results: data });
+    }
+  );
+});
+
+// GET route Lookup by ID
+mobileAppRouter.get("/lookup/patient/:id", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  // Pay attention that the references defined in Patients model match the mongoose.model("") of BSN and User
+  Patients.find({ bsn: req.params.id })
+    .populate("bsn")
+    .populate("healthcareworker")
+    .then((data) => {
+      res.render("app/lookup/app-selected-patient", { results: data });
+      //res.send(data)
+    });
+});
+
+// GET route Edit Patient
+mobileAppRouter.get("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  Patients.find({ bsn: req.params.id })
+    .populate("bsn")
+    .populate("healthcareworker")
+    .then((data) => {
+      res.render("app/lookup/app-edit-patient", { results: data });
+    });
+});
+
+// POST route Edit Patient
+mobileAppRouter.post("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  const { status } = req.body;
+  Patients.updateOne({ bsn: req.params.id }, { $set: { status: status } })
+    .then((data) => {
+      res.render("app/lookup/app-edit-patient-completed", { id: req.params.id });
+    })
+    .catch((err) => next(err));
 });
 
 // ## LOGOUT PROCESS ##

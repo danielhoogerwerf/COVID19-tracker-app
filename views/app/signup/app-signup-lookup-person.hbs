@@ -1,9 +1,12 @@
 <h3> Lookup person</h3>
+<br />
+{{#if currentUser}}<h5>Current username: {{currentUser}}</h5>{{/if}}
+<br />
 
 <form action="/app/signup/lookup/" method="post">
-
 <label>Last Name</label>
 <input type='text' name='name'>
 <label>Birthdate</label>
 <input type='date' name='birthdate'>
+<button class="btn btn-primary" type="submit">Search</button>
 </form>
