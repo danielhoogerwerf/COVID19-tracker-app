@@ -55,7 +55,7 @@ mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app"), (req,
   );
 });
 
-// GET route Lookup already patient?
+// GET route Lookup already patient? --  TO FINISH
 mobileAppRouter.get("/signup/lookup/:id", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   let patientIsRegistered
   Patients.find({ bsn: req.params.id })
@@ -120,24 +120,24 @@ mobileAppRouter.get("/signup/confirmation", ensureLogin.ensureLoggedIn("/app"), 
 
 // ## LOOKUP PATIENT PROCESS ##
 
-// GET route Lookup patient page
+// GET route Lookup patient page -- TO FINISH
 mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-  // res.render("app/lookup/app-lookup-patient");
-  let userRole = { region: req.user.region };
-  if (req.user.role === "ADMIN") {
-    userRole = {};
-  }
-  Patients.find(userRole)
-    .populate("bsn")
-    .populate("healthcareworker")
-    .then((results) => {
-      res.render("app/lookup/app-lookup-patient", {
-        results,
-        currentUser: req.user.username,
-        currentRegion: req.user.region,
-      });
-    })
-    .catch((e) => next(e));
+  res.render("app/lookup/app-lookup-patient");
+  // let userRole = { region: req.user.region };
+  // if (req.user.role === "ADMIN") {
+  //   userRole = {};
+  // }
+  // Patients.find(userRole)
+  //   .populate("bsn")
+  //   .populate("healthcareworker")
+  //   .then((results) => {
+  //     res.render("app/lookup/app-lookup-patient", {
+  //       results,
+  //       currentUser: req.user.username,
+  //       currentRegion: req.user.region,
+  //     });
+  //   })
+  //   .catch((e) => next(e));
 });
 
 // POST route Lookup patient page
