@@ -3,14 +3,14 @@
 {{#if patientIsRegistered}}
 <p>Patient is already registered!</p>
 <br />
-<a href="/app/lookup/patient/{{id}}"
+<a href="/app/lookup/patient/{{bsnResults.id}}" class="btn btn-warning">Edit patient status</a>
+<br />
+{{else}}
 
-
-{{#if results}}
 {{#each results}}
 <p><a class="btn btn-info" href="/app/signup/lookup/{{id}}">Select</a>&nbsp; BSN: {{bsnnumber}} | Name: {{name}} | Birth Date: {{formatDate birthdate}} | Age: {{age}} | Gender: {{gender}}</p>
 <br />
 {{/each}}
-{{else}}
-<p>Patient not found</p>
+<br />
+<p><a href="/app/signup/patient/" class="btn btn-danger">Register a new patient</a></p>
 {{/if}}

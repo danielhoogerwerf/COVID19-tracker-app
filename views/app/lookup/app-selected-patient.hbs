@@ -1,5 +1,6 @@
 <h3>Selected Patient Information</h3>
 <br />
+{{#if results}}
 {{#each results}}
 <p>BSN: {{bsn.0.bsnnumber}}</p>
 <p>Name: {{bsn.0.name}}</p>
@@ -12,4 +13,7 @@
 <br />
 {{/each}}
 <p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-danger">Edit status of patient</a></p>
-<p><a href="/app/lookup/patient" class="btn btn-primary">Back to search</a></p>
+{{else}}
+<p>This person is not a patient</p>
+{{/if}}
+<p><a href="/app/lookup/patient/" class="btn btn-primary">Back to the lookup screen</a></p>

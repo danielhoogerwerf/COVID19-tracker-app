@@ -67,6 +67,13 @@ hbs.registerHelper("formatDate", (datetime) => {
   }
 });
 
+// Handlebars Form Radio Checked helper
+hbs.registerHelper("checkedRadio",  (result, gender) => {
+  console.log(result)
+  console.log(gender)
+  return result === gender ? "checked" : null;
+});
+
 // Routes
 const Router = require("./routes/index");
 app.use("/", Router);
