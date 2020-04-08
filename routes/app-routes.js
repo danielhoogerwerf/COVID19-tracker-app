@@ -2,7 +2,6 @@
 const express = require("express");
 const mobileAppRouter = express.Router();
 const ensureLogin = require("connect-ensure-login");
-const bcrypt = require("bcrypt");
 const passport = require("passport");
 const moment = require("moment");
 
@@ -68,13 +67,15 @@ mobileAppRouter.get("/signup", ensureLogin.ensureLoggedIn("/app/login"), (req, r
 
 // POST route Lookup person page
 mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  const { name, birthdate } = req.body;
+  const { birthdate } = req.body;
+  let { name } = req.body;
+  if (name === "") {
+    name = "NoNameEntered!";
+  }
 
-  BSN.find({ $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name + ".*", $options: "i" } }] }).then(
-    (data) => {
-      res.render("app/signup/app-signup-lookup-person-result", { results: data });
-    }
-  );
+  BSN.find({ $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name, $options: "i" } }] }).then((data) => {
+    res.render("app/signup/app-signup-lookup-person-result", { results: data });
+  });
 });
 
 // Step 2 - GET route Lookup already patient
@@ -108,31 +109,28 @@ mobileAppRouter.get("/signup/patient", ensureLogin.ensureLoggedIn("/app/login"),
   res.render("app/signup/app-signup-patient");
 });
 
-// POST route SignUp page -- Need to remove the patient var method. It's not safe.
-let patient = {};
+// POST route SignUp page
 mobileAppRouter.post("/signup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
   patient = JSON.parse(JSON.stringify(req.body));
   res.render("app/signup/app-signup-confirmation", { patient });
 });
 
 // Step 4 - POST route Confirmation page
-mobileAppRouter.get("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  // console.log("final result");
-  // console.log(req.user.id);
-  // console.log(patient.name);
+mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+  const { name, birthdate, age, region, gender, bsnnumber, status } = req.body;
   BSN.create({
-    bsnnumber: patient.bsn,
-    name: patient.name,
-    birthdate: patient.birthdate,
-    age: patient.age,
-    gender: patient.gender,
+    bsnnumber: bsnnumber,
+    name: name,
+    birthdate: birthdate,
+    age: age,
+    gender: gender,
   })
     .then((bsn) => {
       Patients.create({
         bsn: bsn._id,
         healthcareworker: req.user.id,
-        status: patient.status,
-        region: patient.region,
+        status: status,
+        region: region,
       });
     })
     .then(() => {
@@ -167,21 +165,19 @@ mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"),
 
 // POST route Lookup patient page
 mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  const { name, birthdate } = req.body;
+  const { birthdate } = req.body;
+  let { name } = req.body;
+  if (name === "") {
+    name = "NoNameEntered!";
+  }
 
-  // BSN.find({ $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name + ".*", $options: "i" } }] }).then(
-  //   (data) => {
-  //     res.render("app/lookup/app-lookup-results-patient", { results: data });
-  //   }
-  // );
   Patients.find({})
     .populate({
       path: "bsn",
-      match: { $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name + ".*", $options: "i" } }] },
-      select: 'name birthdate age gender bsnnumber'
+      match: { $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name, $options: "i" } }] },
+      select: "name birthdate age gender bsnnumber",
     })
     .then((data) => {
-      //res.send(data[8])
       res.render("app/lookup/app-lookup-results-patient", { results: data });
     })
     .catch((e) => next(e));

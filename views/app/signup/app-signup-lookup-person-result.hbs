@@ -7,10 +7,15 @@
 <br />
 {{else}}
 
+{{#if results}}
 {{#each results}}
 <p><a class="btn btn-info" href="/app/signup/lookup/{{id}}">Select</a>&nbsp; BSN: {{bsnnumber}} | Name: {{name}} | Birth Date: {{formatDate birthdate}} | Age: {{age}} | Gender: {{gender}}</p>
 <br />
 {{/each}}
 <br />
-<p><a href="/app/signup/patient/" class="btn btn-danger">Register a new patient</a></p>
+{{else}}
+<br />
+<p>You're search did not provide any results.</p>
+{{/if}}
+<p><a href="/app/signup/patient/" class="btn btn-danger">Register a new patient?</a></p>
 {{/if}}
