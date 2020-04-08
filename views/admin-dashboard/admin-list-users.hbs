@@ -45,7 +45,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/admin/userlist">
+        <a class="nav-link" href="/admin/patientlist">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Patients</span></a>
       </li>
@@ -126,10 +126,20 @@
       <th scope="col">GGD region</th>
       <th scope="col">Role</th>
       <th scope="col">Registration date</th>
+       <th scope="col"></th>
     </tr>
   </thead>
   <tbody id='userlist'>
-   
+   {{#each users}}
+
+   <tr><td>{{@index}}</td><td>{{this.username}}</td><td>{{this.region}}</td><td>{{this.role}}</td><td>{{this.createdAt}}</td>
+   <td><a href="/admin/userlist/{{this.id}}/edit" style="float: right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+   </td><td><a href="/admin/userlist/{{this.id}}/delete" style="float: right"><i class="fa fa-trash" aria-hidden="true"></i></a>
+   </td>
+   </tr>
+
+
+{{/each}}
     
   </tbody>
 </table>
