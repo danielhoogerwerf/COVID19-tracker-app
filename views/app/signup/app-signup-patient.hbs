@@ -2,9 +2,9 @@
 
 <form action="/app/signup/patient" method="post">
 
-<div><label>Name: </label><input type='text' name='name'></div>
-<div><label>Birthdate: </label><input type='date' name='birthdate'></div>
-<div><label>Age: </label><input type='text' name='age'></div>
+<div><label>Name: </label><input type='text' name='name' value="{{bsnResults.name}}"></div>
+<div><label>Birthdate: </label><input type='date' name='birthdate' value="{{formattedDate}}"></div>
+<div><label>Age: </label><input type='text' name='age' value="{{bsnResults.age}}"></div>
 <div><label>Region: </label>
 <select name='region'>
   <option name="Dienst Gezondheid & Jeugd Zuid-Holland Zuid">Dienst Gezondheid & Jeugd Zuid-Holland Zuid</option>
@@ -34,14 +34,14 @@
 </select></div>
 <div>
   <label>Gender: </label>
-  <input type="radio" name="gender" value="Male">
+  <input type="radio" name="gender" value="Male" {{checkedRadio bsnResults.gender "Male"}}>
   <label for="Male">Male</label>
-  <input type="radio" name="gender" value="Female">
+  <input type="radio" name="gender" value="Female" {{checkedRadio bsnResults.gender "Female"}}>
   <label for="Female">Female</label>
-  <input type="radio" name="gender" value="Other">
+  <input type="radio" name="gender" value="Other" {{checkedRadio bsnResults.gender "Other"}}>
   <label for="Other">Other</label>
   </div>
-<div><label>BSN: </label><input name="bsn" type='text'></div>
+<div><label>BSN: </label><input name="bsn" type='text' value="{{bsnResults.bsnnumber}}"></div>
 <div><label>Current status infection</label>
 <select name='status'>
 <option name='Home'>Home</option>

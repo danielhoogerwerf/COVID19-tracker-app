@@ -1,6 +1,5 @@
 <h3>Lookup A Patient</h3>
 {{#if currentUser}}<h5>Current username: {{currentUser}}</h5>{{/if}}
-{{#if currentRegion}}<h5>Results restricted to region: {{currentRegion}}</h5>{{/if}}
 <br />
 
 <form action="/app/lookup/patient" method="post">
@@ -12,14 +11,15 @@
 <button type="submit">Search</button>
 </form>
 <br />
-<h3>Current active patients:</h3>
+<h3>Current active patients within your region: {{currentRegion}}</h3>
 {{#if results}}
 {{#each results}}
-<p><a class="btn btn-info" href="/app/lookup/patient/{{id}}">Select</a>&nbsp; BSN: {{bsn.0.bsnnumber}} | Name: {{bsn.0.name}} | Birth Date: {{formatDate bsn.0.birthdate}} | Age: {{bsn.0.age}} | Gender: {{bsn.0.gender}} || Status: {{status}} || Healthcare Worker: {{healthcareworker.0.username}}</p>
+<p><a class="btn btn-info" href="/app/lookup/patient/{{bsn.0.id}}">Select</a>&nbsp; BSN: {{bsn.0.bsnnumber}} | Name: {{bsn.0.name}} | Birth Date: {{formatDate bsn.0.birthdate}} | Age: {{bsn.0.age}} | Gender: {{bsn.0.gender}} || Status: {{status}} || Healthcare Worker: {{healthcareworker.0.username}}</p>
 <br />
 {{/each}}
 {{else}}
 <p>Patient not found</p>
 {{/if}}
+<p><a class="btn btn-primary" href="/app/">Return to home screen</a></p>
 
 

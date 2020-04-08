@@ -5,8 +5,10 @@
 <br />
 {{#if results}}
 {{#each results}}
-<p><a class="btn btn-info" href="/app/lookup/patient/{{id}}">Select</a>&nbsp; BSN: {{bsnnumber}} | Name: {{name}} | Birth Date: {{formatDate birthdate}} | Age: {{age}} | Gender: {{gender}}</p>
+{{#if bsn.0.name}}
+<p><a class="btn btn-info" href="/app/lookup/patient/{{bsn.0.id}}">Select</a>&nbsp; BSN: {{bsn.0.bsnnumber}} | Name: {{bsn.0.name}} | Birth Date: {{formatDate bsn.0.birthdate}} | Age: {{bsn.0.age}} | Gender: {{bsn.0.gender}}</p>
 <br />
+{{/if}}
 {{/each}}
 {{else}}
 <p>Patient not found</p>
