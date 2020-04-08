@@ -13,4 +13,14 @@
 </div>
 <br />
 <p>Are these details correct?</p>
-<p><a href="javascript:history.back()">No, edit the details</a> - <a href="/app/signup/confirmation">Yes, save the information</a></p>
+<p><a href="javascript:history.back()" class="btn btn-primary">No, edit the details</a>
+<form method="POST" action="/app/signup/confirmation">
+<input type="hidden" name="name" value="{{patient.name}}"> 
+<input type="hidden" name="birthdate" value="{{patient.birthdate}}">
+<input type="hidden" name="age" value="{{patient.age}}">
+<input type="hidden" name="region" value="{{patient.region}}">
+<input type="hidden" name="gender" value="{{patient.gender}}">
+<input type="hidden" name="bsnnumber" value="{{patient.bsn}}">
+<input type="hidden" name="status" value="{{patient.status}}">
+<button type="submit" class="btn btn-warning">Yes, save the information</button>
+</form>
