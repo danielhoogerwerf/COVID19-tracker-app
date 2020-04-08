@@ -1,3 +1,4 @@
+// Module declarations
 const express        = require("express");
 const adminRouter = express.Router();
 const ensureLogin = require('connect-ensure-login');
@@ -36,7 +37,7 @@ adminRouter.post(
 
 // get route for admin homepage
 adminRouter.get('/dashboard', (req, res, next) => {
-  res.render('admin-dashboard/admin-dashboard');
+  res.render('admin-dashboard/admin-dashboard', {username: req.user.username});
 });
 
 // get route for admin userlist

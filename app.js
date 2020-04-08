@@ -13,6 +13,7 @@ const passport = require("./auth/passport");
 const Mongostore = require("connect-mongo")(session);
 const moment = require("moment");
 
+// Database connection
 mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
@@ -36,6 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(flash());
+
 // Middleware for sessions
 app.use(
   session({
@@ -58,6 +60,8 @@ app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
+// ## Handlebar helpers ##
+
 // Handlebars momentJS date helper
 hbs.registerHelper("formatDate", (datetime) => {
   if (moment) {
@@ -69,17 +73,25 @@ hbs.registerHelper("formatDate", (datetime) => {
 
 // Handlebars Form Radio Checked helper
 hbs.registerHelper("checkedRadio",  (result, gender) => {
-  console.log(result)
-  console.log(gender)
   return result === gender ? "checked" : null;
 });
 
-// Routes
+// ## Routes ##
+
+// Index route
 const Router = require("./routes/index");
 app.use("/", Router);
+
+// Admin page route
 const adminRouter = require("./routes/admin-routes");
 app.use("/admin", adminRouter);
+
+// Healthworker app route
 const appRoutes = require("./routes/app-routes");
 app.use("/app", appRoutes);
+
+// API route
+const apiRoutes = require("./routes/api-routes");
+app.use("/api", apiRoutes)
 
 module.exports = app;
