@@ -4,7 +4,7 @@ function checkRoles(role) {
       next();
     } else {
       req.flash("error", "Access Denied!");
-      res.redirect("/login");
+      res.redirect("/admin/acces-denied");
     }
   };
 }

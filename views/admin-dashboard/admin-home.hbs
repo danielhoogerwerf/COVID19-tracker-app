@@ -38,18 +38,25 @@
       
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
+     {{#if admin}}
+<li class="nav-item">
         <a class="nav-link" href="/admin/userlist">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Userlist</span></a>
       </li>
+{{/if}}   
+
 
       <li class="nav-item">
         <a class="nav-link" href="/admin/patientlist">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Patients</span></a>
       </li>
-
+ <li class="nav-item">
+        <a class="nav-link" href="/admin/logout">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Logout</span></a>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -104,7 +111,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Friso Homan</span>
+    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser}}</span>
                              </a>
                         
             </li>
@@ -116,7 +123,9 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
+{{#if message}}
+    <div class="error-message">{{ message }}</div>
+  {{/if}}
      <div class="row">
 
             <!-- Content Column -->
