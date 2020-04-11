@@ -38,11 +38,13 @@
       
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
+      {{#if admin}}
+<li class="nav-item">
         <a class="nav-link" href="/admin/userlist">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Userlist</span></a>
       </li>
+{{/if}}   
 
       <li class="nav-item">
         <a class="nav-link" href="/admin/patientlist">
@@ -50,7 +52,11 @@
           <span>Patients</span></a>
       </li>
 
-
+ <li class="nav-item">
+        <a class="nav-link" href="/admin/logout">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Logout</span></a>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -105,7 +111,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Friso Homan</span>
+    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser}}</span>
                              </a>
                         
             </li>
@@ -116,10 +122,18 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">               
+        <div class="container-fluid">      
+
+{{#if saveMessage}}
+<div class="alert alert-success" role="alert">
+ {{saveMessage}}
+</div>
+{{/if}}
+
+
     <div class="row">        
           <div class="col-lg-5">
-            <div class="p-5">
+            <div class="p-5 card shadow mb-4">
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Add a user</h1>
               </div>
@@ -142,7 +156,15 @@
         </select>            
                </div>
                <button class="btn btn-primary" type="submit">Add user</button>
-               </form>                  
+               </form>   
+               <p></p>
+{{#if errorMessage}}
+<div class="alert alert-warning" role="alert">
+ {{errorMessage}}
+</div>
+{{/if}}
+
+                   
             </div>
           </div>
            <div class="col-lg-7 d-none d-lg-block"></div>

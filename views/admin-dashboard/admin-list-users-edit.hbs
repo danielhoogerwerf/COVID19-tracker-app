@@ -38,11 +38,14 @@
       
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
+      {{#if admin}}
+<li class="nav-item">
         <a class="nav-link" href="/admin/userlist">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Userlist</span></a>
       </li>
+{{/if}}   
+
 
       <li class="nav-item">
         <a class="nav-link" href="/admin/patientlist">
@@ -50,7 +53,11 @@
           <span>Patients</span></a>
       </li>
 
-
+ <li class="nav-item">
+        <a class="nav-link" href="/admin/logout">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Logout</span></a>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -105,7 +112,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Friso Homan</span>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser}}</span>
                              </a>
                         
             </li>
@@ -118,41 +125,84 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-     <table class="table table-striped">
-  <thead >
-    <tr>
-     
-      <th scope="col">username</th>
-      <th scope="col">GGD region</th>
-      <th scope="col">Role</th>
-      <th scope="col">Registration date</th>
-       <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody id='userlist'>
-     <tr><td>{{user.username}}</td>
-     <td>
-      <select>
-        <option value=“{{user.region}}” hidden=“hidden” selected=“selected”>{{user.region}}</option>
+{{#if updateMessage}}
+<div class="alert alert-success" role="alert">
+ {{updateMessage}}
+</div>
+{{/if}}
+
+
+    <div class="row">        
+          <div class="col-lg-5">
+            <div class="p-5 card shadow mb-4">
+             
+                <h1 class="h4 text-gray-900 mb-4">Update a user record</h1>
+           
+             
+
+<form action="/admin/userlist/{{user.id}}/update" method="post">
+<div class="form-group row">
+<label for="username" style='display:inline-block; width:100%;'>Username</label><p></p>
+ <input type="text" id="username" value='{{user.username}}' disabled> 
+</div>
+<div class="form-group row">
+   <label>Region</label>
+      <select name='region' class="form-control">
+        <option name=“{{user.region}}” hidden=“hidden” selected=“selected”>{{user.region}}</option>
       {{#each region}}
        <option name="{{this}}">{{this}}</option>
       {{/each}}
         </select>
-   </td>
-<td>
-   <select>
-      <option value=“{{user.role}}” hidden=“hidden” selected=“selected”>{{user.role}}</option>
+</div>
+  
+
+  <div class="form-group row">
+     <label>Role</label>
+   <select name='role' class="form-control">
+      <option name=“{{user.role}}” hidden=“hidden” selected=“selected”>{{user.role}}</option>
       {{#each roles}}
    <option name="{{this}}">{{this}}</option>
        {{/each}}
         </select>
-   </td>
-   <td>{{user.createdAt}}</td>
-   <td><a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Update user</a></td>
-   </tr>
-    </tbody>
-</table>
+        </div>
+        
+<p></p>
+   <button class="btn btn-primary" type="submit">Update record user</button>
  
+ </form>
+
+
+
+               <p></p>
+{{#if errorMessage}}
+<div class="alert alert-warning" role="alert">
+ {{errorMessage}}
+</div>
+{{/if}}
+
+                   
+            </div>
+          </div>
+           <div class="col-lg-7 d-none d-lg-block"></div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </div>
+
+
         <!-- /.container-fluid -->
 
       </div>
