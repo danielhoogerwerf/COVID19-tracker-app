@@ -1,13 +1,28 @@
+<div class="container-fluid">
+<div class="row">        
+          <div class="col-lg-5">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Login Admin</h1>
+              </div>
 
-<h1>Login admin</h1>
-<form action="/admin" method="post">
+<form class="user" action="/admin" method="post">
+  <div class="form-group row">
 <label>Username</label>
-<input type="text" name="username"><br><br>
+<input type="text" class="form-control" name="username">
+</div>
+<div class="form-group row">
 <label>Password</label>
-<input type="password" name="password">
-<p></p>
-{{#if message}}
-    <div class="error-message">{{ message }}</div>
-  {{/if}}
-<button type="submit">Send</button>
+<input class="form-control" type="password" name="password">
+</div>
+<button type="submit" class="btn btn-primary" >Send</button>
 </form>
+
+{{#if message}}
+<div class="alert alert-warning" role="alert"></div>
+    <div class="error-message">{{ message }}</div>
+    </div>
+  {{/if}}
+</div>
+</div>
+</div></div>

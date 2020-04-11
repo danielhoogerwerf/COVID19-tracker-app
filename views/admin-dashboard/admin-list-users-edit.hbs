@@ -52,12 +52,12 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Patients</span></a>
       </li>
+
  <li class="nav-item">
         <a class="nav-link" href="/admin/logout">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Logout</span></a>
       </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -79,7 +79,9 @@
             <i class="fa fa-bars"></i>
           </button>
  <h1 class="h3 mb-0 text-gray-800">Userlist COVI-19 app</h1>
-                   <!-- Topbar Navbar -->
+         
+
+          <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -100,54 +102,107 @@
                   </div>
                 </form>
               </div>
-            </li>       
-              <div class="topbar-divider d-none d-sm-block"></div>
+            </li>
+
+          
+             
+
+            <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser}}</span>
-                             </a>                       
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser}}</span>
+                             </a>
+                        
             </li>
+
           </ul>
+
         </nav>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-{{#if saveMessage}}
+
+{{#if updateMessage}}
 <div class="alert alert-success" role="alert">
- {{saveMessage}}
+ {{updateMessage}}
 </div>
 {{/if}}
 
-<a href="/admin/userlist/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Add a user</a>
-    <p></p>
-     <table class="table table-striped">
-  <thead >
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">username</th>
-      <th scope="col">GGD region</th>
-      <th scope="col">Role</th>
-      <th scope="col">Registration date</th>
-       <th scope="col"></th>
-        <th scope="col"></th>
-         <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody id='userlist'>
-   {{#each users}}
-   <tr><td>{{@index}}</td><td>{{this.username}}</td><td>{{this.region}}</td><td>{{this.role}}</td><td>{{this.createdAt}}</td>
-   <td><a href="/admin/userlist/{{this.id}}/edit" style="float: right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-   </td><td><a href="/admin/userlist/{{this.id}}/delete" style="float: right"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-   <td><a href="/admin/userlist/{{this.id}}/mail" style="float: right"><i class="fa fa-envelope-square"></i></a></td>
-   </tr>
-   {{/each}}
 
-  </tbody>
-</table>
+    <div class="row">        
+          <div class="col-lg-5">
+            <div class="p-5 card shadow mb-4">
+             
+                <h1 class="h4 text-gray-900 mb-4">Update a user record</h1>
+           
+             
+
+<form action="/admin/userlist/{{user.id}}/update" method="post">
+<div class="form-group row">
+<label for="username" style='display:inline-block; width:100%;'>Username</label><p></p>
+ <input type="text" id="username" value='{{user.username}}' disabled> 
+</div>
+<div class="form-group row">
+   <label>Region</label>
+      <select name='region' class="form-control">
+        <option name=“{{user.region}}” hidden=“hidden” selected=“selected”>{{user.region}}</option>
+      {{#each region}}
+       <option name="{{this}}">{{this}}</option>
+      {{/each}}
+        </select>
+</div>
+  
+
+  <div class="form-group row">
+     <label>Role</label>
+   <select name='role' class="form-control">
+      <option name=“{{user.role}}” hidden=“hidden” selected=“selected”>{{user.role}}</option>
+      {{#each roles}}
+   <option name="{{this}}">{{this}}</option>
+       {{/each}}
+        </select>
+        </div>
+        
+<p></p>
+   <button class="btn btn-primary" type="submit">Update record user</button>
  
+ </form>
+
+
+
+               <p></p>
+{{#if errorMessage}}
+<div class="alert alert-warning" role="alert">
+ {{errorMessage}}
+</div>
+{{/if}}
+
+                   
+            </div>
+          </div>
+           <div class="col-lg-7 d-none d-lg-block"></div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </div>
+
+
         <!-- /.container-fluid -->
 
       </div>
