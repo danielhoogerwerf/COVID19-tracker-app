@@ -18,3 +18,11 @@ function showPosition(position) {
         }
       });
 }
+
+// NAV BAR TOGGLE MENU
+let mainNav = document.getElementById("js-menu");
+let navBarToggle = document.getElementById("js-navbar-toggle");
+
+navBarToggle.addEventListener("click", function() {
+  mainNav.classList.toggle("active");
+});

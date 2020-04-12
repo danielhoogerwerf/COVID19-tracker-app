@@ -1,11 +1,47 @@
+  <nav class="navbar">
+   <h3>COVID-19 App</h3>
+    <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars"></i>
+        </span>
+    <a href="#" class="logo"><i class="fa fa-viruses" style='color:white;'></i></a>
+    
+    <ul class="main-nav" id="js-menu">
+      <li>
+        <a href="/app/home" class="nav-links">Home</a>
+      </li>
+      <li>
+        <a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
+      </li>
+      <li>
+        <a href="/app/signup/" class="nav-links">Register Patient</a>
+      </li>
+      <li>
+        <a href="/app/patients" class="nav-links">My patients</a>
+      </li>
+     
+    </ul>
+  </nav>
+ <div class='form-container'>  
+
 <h3> Edit patient status</h3>
 
 {{#each results}}
-<form action="/app/lookup/patient/{{bsn.0.id}}/edit" method="POST"> 
-<p>BSN: {{bsn.0.bsnnumber}}</p>
-<p>Name: {{bsn.0.name}}</p>
+<form class="user" action="/app/lookup/patient/{{bsn.0.id}}/edit" method="POST"> 
+<div class="form-group row">
+    <label>BSN</label>
+<input class="form-control" value='{{bsn.0.bsnnumber}}' disabled >
+</div>
+<div class="form-group row">
+    <label>Name:</label>
+<input class="form-control" value='{{bsn.0.name}}' disabled>
+</div>
+<div class="form-group row">
+    <label>Gender:</label>
+<input class="form-control" value='{{bsn.0.gender}}' disabled>
+</div>
+<div class="form-group row">
 <label>Current status infection:</label>
-<select name='status'>
+<select class="form-control" name='status'>
 <option value="{{status}}" hidden="hidden" selected="selected">{{status}}</option>
 <option name='Home'>Home</option>
 <option name='Hospitalized'>Hospitalized</option>
@@ -13,12 +49,15 @@
 <option name='Deceased'>Deceased</option>
 <option name='Recovered'>Recovered</option>
 </select>
-<br />
-<br />
-<button type="submit" class="btn btn-danger">Submit results</button>
+</div>
+
+
+
+<button type="submit" class="btn btn-primary">Submit results</button>
 </form>
 <br />
 {{/each}}
 <p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}" class="btn btn-primary">Cancel changes and return to patient result</a></p>
 
 
+</div>
