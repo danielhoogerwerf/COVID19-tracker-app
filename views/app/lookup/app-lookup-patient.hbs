@@ -1,25 +1,47 @@
+
+ <nav class="navbar">
+   <h3>COVID-19 App</h3>
+    <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars"></i>
+        </span>
+    <a href="#" class="logo"><i class="fa fa-viruses" style='color:white;'></i></a>
+    
+    <ul class="main-nav" id="js-menu">
+      <li>
+        <a href="/app/home" class="nav-links">Home</a>
+      </li>
+      <li>
+        <a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
+      </li>
+      <li>
+        <a href="/app/signup/" class="nav-links">Register Patient</a>
+      </li>
+      <li>
+        <a href="/app/patients" class="nav-links">My patients</a>
+      </li>
+     
+    </ul>
+  </nav>
+<div class='form-container'> 
 <h3>Lookup A Patient</h3>
 {{#if currentUser}}<h5>Current username: {{currentUser}}</h5>{{/if}}
 <br />
 
-<form action="/app/lookup/patient" method="post">
-
+<form action="/app/lookup/patient" class="user" method="post">
+<div class="form-group row">
 <label>Name</label>
-<input type='text' name='name'>
+<input  class="form-control" type='text' name='name'>
+</div>
+<div class="form-group row">
 <label>Birthdate</label>
-<input type='date' name='birthdate'>
-<button type="submit">Search</button>
+<input  class="form-control" type='date' name='birthdate'>
+</div>
+<button class="btn btn-primary" type="submit">Search</button>
 </form>
 <br />
-<h3>Current active patients within your region: {{currentRegion}}</h3>
-{{#if results}}
-{{#each results}}
-<p><a class="btn btn-info" href="/app/lookup/patient/{{bsn.0.id}}">Select</a>&nbsp; BSN: {{bsn.0.bsnnumber}} | Name: {{bsn.0.name}} | Birth Date: {{formatDate bsn.0.birthdate}} | Age: {{bsn.0.age}} | Gender: {{bsn.0.gender}} || Status: {{status}} || Healthcare Worker: {{healthcareworker.0.username}}</p>
-<br />
-{{/each}}
-{{else}}
-<p>Patient not found</p>
-{{/if}}
-<p><a class="btn btn-primary" href="/app/">Return to home screen</a></p>
 
 
+
+<p><a class="btn btn-primary" href="/app/home">Return to home screen</a></p>
+
+</div>
