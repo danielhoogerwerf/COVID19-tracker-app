@@ -16,7 +16,7 @@ const Patients = require("../models/patients");
 // ## LOGIN PROCESS ##
 
 // GET route Login page app
-mobileAppRouter.get("/login", (req, res, next) => {
+mobileAppRouter.get("/", (req, res, next) => {
   res.render("app/app-login", { message: req.flash("error") });
 });
 
@@ -24,7 +24,7 @@ mobileAppRouter.get("/login", (req, res, next) => {
 mobileAppRouter.post(
   "/",
   passport.authenticate("local", {
-    successRedirect: "/app/",
+    successRedirect: "/app/home",
     failureRedirect: "/app/login",
     failureFlash: true,
   })
@@ -33,7 +33,7 @@ mobileAppRouter.post(
 // ## HOME SCREEN ##
 
 // GET route home page
-mobileAppRouter.get("/", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.get("/home", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
   res.render("app/app-home");
 });
 
@@ -111,6 +111,14 @@ mobileAppRouter.get("/signup/patient", ensureLogin.ensureLoggedIn("/app/login"),
 
 // POST route SignUp page
 mobileAppRouter.post("/signup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+  
+  const {name,birthdate,age,region,gender,bsn,status} = req.body
+
+  if (name === '' || birthdate === '' || age === '' || region === '' || gender === '' || bsn === '' || status === ''){
+    res.render('app/signup/app-signup-patient',{errorMessage: 'Please fill in all the required fields'})
+    return
+  }
+    
   patient = JSON.parse(JSON.stringify(req.body));
   res.render("app/signup/app-signup-confirmation", { patient });
 });
@@ -144,23 +152,23 @@ mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/lo
 
 // GET route Lookup patient page
 mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  let userRegion = { region: req.user.region };
-  console.log(userRegion);
-  console.log(req.user.role);
-  if (req.user.role === "ADMIN") {
-    userRegion = {};
-  }
-  Patients.find(userRegion)
-    .populate("bsn")
-    .populate("healthcareworker")
-    .then((results) => {
+ // let userRegion = { region: req.user.region };
+//  console.log(userRegion);
+ // console.log(req.user.role);
+ // if (req.user.role === "ADMIN") {
+ //   userRegion = {};
+ // }
+ // Patients.find(userRegion)
+ //   .populate("bsn")
+ //   .populate("healthcareworker")
+  //  .then((results) => {
       res.render("app/lookup/app-lookup-patient", {
-        results,
+     //   results,
         currentUser: req.user.username,
         currentRegion: req.user.region,
       });
-    })
-    .catch((e) => next(e));
+ //   })
+ //   .catch((e) => next(e));
 });
 
 // POST route Lookup patient page
@@ -214,12 +222,35 @@ mobileAppRouter.post("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/ap
     .catch((err) => next(err));
 });
 
+
+// GET route my patient page
+mobileAppRouter.get("/patients", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+  let userRegion = { region: req.user.region };
+   if (req.user.role === "ADMIN") {
+    userRegion = {};
+  }
+  Patients.find(userRegion)
+    .populate("bsn")
+    .populate("healthcareworker")
+    .then((results) => {
+      res.render("app/app-patient-list", {
+        results,
+        currentUser: req.user.username,
+        currentRegion: req.user.region,
+      });
+    })
+    .catch((e) => next(e));
+});
+
+
+
+
 // ## LOGOUT PROCESS ##
 
 // GET logout route
 mobileAppRouter.get("/logout", (req, res) => {
   req.session.destroy(() => {
-    res.redirect("/");
+    res.redirect("/app");
   });
 });
 

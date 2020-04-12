@@ -1,26 +1,67 @@
+ <nav class="navbar">
+   <h3>COVID-19 App</h3>
+    <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars"></i>
+        </span>
+    <a href="#" class="logo"><i class="fa fa-viruses" style='color:white;'></i></a>
+    
+    <ul class="main-nav" id="js-menu">
+      <li>
+        <a href="/app/home" class="nav-links">Home</a>
+      </li>
+      <li>
+        <a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
+      </li>
+      <li>
+        <a href="/app/signup/" class="nav-links">Register Patient</a>
+      </li>
+      <li>
+        <a href="/app/patients" class="nav-links">My patients</a>
+      </li>
+     
+    </ul>
+  </nav>
+ 
+ 
+ <div class='form-container'>  
 <h3> Confirmation patient screen</h3>
 <br />
 <p>Please confirm the following entered details:</p>
 <br />
-<div class="confirmation-container">
-    <p>Name: {{patient.name}}</p>
-    <p>Birthdate: {{patient.birthdate}}</p>
-    <p>Age: {{patient.age}}</p>
-    <p>Region: {{patient.region}}</p>
-    <p>Gender: {{patient.gender}}</p>
-    <p>BSN: {{patient.bsn}}</p>
-    <p>Current Status: {{patient.status}}</p>
+<form method="POST" class="user" action="/app/signup/confirmation">
+<div class="form-group row">
+<label for="name">Name</label>
+<input   class="form-control" name="name" value="{{patient.name}}" disabled> 
 </div>
+<div class="form-group row">
+    <label for="birthdate">Birthdate</label>
+<input   class="form-control" name="birthdate" value="{{patient.birthdate}}" disabled > 
+</div>
+<div class="form-group row">
+    <label for='age'>Age</label>
+<input   class="form-control" name="age" value="{{patient.age}}"disabled >
+</div>
+<div class="form-group row">
+    <label for="region">GGD Region</label>
+<input  class="form-control" name="region" value="{{patient.region}}" disabled>
+</div>
+<div class="form-group row">
+    <label for="gender">Gender</label>
+<input  class="form-control" name="gender" value="{{patient.gender}}" disabled>
+</div>
+<div class="form-group row">
+    <label for='bsn'>BSN</label>
+<input   class="form-control" name="bsnnumber" value="{{patient.bsn}}" disabled>
+</div>
+<div class="form-group row">
+    <label for='status'>Patient status</label>
+<input   class="form-control" name="status" value="{{patient.status}}" disabled>
+</div>
+<button type="submit" class="btn btn-primary">Yes, save the information</button>
+</form>
+
+
 <br />
 <p>Are these details correct?</p>
 <p><a href="javascript:history.back()" class="btn btn-primary">No, edit the details</a>
-<form method="POST" action="/app/signup/confirmation">
-<input type="hidden" name="name" value="{{patient.name}}"> 
-<input type="hidden" name="birthdate" value="{{patient.birthdate}}">
-<input type="hidden" name="age" value="{{patient.age}}">
-<input type="hidden" name="region" value="{{patient.region}}">
-<input type="hidden" name="gender" value="{{patient.gender}}">
-<input type="hidden" name="bsnnumber" value="{{patient.bsn}}">
-<input type="hidden" name="status" value="{{patient.status}}">
-<button type="submit" class="btn btn-warning">Yes, save the information</button>
-</form>
+</div>
