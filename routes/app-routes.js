@@ -136,6 +136,7 @@ mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/lo
     .then((bsn) => {
       Patients.create({
         bsn: bsn._id,
+        history: {"Status": status, Date: moment.utc().format()},
         healthcareworker: req.user.id,
         status: status,
         region: region,
@@ -152,23 +153,21 @@ mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/lo
 
 // GET route Lookup patient page
 mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
- // let userRegion = { region: req.user.region };
-//  console.log(userRegion);
- // console.log(req.user.role);
- // if (req.user.role === "ADMIN") {
- //   userRegion = {};
- // }
- // Patients.find(userRegion)
- //   .populate("bsn")
- //   .populate("healthcareworker")
-  //  .then((results) => {
+  let userRegion = { region: req.user.region };
+  if (req.user.role === "ADMIN") {
+    userRegion = {};
+  }
+  Patients.find(userRegion)
+    .populate("bsn")
+    .populate("healthcareworker")
+    .then((results) => {
       res.render("app/lookup/app-lookup-patient", {
-     //   results,
+        results,
         currentUser: req.user.username,
         currentRegion: req.user.region,
       });
- //   })
- //   .catch((e) => next(e));
+    })
+    .catch((e) => next(e));
 });
 
 // POST route Lookup patient page
@@ -215,7 +214,10 @@ mobileAppRouter.get("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app
 // POST route Edit Patient
 mobileAppRouter.post("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
   const { status } = req.body;
-  Patients.updateOne({ bsn: req.params.id }, { $set: { status: status } })
+  Patients.updateOne(
+    { bsn: req.params.id },
+    { $set: { status: status, updatedAt: new Date() }, $addToSet: { history: [{"Status": status, "Date": moment.utc().format()}] } }
+  )
     .then((data) => {
       res.render("app/lookup/app-edit-patient-completed", { id: req.params.id });
     })
