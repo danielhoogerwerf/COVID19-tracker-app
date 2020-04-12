@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 // BSN Schema
 const BsnSchema = new Schema({
+  // Number removes the 0 from values that start with it. Use STRING to store these type of numbers in the future!
   bsnnumber: Number,
   name: String,
   birthdate: Date,

@@ -1,6 +1,33 @@
+
+ <nav class="navbar">
+   <h3>COVID-19 App</h3>
+    <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars"></i>
+        </span>
+    <a href="#" class="logo"><i class="fa fa-viruses" style='color:white;'></i></a>
+    
+    <ul class="main-nav" id="js-menu">
+      <li>
+        <a href="/app/home" class="nav-links">Home</a>
+      </li>
+      <li>
+        <a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
+      </li>
+      <li>
+        <a href="/app/signup/" class="nav-links">Register Patient</a>
+      </li>
+      <li>
+        <a href="/app/patients" class="nav-links">My patients</a>
+      </li>
+     
+    </ul>
+  </nav>
+<div class='form-container'> 
 <h3>Selected Patient Information</h3>
 <br />
+<p><a href="/app/lookup/patient/" class="btn btn-primary">Back to the lookup screen</a></p>
 {{#if results}}
+<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-danger">Edit status of patient</a></p>
 {{#each results}}
 <p>BSN: {{bsn.0.bsnnumber}}</p>
 <p>Name: {{bsn.0.name}}</p>
@@ -12,8 +39,12 @@
 <p>Healthcare Worker: {{healthcareworker.0.username}}</p>
 <br />
 {{/each}}
-<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-danger">Edit status of patient</a></p>
+<h5>History of patient</h5>
+{{#each results.0.history}}
+<p>{{formatDate Date}}: {{Status}}</p>
+{{/each}}
 {{else}}
 <p>This person is not a patient</p>
 {{/if}}
-<p><a href="/app/lookup/patient/" class="btn btn-primary">Back to the lookup screen</a></p>
+</div>
+

@@ -70,10 +70,7 @@ adminRouter.get('/userlist/:id/delete',ensureLogin.ensureLoggedIn("/"), (req, re
 adminRouter.get('/userlist/:id/edit',ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
 Users.findById(req.params.id)
 .then(user => {
-  let ADMIN = false
-  if (req.user.role === 'ADMIN'){
- ADMIN = true
-  }
+  
   res.render('admin-dashboard/admin-list-users-edit',{user: user,roles:roles,region:region,currentUser:req.user.username,admin:req.user.role})
 })
 .catch(err => console.log(err))
@@ -99,6 +96,7 @@ adminRouter.get('/userlist/:id/mail',ensureLogin.ensureLoggedIn("/"), (req, res,
   Users.findById(req.params.id)
  .then(user => {
   // async..await is not allowed in global scope, must use a wrapper
+  
 async function main() {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing

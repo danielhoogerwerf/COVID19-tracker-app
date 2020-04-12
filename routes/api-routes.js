@@ -29,6 +29,7 @@ apiRoutes.get("/infections/fatality", (req, res, next) => {
 // Infection Status
 apiRoutes.get("/infections/:state", (req, res, next) => {
   const state = req.params.state;
+  const relDate = 
   Patients.aggregate([{ $match: { status: state } }, { $project: { _id: 0, status: 1 } }, { $count: "status" }]).then(
     (data) => {
       let jsonData;
@@ -37,7 +38,7 @@ apiRoutes.get("/infections/:state", (req, res, next) => {
       } else {
         jsonData = data[0].status;
       }
-      res.json({ "Amount of Infections": jsonData });
+      res.json({ state: state, amount: jsonData });
     }
   );
 });
