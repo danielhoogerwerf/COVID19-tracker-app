@@ -4,6 +4,7 @@
 <form action="/app/lookup/patient/{{bsn.0.id}}/edit" method="POST"> 
 <p>BSN: {{bsn.0.bsnnumber}}</p>
 <p>Name: {{bsn.0.name}}</p>
+<p>Last updated: {{formatDate ../updatedAt}}</p>
 <label>Current status infection:</label>
 <select name='status'>
 <option value="{{status}}" hidden="hidden" selected="selected">{{status}}</option>
