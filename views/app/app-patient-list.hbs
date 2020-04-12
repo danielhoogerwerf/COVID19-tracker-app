@@ -1,27 +1,31 @@
-
  <nav class="navbar">
-   <h3>COVID-19 App</h3>
-    <span class="navbar-toggle" id="js-navbar-toggle">
-            <i class="fa fa-bars"></i>
-        </span>
-    <a href="#" class="logo"><i class="fa fa-viruses" style='color:white;'></i></a>
-        <ul class="main-nav" id="js-menu">
-      <li>
-        <a href="/app/home" class="nav-links">Home</a>
+    <a href="/app/home" ><img class='covid-logo' src="/images/covid-19-logo.png"</a>
+  <h3 class='d-inline'>COVID-19 App</h3>
+   
+
+   
+    
+    <ul class="main-nav" id="js-menu">
+      <li><a href="/app/home" class="nav-links">Home</a>
       </li>
-      <li>
-        <a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
+      <li><a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
       </li>
-      <li>
-        <a href="/app/signup/" class="nav-links">Register Patient</a>
+      <li><a href="/app/signup/" class="nav-links">Register Patient</a>
       </li>
-      <li>
-        <a href="/app/patients" class="nav-links">My patients</a>
+      <li><a href="/app/patients" class="nav-links">My patients</a>
       </li>     
     </ul>
+        <span class="navbar-toggle" id="js-navbar-toggle">
+            <i class="fa fa-bars"></i>
+        </span>
   </nav>
+
 <div class='form-container'>
-<h3>Current active patients within your region: {{currentRegion}}</h3>
+<div class='mb-4'>
+<h3>Patients within your region</h3>
+Active Region: {{currentRegion}}
+</div>
+
 {{#if results}}
 
 <table role="table" class='mrtable'>
@@ -47,7 +51,7 @@
       <td role="cell">{{bsn.0.gender}}</td>
       <td role="cell">{{status}}</td>
       <td role="cell">{{healthcareworker.0.username}}</td>
-      <td ><a  href="/app/lookup/patient/{{bsn.0.id}}">SELECT</a></td>
+      <td ><a class="btn btn-primary btn-sm mt-1 mb-2" href="/app/lookup/patient/{{bsn.0.id}}">Select patient</a></td>
           </tr>
 {{/each}}
 {{/if}}

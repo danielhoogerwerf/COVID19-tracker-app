@@ -174,8 +174,10 @@ mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"),
 mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
   const { birthdate } = req.body;
   let { name } = req.body;
-  if (name === "") {
-    name = "NoNameEntered!";
+  if (name === "" && birthdate === '') {
+    
+    res.render("app/lookup/app-lookup-patient", {errorMessage: 'You should fill in at least one query' })
+    return
   }
 
   Patients.find({})
