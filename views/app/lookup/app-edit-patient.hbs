@@ -40,8 +40,7 @@
 <input class="form-control" value='{{bsn.0.gender}}' disabled>
 </div>
 <div class="form-group row">
-<p>Last updated: {{formatDate ../updatedAt}}</p>
-<label>Current status infection:</label>
+<label>Current status infection: </label>
 <select class="form-control" name='status'>
 <option value="{{status}}" hidden="hidden" selected="selected">{{status}}</option>
 <option name='Home'>Home</option>
@@ -50,6 +49,7 @@
 <option name='Deceased'>Deceased</option>
 <option name='Recovered'>Recovered</option>
 </select>
+<em>Last updated: {{formatDate ../updatedAt}}</em>
 </div>
 
 
