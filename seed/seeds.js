@@ -51,8 +51,8 @@ const randomNumber = () => Math.floor(Math.random() * 25);
 const fakeDate = () => moment().subtract(randomNumber(), "days").utc().format();
 
 mongoose
-  //.connect(process.env.MONGODB_URL, {
-    .connect("mongodb://localhost/covid19-tracker-app", {
+  .connect(process.env.MONGODB_URL, {
+  //  .connect("mongodb://localhost/covid19-tracker-app", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
