@@ -52,7 +52,7 @@ const fakeDate = () => moment().subtract(randomNumber(), "days").utc().format();
 
 mongoose
   .connect(process.env.MONGODB_URL, {
-  //  .connect("mongodb://localhost/covid19-tracker-app", {
+    //.connect("mongodb://localhost/covid19-tracker-app", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -79,7 +79,7 @@ mongoose
               const registerStatus = fakeStatus[Math.floor(Math.random() * fakeStatus.length)];
               Patients.create({
                 bsn: bsn._id,
-                history: { Status: registerStatus, Date: fakeDate() },
+                history: { Status: registerStatus, Date: new Date(fakeDate()) },
                 healthcareworker: fakeUsers[Math.floor(Math.random() * fakeUsers.length)],
                 status: registerStatus,
                 region: fakeRegion[Math.floor(Math.random() * fakeRegion.length)],

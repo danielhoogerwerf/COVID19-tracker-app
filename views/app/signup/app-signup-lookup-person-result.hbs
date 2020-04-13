@@ -1,31 +1,8 @@
 
- <nav class="navbar">
-   <h3>COVID-19 App</h3>
-    <span class="navbar-toggle" id="js-navbar-toggle">
-            <i class="fa fa-bars"></i>
-        </span>
-    <a href="#" class="logo"><i class="fa fa-viruses" style='color:white;'></i></a>
-    
-    <ul class="main-nav" id="js-menu">
-      <li>
-        <a href="/app/home" class="nav-links">Home</a>
-      </li>
-      <li>
-        <a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
-      </li>
-      <li>
-        <a href="/app/signup/" class="nav-links">Register Patient</a>
-      </li>
-      <li>
-        <a href="/app/patients" class="nav-links">My patients</a>
-      </li>
-     
-    </ul>
-  </nav>
+ {{> navbar}}
  
-
-
 <div class='form-container'> 
+
 <h3> Lookup person</h3>
 <br />
 {{#if patientIsRegistered}}
@@ -35,12 +12,36 @@
 <br />
 {{else}}
 
+
 {{#if results}}
+
+<table role="table" class='mrtable'>
+  <thead role="rowgroup">
+    <tr role="row">
+      <th role="columnheader">BSN</th>
+      <th role="columnheader">Name</th>
+      <th role="columnheader">Birth date</th>
+      <th role="columnheader">Gender</th>
+      
+
+    </tr>
+  </thead>
+  <tbody role="rowgroup">
+
+
 {{#each results}}
-<p><a class="btn btn-info" href="/app/signup/lookup/{{id}}">Select</a>&nbsp; BSN: {{bsnnumber}} | Name: {{name}} | Birth Date: {{formatDate birthdate}} | Age: {{age}} | Gender: {{gender}}</p>
-<br />
+
+<tr role="row">
+      <td role="cell">{{bsnnumber}}</td>
+      <td role="cell">{{name}}</td>
+      <td role="cell">{{formatDate birthdate}}</td>
+      <td role="cell">{{gender}}</td>
+      <td ><a class="btn btn-primary btn-sm mt-1 mb-2" href="/app/signup/patient/{{id}}">Select person</a></td>
+          </tr>
+
 {{/each}}
-<br />
+</tbody></table>
+
 {{else}}
 <br />
 <p>You're search did not provide any results.</p>

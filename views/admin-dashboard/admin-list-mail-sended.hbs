@@ -46,6 +46,7 @@
       </li>
 {{/if}}   
 
+
       <li class="nav-item">
         <a class="nav-link" href="/admin/patientlist">
           <i class="fas fa-fw fa-chart-area"></i>
@@ -77,10 +78,8 @@
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
- <h1 class="h3 mb-0 text-gray-800">Dashboard COVID-19 outbreak Netherlands</h1>
-         
-
-          <!-- Topbar Navbar -->
+ <h1 class="h3 mb-0 text-gray-800">Userlist COVI-19 app</h1>
+                   <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -101,56 +100,30 @@
                   </div>
                 </form>
               </div>
-            </li>
-
-          
-             
-
-            <div class="topbar-divider d-none d-sm-block"></div>
+            </li>       
+              <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser}}</span>
-                             </a>
-                        
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{currentUser}}</span>
+                             </a>                       
             </li>
-
           </ul>
-
         </nav>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-     <table class="table table-striped">
-  <thead >
-    <tr>
-      <th scope="col">BSN</th>
-      <th scope="col">Name</th>
-      <th scope="col">Gender</th>
-      <th scope="col">Birthdate</th>
-      <th scope="col">Status</th>
-      <th scope="col">GGD region</th>
-      <th scope="col">Register date</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each patients}}
-    <tr>
-      <td> {{bsn.0.bsnnumber}}</td>
-      <td>{{bsn.0.name}}</td>
-      <td>{{bsn.0.gender}}</td>
-       <td>{{birthDate}}</td>
-       <td>{{status}}</td>        
-      <td>{{region}}</td> 
-      <td>{{regDate}}</td>
-    </tr>
-    
-     {{/each}}
-  </tbody>
-</table>
+<div class="alert alert-success" role="alert">
+  
+<p>A e-mail with a password was sended to : {{mailUser}}</p>
+
+</div>
+
+
+
  
         <!-- /.container-fluid -->
 

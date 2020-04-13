@@ -7,7 +7,6 @@ const BsnSchema = new Schema({
   bsnnumber: Number,
   name: String,
   birthdate: Date,
-  age: Number,
   gender: {
     type: String,
     enum: ["Male", "Female", "Other"]
