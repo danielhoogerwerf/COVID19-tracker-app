@@ -1,24 +1,5 @@
- <nav class="navbar">
-    <a href="/app/home" ><img class='covid-logo' src="/images/covid-19-logo.png"</a>
-  <h3 class='d-inline'>COVID-19 App</h3>    
-    
-    <ul class="main-nav" id="js-menu">
-      <li><a href="/app/home" class="nav-links">Home</a>
-      </li>
-      <li><a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
-      </li>
-      <li><a href="/app/signup/" class="nav-links">Register Patient</a>
-      </li>
-      <li><a href="/app/patients" class="nav-links">My patients</a>
-      </li>  
-      <li><a href="/app/logout" class="nav-links">Logout</a>
-      </li>   
-    </ul>
-        <span class="navbar-toggle" id="js-navbar-toggle">
-            <i class="fa fa-bars"></i>
-        </span>
-  </nav>
 
+ {{> navbar}}
 <div class='form-container'> 
 {{#if currentUser}}Username: {{currentUser}}{{/if}}
 

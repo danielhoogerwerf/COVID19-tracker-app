@@ -61,6 +61,9 @@ app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
+// Register partials directory
+hbs.registerPartials(__dirname + "/views/partials");
+
 // ## Handlebar helpers ##
 
 // Handlebars momentJS date helper
@@ -71,6 +74,8 @@ hbs.registerHelper("formatDate", (datetime) => {
     return datetime;
   }
 });
+
+
 
 // Handlebars Form Radio Checked helper
 hbs.registerHelper("checkedRadio",  (result, gender) => {
