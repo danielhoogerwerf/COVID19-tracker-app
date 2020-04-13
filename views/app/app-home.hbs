@@ -1,36 +1,20 @@
- <nav class="navbar">
-    <a href="/app/home" ><img class='covid-logo' src="/images/covid-19-logo.png"</a>
-  <h3 class='d-inline'>COVID-19 App</h3>
-   
 
-   
-    
-    <ul class="main-nav" id="js-menu">
-      <li><a href="/app/home" class="nav-links">Home</a>
-      </li>
-      <li><a href="/app/lookup/patient" class="nav-links">Lookup patient</a>
-      </li>
-      <li><a href="/app/signup/" class="nav-links">Register Patient</a>
-      </li>
-      <li><a href="/app/patients" class="nav-links">My patients</a>
-      </li>     
-    </ul>
-        <span class="navbar-toggle" id="js-navbar-toggle">
-            <i class="fa fa-bars"></i>
-        </span>
-  </nav>
-
+ {{> navbar}}
  <div class='form-container'>
-<h1>Mobile app home</h1>
 
 
-Welcome to the COVI 19 registration app!
+Hi {{currentUser.username}},
+<p></p>
+With this COVID-19 registration app you can register and change
+the status for patients with COVID-19 infections in the GGD region of: <br>
+<b> {{currentUser.region}} </b>
+
 <p></p>
 <a href="/app/signup/" class="btn btn-primary">Register a patient</a>
 <p></p>
-<a href="/app/lookup/patient" class="btn btn-info">Look up a patient</a>
+<a href="/app/lookup/patient" class="btn btn-primary">Look up a patient</a>
 <p></p>
-{{!-- <a href="/app/patients/list" class="btn btn-warning">Patient list</a>
-<p></p> --}}
-<a href="/app/logout" class="btn btn-danger">Logout</a>
+<a href="/app/patients" class="btn btn-primary">Patient list</a>
+<p></p> 
+<a href="/app/logout" class="btn btn-primary">Logout</a>
 </div>

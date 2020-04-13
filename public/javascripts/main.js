@@ -37,9 +37,44 @@ const stackedChart = () => {
 let mainNav = document.getElementById("js-menu");
 let navBarToggle = document.getElementById("js-navbar-toggle");
 
-// navBarToggle.addEventListener("click", function() {
-//   mainNav.classList.toggle("active");
-// });
+navBarToggle.addEventListener("click", function() {
+  mainNav.classList.toggle("active");
+});
 
+
+//Generic delete function
+function deleteConfirm(entity, successCallback){
+
+  var modal = $('#genericDeleteModal');
+  modal.find('.modal-body .entityType').html(entity);
+  modal.modal('show')
+  $('#confirmDeleteButton').bind('click', function() 
+  {
+    var deleteTextInput = modal.find('#deleteConfirmText');
+    if(deleteTextInput.val() === 'Delete')
+    {
+      modal.modal('hide');
+      successCallback();
+    }
+  })
+};
+$('#genericDeleteModal').on('hide.bs.modal',function(){
+   var modal = $(this);
+   var deleteTextInput = modal.find('#deleteConfirmText');
+   deleteTextInput.val('');
+});
+
+//Local delete button callback
+$('#userDeleteButton').on('click',function(){
+  var entity = $('#SelectedUser').val();
+  deleteConfirm(entity,myRandomSuccessCallBackFunction)
+});
+//local success callback
+function myRandomSuccessCallBackFunction()
+{
+  alert('user deleted');
+}
+
+// Infection chart for the dashboard
 window.addEventListener("DOMContentLoaded", stackedChart());
 

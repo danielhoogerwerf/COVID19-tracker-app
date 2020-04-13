@@ -34,7 +34,7 @@ mobileAppRouter.post(
 
 // GET route home page
 mobileAppRouter.get("/home", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  res.render("app/app-home");
+    res.render("app/app-home",{currentUser:req.user});
 });
 
 // ## SIGN UP PROCESS ##
@@ -110,21 +110,16 @@ mobileAppRouter.get("/signup/patient", ensureLogin.ensureLoggedIn("/app/login"),
 
 // POST route SignUp page
 mobileAppRouter.post("/signup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  
-  const {name,birthdate,region,gender,bsn,status} = req.body
-
-  if (name === '' || birthdate === '' || region === '' || gender === '' || bsn === '' || status === ''){
-    res.render('app/signup/app-signup-patient',{errorMessage: 'Please fill in all the required fields'})
-    return
-  }
-    
+     
   patient = JSON.parse(JSON.stringify(req.body));
   res.render("app/signup/app-signup-confirmation", { patient });
 });
 
 // Step 4 - POST route Confirmation page
 mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  const { name, birthdate, region, gender, bsnnumber, status } = req.body;
+    
+  const { name, birthdate, region, gender, bsnnumber, status } = req.body; 
+
   BSN.create({
     bsnnumber: bsnnumber,
     name: name,
@@ -140,7 +135,8 @@ mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/lo
         region: region,
       });
     })
-    .then(() => {
+    .then((patient) => {
+      console.log('Patient created:', patient)
       res.render("app/signup/app-signup-registration-complete");
       patient = {};
     })
@@ -170,14 +166,9 @@ mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"),
 
 // POST route Lookup patient page
 mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  const { birthdate } = req.body;
-  let { name } = req.body;
-  if (name === "" && birthdate === '') {
-    
-    res.render("app/lookup/app-lookup-patient", {errorMessage: 'You should fill in at least one query' })
-    return
-  }
-
+ 
+  const { name, birthdate } = req.body;
+  
   Patients.find({})
     .populate({
       path: "bsn",
@@ -185,6 +176,9 @@ mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login")
       select: "name birthdate gender bsnnumber",
     })
     .then((data) => {
+    
+      
+
       res.render("app/lookup/app-lookup-results-patient", { results: data });
     })
     .catch((e) => next(e));
@@ -197,6 +191,7 @@ mobileAppRouter.get("/lookup/patient/:id", ensureLogin.ensureLoggedIn("/app/logi
     .populate("bsn")
     .populate("healthcareworker")
     .then((data) => {
+      
       res.render("app/lookup/app-selected-patient", { results: data });
     });
 });
@@ -235,8 +230,11 @@ mobileAppRouter.get("/patients", ensureLogin.ensureLoggedIn("/app/login"), (req,
     .populate("bsn")
     .populate("healthcareworker")
     .then((results) => {
+
+      const totalCases = results.length
       res.render("app/app-patient-list", {
         results,
+        totalCases,
         currentUser: req.user.username,
         currentRegion: req.user.region,
       });
