@@ -19,10 +19,27 @@ function showPosition(position) {
       });
 }
 
+// Moment date declarations
+const pastMonth = moment().subtract(1, "months").format('YYYY-MM-DD');
+const currentDate = moment().format('YYYY-MM-DD');
+
+// Stacked bar chart Infections
+const stackedChart = () => {
+   axios
+     .get(`/api/infections/overview/totals/${pastMonth}`)
+     .then((response) => {
+       outbreakChart(response.data);
+     })
+     .catch((err) => console.log("Error while getting the data: ", err));
+}
+
 // NAV BAR TOGGLE MENU
 let mainNav = document.getElementById("js-menu");
 let navBarToggle = document.getElementById("js-navbar-toggle");
 
-navBarToggle.addEventListener("click", function() {
-  mainNav.classList.toggle("active");
-});
+// navBarToggle.addEventListener("click", function() {
+//   mainNav.classList.toggle("active");
+// });
+
+window.addEventListener("DOMContentLoaded", stackedChart());
+
