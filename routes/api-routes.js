@@ -135,12 +135,19 @@ apiRoutes.get("/infections/overview/totals/:startDate", (req, res, next) => {
   });
 });
 
+// Total count of Patients
+apiRoutes.get("/infections/totals", (req, res, next) => {
+  Patients.count().then((data) => {
+    res.json({ totals: data });
+  });
+});
+
 // Fatality Rate
 apiRoutes.get("/infections/fatalities", (req, res, next) => {
   Patients.find({ status: { $exists: true } }, { _id: 0, status: 1 }).then((data) => {
     const total = Object.keys(data).length;
     const deceased = Object.values(data).filter((word) => word.status === "Deceased").length;
-    res.json({ "Percentage of deceased": (deceased / total) * 100 });
+    res.json({ "percentage": (deceased / total) * 100 });
   });
 });
 
