@@ -1,3 +1,6 @@
+
+ {{> navbar}}
+ 
 <div class='form-container'> 
 
 <h3> Lookup person</h3>
@@ -9,12 +12,36 @@
 <br />
 {{else}}
 
+
 {{#if results}}
+
+<table role="table" class='mrtable'>
+  <thead role="rowgroup">
+    <tr role="row">
+      <th role="columnheader">BSN</th>
+      <th role="columnheader">Name</th>
+      <th role="columnheader">Birth date</th>
+      <th role="columnheader">Gender</th>
+      
+
+    </tr>
+  </thead>
+  <tbody role="rowgroup">
+
+
 {{#each results}}
-<p><a class="btn btn-info" href="/app/signup/lookup/{{id}}">Select</a>&nbsp; BSN: {{bsnnumber}} | Name: {{name}} | Birth Date: {{formatDate birthdate}} | Age: {{age}} | Gender: {{gender}}</p>
-<br />
+
+<tr role="row">
+      <td role="cell">{{bsnnumber}}</td>
+      <td role="cell">{{name}}</td>
+      <td role="cell">{{formatDate birthdate}}</td>
+      <td role="cell">{{gender}}</td>
+      <td ><a class="btn btn-primary btn-sm mt-1 mb-2" href="/app/signup/patient/{{id}}">Select person</a></td>
+          </tr>
+
 {{/each}}
-<br />
+</tbody></table>
+
 {{else}}
 <br />
 <p>You're search did not provide any results.</p>

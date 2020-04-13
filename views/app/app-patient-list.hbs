@@ -1,9 +1,6 @@
  <nav class="navbar">
     <a href="/app/home" ><img class='covid-logo' src="/images/covid-19-logo.png"</a>
-  <h3 class='d-inline'>COVID-19 App</h3>
-   
-
-   
+  <h3 class='d-inline'>COVID-19 App</h3>    
     
     <ul class="main-nav" id="js-menu">
       <li><a href="/app/home" class="nav-links">Home</a>
@@ -13,7 +10,9 @@
       <li><a href="/app/signup/" class="nav-links">Register Patient</a>
       </li>
       <li><a href="/app/patients" class="nav-links">My patients</a>
-      </li>     
+      </li>  
+      <li><a href="/app/logout" class="nav-links">Logout</a>
+      </li>   
     </ul>
         <span class="navbar-toggle" id="js-navbar-toggle">
             <i class="fa fa-bars"></i>
@@ -21,9 +20,18 @@
   </nav>
 
 <div class='form-container'>
-<div class='mb-4'>
 <h3>Patients within your region</h3>
-Active Region: {{currentRegion}}
+<div class='dashboard-mobile'>
+
+<div class="dashboard-card">
+<h6>Region:</h6> {{currentRegion}}
+</div>
+<div class="dashboard-card">
+<h6>Total cases:</h6> {{totalCases}}
+
+</div>
+
+
 </div>
 
 {{#if results}}
@@ -34,9 +42,9 @@ Active Region: {{currentRegion}}
       <th role="columnheader">BSN</th>
       <th role="columnheader">Name</th>
       <th role="columnheader">Birth date</th>
-      <th role="columnheader">Age</th>
       <th role="columnheader">Gender</th>
       <th role="columnheader">Status</th>
+      <th role="columnheader">Region</th>
       <th role="columnheader">Worker</th>
     </tr>
   </thead>
@@ -47,9 +55,9 @@ Active Region: {{currentRegion}}
       <td role="cell">{{bsn.0.bsnnumber}}</td>
       <td role="cell">{{formatDate bsn.0.birthdate}}</td>
       <td role="cell">{{bsn.0.name}}</td>
-      <td role="cell">{{bsn.0.age}} </td>
       <td role="cell">{{bsn.0.gender}}</td>
       <td role="cell">{{status}}</td>
+      <td role="cell">{{region}}</td>
       <td role="cell">{{healthcareworker.0.username}}</td>
       <td ><a class="btn btn-primary btn-sm mt-1 mb-2" href="/app/lookup/patient/{{bsn.0.id}}">Select patient</a></td>
           </tr>

@@ -3,16 +3,19 @@ const express        = require("express");
 const adminRouter = express.Router();
 const ensureLogin = require('connect-ensure-login');
 const passport = require('passport')
-const bcrypt = require("bcrypt");
-const bcryptSalt = 10;
 const nodemailer = require('nodemailer');
+const moment = require("moment");
+
 
 // checkRoles middleware
 const checkRoles = require("../auth/checkRoles");
+const generatePassword = require('../auth/generatePassword')
+
 
 // Models declarations
 const Users = require("../models/users");
 const Patients = require("../models/patients");
+const BSN = require("../models/bsn");
 
 // variable declarations
 const roles = Users.schema.path('role').enumValues
@@ -51,7 +54,13 @@ adminRouter.get('/dashboard',ensureLogin.ensureLoggedIn("/"), (req, res, next) =
 adminRouter.get('/userlist',ensureLogin.ensureLoggedIn("/"),checkAdmin,(req, res, next) => {
   Users.find()
   .then(users => {
-   
+    
+    // format date fields table
+    users.forEach(value => {
+    let date= moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+    value['regDate'] = date
+    })
+
     res.render('admin-dashboard/admin-list-users',{users: users,currentUser:req.user.username,admin:req.user.role,message: req.flash("error")});
   })
   .catch(err => console.log(err))
@@ -98,32 +107,44 @@ adminRouter.get('/userlist/:id/mail',ensureLogin.ensureLoggedIn("/"), (req, res,
   // async..await is not allowed in global scope, must use a wrapper
   
 async function main() {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  let testAccount = await nodemailer.createTestAccount();
+  
+  const password = generatePassword()
+ 
+  // Update the Password in the database
+  Users.findOneAndUpdate(
+    {_id:req.params.id},
+     {password:password.hash})
+    .then(user => console.log('password was updated'))
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+    service: 'gmail',    
     auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass // generated ethereal password
+      user: 'dutchcovid19tracker@gmail.com', // generated ethereal user
+      pass: process.env.GMAIL // generated ethereal password
     }
   });
 
   // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: `"Friso Homan" ${testAccount.user}`, // sender address
+  let mailOptions = await transporter.sendMail({
+    from: 'dutchcovid19tracker@gmail.com', // sender address
     to: user.username, // list of receivers
     subject: "Your COVI-19 password", // Subject line
-    text: `This is your COVI-19 password ${user.password}`, // plain text body
-    html: `This is your COVI-19 password ${user.password}` // html body
+    text: `This is your COVI-19 password: ${password.plain}`, // plain text body
+    html: `This is your COVI-19 password: ${password.plain}` // html body
   });
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if(err)
+      console.log(err)
+    else
+      console.log(info);
+ });
 }
 main().catch(console.error);
+
+res.render('admin-dashboard/admin-list-mail-sended',{mailUser:user.username,currentUser:req.user.username,admin:req.user.role,message: req.flash("error")});
+
 })
 .catch(err => console.log(err))
 });
@@ -152,10 +173,8 @@ adminRouter.post('/userlist/add-user',ensureLogin.ensureLoggedIn("/"), (req, res
     return;
   }
 
-const randomPassword = Math.random().toString(36).slice(-8);
-const salt     = bcrypt.genSaltSync(bcryptSalt);
-const hashPass = bcrypt.hashSync(randomPassword, salt);
-console.log('Password user: ',randomPassword)
+const password = generatePassword()
+
 Users.findOne({username:req.body.username})
 .then(user => {
   if (user !== null) {
@@ -165,7 +184,7 @@ Users.findOne({username:req.body.username})
     return;
   }
 Users.create({username: req.body.username,
-    password:hashPass,
+    password:password.hash,
     region: req.body.region,
     role: req.body.role})
 .then(user => {console.log('user created: ',user)
@@ -179,8 +198,24 @@ res.render('admin-dashboard/admin-list-users-add',{currentUser:req.user.username
 
 // GET route for list patients
 adminRouter.get('/patientlist',ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
-  res.render('admin-dashboard/admin-list-patients',{currentUser:req.user.username,admin:req.user.role,message: req.flash("error")});
+  
+Patients.find()
+.populate("bsn")
+.populate("healthcareworker")
+.then(patients =>  {
+// format date fields table
+  patients.forEach(value => {
+  let date= moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a')
+  let birthdate= moment(value.bsn[0].birthdate).format('MMMM Do YYYY')
+  value['regDate'] = date
+  value['birthDate'] = birthdate  
+  })
+res.render('admin-dashboard/admin-list-patients',{patients,currentUser:req.user.username,admin:req.user.role,message: req.flash("error")});
+})
+.catch(err => console.log(err))
+ 
 });
+
 
 
   // GET route logout
