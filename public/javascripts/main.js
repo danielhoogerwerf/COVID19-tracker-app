@@ -42,7 +42,9 @@ if (navBarToggle && mainNav) {
   });
 }
 
-// When content is loaded, fill the dashboard with real data
+// When content is loaded, fill the dashboard with real data from the local API
+// Functions are defined in apidata.js
+
 window.addEventListener("DOMContentLoaded", () => {
   // Create the infection chart
   stackedChart();
@@ -67,5 +69,4 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Update Last Updates time
   document.getElementById("totals-last-update").innerHTML = currentDate;
-
 });

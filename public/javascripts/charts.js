@@ -1,3 +1,4 @@
+// Colour scheme for the stacked bar chart
 const colorScheme = (colour) => {
   switch (colour) {
     case "Deceased":
@@ -23,6 +24,8 @@ const outbreakChart = (datas) => {
   const icArr = [];
   const recoveredArr = [];
 
+  // take the number of dates, then go through the Objects to retrieve datas[date[iteration]].STATE
+  // Check for undefined and if so, return a 0. Necessary if not all STATEs have data.
   for (let i = 0; i < arrDates.length; i++) {
     deceasedArr.push(!datas[arrDates[i]].Deceased ? 0 : datas[arrDates[i]].Deceased);
     homeArr.push(!datas[arrDates[i]].Home ? 0 : datas[arrDates[i]].Home);
@@ -31,6 +34,7 @@ const outbreakChart = (datas) => {
     recoveredArr.push(!datas[arrDates[i]].Recovered ? 0 : datas[arrDates[i]].Recovered);
   }
 
+  // Make the stacked bar chart using the above arrays for the data
   const ctx = document.getElementById("barChart").getContext("2d");
   const chart = new Chart(ctx, {
     type: "bar",

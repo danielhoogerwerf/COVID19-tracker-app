@@ -13,12 +13,13 @@ apiRoutes.get("/", (req, res, next) => {
 
 // ## Dashboard data API ##
 
-// Infection Status - Daily count of defined status
+// Infection Status - Daily count of provided status
 apiRoutes.get("/infections/overview/status/:statusInput/:startDate", (req, res, next) => {
   const state = req.params.statusInput;
   const relDate = req.params.startDate;
 
-  // Match status
+  // Match the status from the URL, the perform a gte match on the history.Date field (array)
+  // resolve the history array, then group using the history.date, and sum the results based on the date
   Patients.aggregate([
     {
       $match: {
@@ -74,6 +75,10 @@ apiRoutes.get("/infections/overview/status/:statusInput/:startDate", (req, res, 
 // Infection Status - Daily count of all statuses
 apiRoutes.get("/infections/overview/totals/:startDate", (req, res, next) => {
   const relDate = req.params.startDate;
+
+  // First unpack the history array, then do the match using a gte en the history.Date field
+  // then group using the history.date and the history.state, and sum the results
+  // Then reformat the group data using $project for the api results and sort it.
   Patients.aggregate([
       {
         $unwind: {
@@ -142,7 +147,7 @@ apiRoutes.get("/infections/totals", (req, res, next) => {
   });
 });
 
-// Fatality Rate
+// Fatality Percentage
 apiRoutes.get("/infections/fatalities", (req, res, next) => {
   Patients.find({ status: { $exists: true } }, { _id: 0, status: 1 }).then((data) => {
     const total = Object.keys(data).length;
@@ -151,7 +156,7 @@ apiRoutes.get("/infections/fatalities", (req, res, next) => {
   });
 });
 
-// Infection Status - General
+// Infection Status - Total per state
 apiRoutes.get("/infections/:state", (req, res, next) => {
   const state = req.params.state;
   Patients.aggregate([{ $match: { status: state } }, { $project: { _id: 0, status: 1 } }, { $count: "status" }]).then(
@@ -167,7 +172,7 @@ apiRoutes.get("/infections/:state", (req, res, next) => {
   );
 });
 
-// Infection Status - From Start Date to Now
+// Infection Status - Per state From Start Date to Now
 apiRoutes.get("/infections/:state/:startDate", (req, res, next) => {
   const state = req.params.state;
   const relDate = req.params.startDate;
