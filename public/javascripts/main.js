@@ -36,11 +36,18 @@ const stackedChart = () => {
 let mainNav = document.getElementById("js-menu");
 let navBarToggle = document.getElementById("js-navbar-toggle");
 
-if (navBarToggle && mainNav) {
-  navBarToggle.addEventListener("click", function () {
-    mainNav.classList.toggle("active");
-  });
+
+if (mainNav && navBarToggle){
+
+navBarToggle.addEventListener("click", function() {
+  mainNav.classList.toggle("active");
+});
+
 }
+
+
+// Infection chart for the dashboard
+window.addEventListener("DOMContentLoaded", stackedChart());
 
 // When content is loaded, fill the dashboard with real data from the local API
 // Functions are defined in apidata.js
