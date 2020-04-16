@@ -1,14 +1,7 @@
  
 
  {{> navbar}}
-
-<div class="container-fluid">
-<div class="row">        
-          <div class="col-lg-5">
-            <div class="p-5">
-              <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Login COVID-19 APP</h1>
-              </div>
+ <div class='form-container'>
 <form class="user" action="/app" method="post">
   <div class="form-group row">
 <label>Username</label>
@@ -20,9 +13,40 @@
 </div>
 <button type="submit" class="btn btn-primary" >Send</button>
 </form>
+<p></p>
 {{#if message}}
-<div class="alert alert-warning" role="alert"></div>
-    <div class="error-message">{{ message }}</div>
-    </div>
+<div class="alert alert-warning" role="alert"> {{ message }}</div>
+
   {{/if}}
-</div></div></div></div>
+
+  <a href="#myModal" data-toggle="modal" >Forgot your password?</a>
+
+
+<!-- Modal -->
+<!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Send a new password</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form action="/app/password" method="POST">
+         Send an new password to <input type="email" name='username'>
+         <button type="submit" class="btn btn-primary" id='delete-modal'>Confirm</button>
+         </form>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>

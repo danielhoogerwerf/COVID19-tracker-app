@@ -6,6 +6,10 @@ const UsersSchema = new Schema(
   {
     username: String,
     password: String,
+    passwordflag: {
+      type: Boolean,
+      default: false
+    },
     role: {
       type: String,
       enum: ["GUEST", "HEALTHWORKER", "ADMIN"],
