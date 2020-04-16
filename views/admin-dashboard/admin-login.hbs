@@ -1,10 +1,9 @@
-<div class="container-fluid">
-<div class="row">        
-          <div class="col-lg-5">
-            <div class="p-5">
-              <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Login Admin</h1>
-              </div>
+
+
+ <div class='form-container'>
+ 
+<h3 class='d-inline'>COVID-19 Dashboard</h3> 
+         
 
 <form class="user" action="/admin" method="post">
   <div class="form-group row">
@@ -17,14 +16,8 @@
 </div>
 <button type="submit" class="btn btn-primary" >Send</button>
 </form>
-
-{{#if message}}
-<div class="alert alert-warning" role="alert"></div>
-    <div class="error-message">{{ message }}</div>
-    </div>
-  {{/if}}
 <p></p>
-  <a href="/" class="btn btn-primary">Home</a>
-</div>
-</div>
-</div></div>
+{{#if message}}
+<div class="alert alert-warning" role="alert">{{ message }}</div>
+
+  {{/if}}

@@ -3,14 +3,13 @@ const express        = require("express");
 const adminRouter = express.Router();
 const ensureLogin = require('connect-ensure-login');
 const passport = require('passport')
-const nodemailer = require('nodemailer');
 const moment = require("moment");
 
 
 // checkRoles middleware
 const checkRoles = require("../auth/checkRoles");
 const generatePassword = require('../auth/generatePassword')
-
+const mailPassword = require('../auth/mailPassword')
 
 // Models declarations
 const Users = require("../models/users");
@@ -53,14 +52,12 @@ adminRouter.get('/dashboard',ensureLogin.ensureLoggedIn("/"), (req, res, next) =
 // get route for admin userlist
 adminRouter.get('/userlist',ensureLogin.ensureLoggedIn("/"),checkAdmin,(req, res, next) => {
   Users.find()
-  .then(users => {
-    
+  .then(users => {    
     // format date fields table
     users.forEach(value => {
     let date= moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a')
     value['regDate'] = date
     })
-
     res.render('admin-dashboard/admin-list-users',{users: users,currentUser:req.user.username,admin:req.user.role,message: req.flash("error")});
   })
   .catch(err => console.log(err))
@@ -78,8 +75,7 @@ adminRouter.get('/userlist/:id/delete',ensureLogin.ensureLoggedIn("/"), (req, re
 // GET route for admin userlist to edit user
 adminRouter.get('/userlist/:id/edit',ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
 Users.findById(req.params.id)
-.then(user => {
-  
+.then(user => {  
   res.render('admin-dashboard/admin-list-users-edit',{user: user,roles:roles,region:region,currentUser:req.user.username,admin:req.user.role})
 })
 .catch(err => console.log(err))
@@ -105,46 +101,9 @@ adminRouter.get('/userlist/:id/mail',ensureLogin.ensureLoggedIn("/"), (req, res,
   Users.findById(req.params.id)
  .then(user => {
   // async..await is not allowed in global scope, must use a wrapper
-  
-async function main() {
-  
-  const password = generatePassword()
- 
-  // Update the Password in the database
-  Users.findOneAndUpdate(
-    {_id:req.params.id},
-     {password:password.hash})
-    .then(user => console.log('password was updated'))
-
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    service: 'gmail',    
-    auth: {
-      user: 'dutchcovid19tracker@gmail.com', // generated ethereal user
-      pass: process.env.GMAIL // generated ethereal password
-    }
-  });
-
-  // send mail with defined transport object
-  let mailOptions = await transporter.sendMail({
-    from: 'dutchcovid19tracker@gmail.com', // sender address
-    to: user.username, // list of receivers
-    subject: "Your COVI-19 password", // Subject line
-    text: `This is your COVI-19 password: ${password.plain}`, // plain text body
-    html: `This is your COVI-19 password: ${password.plain}` // html body
-  });
-
-  transporter.sendMail(mailOptions, function (err, info) {
-    if(err)
-      console.log(err)
-    else
-      console.log(info);
- });
-}
-main().catch(console.error);
-
+  mailPassword(req.params.id,user.username)
+.catch(console.error);
 res.render('admin-dashboard/admin-list-mail-sended',{mailUser:user.username,currentUser:req.user.username,admin:req.user.role,message: req.flash("error")});
-
 })
 .catch(err => console.log(err))
 });

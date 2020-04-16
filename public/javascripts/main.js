@@ -1,22 +1,46 @@
 // // Get geolocation of the patient and registrate it in the database
 
+// import { compareSync } from "bcrypt";
+
 // if (navigator.geolocation) {
 //     navigator.geolocation.getCurrentPosition(showPosition);
 // } else {
 //     // Geolocation is not supported by this browser
 // }
 
-function showPosition(position) {
-  axios({
-    method: "post",
-    url: "app/signup",
-    data: {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-    },
-  });
+// function showPosition(position) {
+//  axios({
+//    method: "post",
+//    url: "app/signup",
+//    data: {
+//      latitude: position.coords.latitude,
+//      longitude: position.coords.longitude,
+//    },
+//  });
+// }
+
+// Modal for delete button userlist
+
+const $userlist = document.getElementById('userlist')
+const $deleteModal = document.getElementById('delete-modal')
+const $deleteUser = document.getElementById('user')
+
+if ($userlist){
+
+$userlist.addEventListener('click', event => {
+console.log(event.target.className)
+if (event.target.className === 'fa fa-trash') {
+console.log(event.target)
+const dataDeleteID = event.target.parentElement.getAttribute('data-delete-id')
+const dataDeleteUser = event.target.parentElement.getAttribute('data-username')
+console.log(dataDeleteUser)
+$deleteModal.href = dataDeleteID
+$deleteUser.innerText = dataDeleteUser
+}
 }
 
+)
+}
 // ## Stacked bar chart Infections ##
 
 // Moment date declarations
@@ -44,6 +68,10 @@ navBarToggle.addEventListener("click", function() {
 });
 
 }
+
+
+
+
 
 
 // Infection chart for the dashboard
