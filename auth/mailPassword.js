@@ -1,8 +1,5 @@
-
 const nodemailer = require('nodemailer');
-
 const Users = require("../models/users");
-
 const generatePassword = require('../auth/generatePassword')
 
 
