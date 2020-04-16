@@ -115,11 +115,20 @@ mobileAppRouter.get("/signup", ensureLogin.ensureLoggedIn("/app"), (req, res, ne
 mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   const { birthdate } = req.body;
   let { name } = req.body;
-  if (name === "") {
+  if (!name) {
     name = "NoNameEntered!";
   }
+  if (!birthdate) {
+    birthdate = "1111/01/01";
+  }
 
-  BSN.find({ $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name, $options: "i" } }] }).then((data) => {
+  BSN.find({
+    $or: [
+      { $and: [{ name: { $ne: null } }, { name: { $regex: ".*?" + name, $options: "i" } }] },
+      { birthdate: birthdate },
+    ],
+  }).then((data) => {
+    console.log(data);
     res.render("app/signup/app-signup-lookup-person-result", { results: data });
   });
 });
@@ -157,16 +166,13 @@ mobileAppRouter.get("/signup/patient", ensureLogin.ensureLoggedIn("/app"), (req,
 
 // POST route SignUp page
 mobileAppRouter.post("/signup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-     
   patient = JSON.parse(JSON.stringify(req.body));
   res.render("app/signup/app-signup-confirmation", { patient });
 });
 
 // Step 4 - POST route Confirmation page
 mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-    
   const { name, birthdate, region, gender, bsnnumber, status } = req.body; 
-
   BSN.create({
     bsnnumber: bsnnumber,
     name: name,
@@ -176,14 +182,14 @@ mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app"),
     .then((bsn) => {
       Patients.create({
         bsn: bsn._id,
-        history: {"Status": status, Date: new Date()},
+        history: { Status: status, Date: new Date() },
         healthcareworker: req.user.id,
         status: status,
         region: region,
       });
     })
     .then((patient) => {
-      console.log('Patient created:', patient)
+      console.log("Patient created:", patient);
       res.render("app/signup/app-signup-registration-complete");
       patient = {};
     })
@@ -213,18 +219,28 @@ mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req,
 
 // POST route Lookup patient page
 mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
- 
-  const { name, birthdate } = req.body;
-  
+  console.log(req.body)
+  let { birthdate } = req.body;
+  let { name } = req.body;
+  if (!name) {
+    name = "NoNameEntered!";
+  }
+  if (!birthdate) {
+    birthdate = "1111/01/01";
+  }
+  console.log(name, birthdate)
   Patients.find({})
     .populate({
       path: "bsn",
-      match: { $or: [{ birthdate: birthdate }, { name: { $regex: ".*" + name, $options: "i" } }] },
+      match: {
+        $or: [
+          { $and: [{ name: { $ne: null } }, { name: { $regex: ".*?" + name, $options: "i" } }] },
+          { birthdate: birthdate },
+        ],
+      },
       select: "name birthdate gender bsnnumber",
     })
     .then((data) => {
-    
-      console.log(data)
 
       res.render("app/lookup/app-lookup-results-patient", { results: data });
     })
@@ -238,7 +254,6 @@ mobileAppRouter.get("/lookup/patient/:id", ensureLogin.ensureLoggedIn("/app"), (
     .populate("bsn")
     .populate("healthcareworker")
     .then((data) => {
-      
       res.render("app/lookup/app-selected-patient", { results: data });
     });
 });
@@ -258,7 +273,7 @@ mobileAppRouter.post("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/ap
   const { status } = req.body;
   Patients.updateOne(
     { bsn: req.params.id },
-    { $set: { status: status, updatedAt: new Date() }, $addToSet: { history: [{"Status": status, "Date": new Date()}] } }
+    { $set: { status: status, updatedAt: new Date() }, $addToSet: { history: [{ Status: status, Date: new Date() }] } }
   )
     .then((data) => {
       res.render("app/lookup/app-edit-patient-completed", { id: req.params.id });
@@ -266,19 +281,17 @@ mobileAppRouter.post("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/ap
     .catch((err) => next(err));
 });
 
-
 // GET route my patient page
 mobileAppRouter.get("/patients", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   let userRegion = { region: req.user.region };
-   if (req.user.role === "ADMIN") {
+  if (req.user.role === "ADMIN") {
     userRegion = {};
   }
   Patients.find(userRegion)
     .populate("bsn")
     .populate("healthcareworker")
     .then((results) => {
-
-      const totalCases = results.length
+      const totalCases = results.length;
       res.render("app/app-patient-list", {
         results,
         totalCases,
@@ -288,9 +301,6 @@ mobileAppRouter.get("/patients", ensureLogin.ensureLoggedIn("/app"), (req, res, 
     })
     .catch((e) => next(e));
 });
-
-
-
 
 // ## LOGOUT PROCESS ##
 

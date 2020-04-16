@@ -10,34 +10,32 @@
 <form method="POST" class="user" action="/app/signup/confirmation">
 <div class="form-group row">
 <label for="name">Name</label>
-<input   class="form-control" name="name" value="{{patient.name}}" disabled> 
+<input   class="form-control" name="name" value="{{patient.name}}" readonly="readonly"> 
 </div>
 <div class="form-group row">
     <label for="birthdate">Birthdate</label>
-<input   class="form-control" name="birthdate" value="{{patient.birthdate}}" disabled > 
+<input   class="form-control" name="birthdate" value="{{patient.birthdate}}" readonly="readonly" > 
 </div>
 
 <div class="form-group row">
     <label for="region">GGD Region</label>
-<input  class="form-control" name="region" value="{{patient.region}}" disabled>
+<input  class="form-control" name="region" value="{{patient.region}}" readonly="readonly">
 </div>
 <div class="form-group row">
     <label for="gender">Gender</label>
-<input  class="form-control" name="gender" value="{{patient.gender}}" disabled>
+<input  class="form-control" name="gender" value="{{patient.gender}}" readonly="readonly">
 </div>
 <div class="form-group row">
     <label for='bsn'>BSN</label>
-<input   class="form-control" name="bsnnumber" value="{{patient.bsn}}" disabled>
+<input   class="form-control" name="bsnnumber" value="{{patient.bsn}}" readonly="readonly">
 </div>
 <div class="form-group row">
     <label for='status'>Patient status</label>
-<input   class="form-control" name="status" value="{{patient.status}}" disabled>
+<input   class="form-control" name="status" value="{{patient.status}}" readonly="readonly">
 </div>
+<div>Are these details correct?</div>
 <button type="submit" class="btn btn-primary">Yes, save the information</button>
 </form>
-
-
 <br />
-<p>Are these details correct?</p>
-<p><a href="javascript:history.back()" class="btn btn-primary">No, edit the details</a>
+<div><a href="javascript:history.back()" class="btn btn-primary">No, edit the details</a></div>
 </div>
