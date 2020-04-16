@@ -107,17 +107,43 @@
    <td><a href="/admin/userlist/{{this.id}}/edit" style="float: right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
    </td>
       <td><a href="/admin/userlist/{{this.id}}/mail" style="float: right"><i class="fa fa-envelope-square" aria-hidden="true"></i></a></td>
-   <td><a href="/admin/userlist/{{this.id}}/delete" style="float: right"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
 
-   
+<td><a href="#myModal" data-toggle="modal" data-username='{{this.username}}' data-delete-id='/admin/userlist/{{this.id}}/delete' class='delete-button'> <i class="fa fa-trash" aria-hidden="true"></i></a></td>
+ 
    </tr>
-
-
-
    {{/each}}
 
   </tbody>
 </table>
+
+<!-- Modal -->
+<!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Delete user</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+         Are you sure you want to delete user <b><span id='user-delete'> </span></b> from the userlist?<p></p>
+         <a href="" class="btn btn-danger" id='delete-modal'>Confirm</a>
+
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
  
         <!-- /.container-fluid -->
 

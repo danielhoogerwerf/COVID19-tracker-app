@@ -4,9 +4,13 @@ const mobileAppRouter = express.Router();
 const ensureLogin = require("connect-ensure-login");
 const passport = require("passport");
 const moment = require("moment");
+const bcrypt = require("bcrypt")
 
 // checkRoles middleware
 const checkRoles = require("../auth/checkRoles");
+const generatePassword = require('../auth/generatePassword')
+const mailPassword = require('../auth/mailPassword')
+const checkPassword = require('../auth/checkPassword')
 
 // Models declarations
 const Users = require("../models/users");
@@ -20,21 +24,64 @@ mobileAppRouter.get("/", (req, res, next) => {
   res.render("app/app-login", { message: req.flash("error") });
 });
 
+
 // POST route Login page app
 mobileAppRouter.post(
-  "/",
+  "/",checkPassword(),
   passport.authenticate("local", {
     successRedirect: "/app/home",
-    failureRedirect: "/app/login",
+    failureRedirect: "/app",
     failureFlash: true,
   })
 );
 
+mobileAppRouter.post('/password',(req,res,next) => {
+Users.find({username:req.body.username})
+.then(user => {
+mailPassword(user[0]._id,req.body.username)
+res.render("app/app-login");
+})
+.catch(err => console.log(err))
+})
+
+mobileAppRouter.post('/newpassword',(req,res,next) => {
+
+Users.find({username: req.body.username})
+.then(user => {
+console.log(user[0].password)
+console.log(req.body.passwordold)
+bcrypt.compare(user[0].password,req.body.passwordold,(err, same) => {
+    if (!same) {
+      const errorMessage = 'Incorrect password';
+      res.render('app/app-login-change-password',{errorMessage,user:user[0].username})
+    } else {
+      console.log("password is matching");
+
+      if (req.body.passwordnew1 !== req.body.passwordnew2) {
+
+      console.log('Please make sure your new passwords are matching')
+
+      }
+      else {
+      
+
+      }
+
+ 
+    }
+
+
+})
+
+
+})
+})
+
 // ## HOME SCREEN ##
 
 // GET route home page
-mobileAppRouter.get("/home", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  res.render("app/app-home", { currentUser: req.user });
+mobileAppRouter.get("/home", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+    res.render("app/app-home",{currentUser:req.user});
 });
 
 // ## SIGN UP PROCESS ##
@@ -60,13 +107,13 @@ mobileAppRouter.post("/signup/bsn-internal", checkRoles("ADMIN"), (req, res, nex
 });
 
 // Step 1 - GET route Lookup person page
-mobileAppRouter.get("/signup", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.get("/signup", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   res.render("app/signup/app-signup-lookup-person");
 });
 
 // POST route Lookup person page
-mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  let { birthdate } = req.body;
+mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  const { birthdate } = req.body;
   let { name } = req.body;
   if (!name) {
     name = "NoNameEntered!";
@@ -87,7 +134,7 @@ mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app/login"),
 });
 
 // Step 2 - GET route Lookup already patient
-mobileAppRouter.get("/signup/lookup/:id", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.get("/signup/lookup/:id", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   let patientIsRegistered;
   Patients.find({ bsn: req.params.id })
     .populate("bsn")
@@ -113,19 +160,19 @@ mobileAppRouter.get("/signup/lookup/:id", ensureLogin.ensureLoggedIn("/app/login
 });
 
 // Step 3 - GET route SignUp page
-mobileAppRouter.get("/signup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.get("/signup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   res.render("app/signup/app-signup-patient");
 });
 
 // POST route SignUp page
-mobileAppRouter.post("/signup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.post("/signup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   patient = JSON.parse(JSON.stringify(req.body));
   res.render("app/signup/app-signup-confirmation", { patient });
 });
 
 // Step 4 - POST route Confirmation page
-mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
-  const { name, birthdate, region, gender, bsnnumber, status } = req.body;
+mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
+  const { name, birthdate, region, gender, bsnnumber, status } = req.body; 
   BSN.create({
     bsnnumber: bsnnumber,
     name: name,
@@ -152,7 +199,7 @@ mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app/lo
 // ## LOOKUP PATIENT PROCESS ##
 
 // GET route Lookup patient page
-mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   let userRegion = { region: req.user.region };
   if (req.user.role === "ADMIN") {
     userRegion = {};
@@ -171,7 +218,7 @@ mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"),
 });
 
 // POST route Lookup patient page
-mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   console.log(req.body)
   let { birthdate } = req.body;
   let { name } = req.body;
@@ -201,7 +248,7 @@ mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login")
 });
 
 // GET route Lookup by ID
-mobileAppRouter.get("/lookup/patient/:id", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.get("/lookup/patient/:id", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   // Pay attention that the references defined in Patients model match the mongoose.model("") of BSN and User
   Patients.find({ bsn: req.params.id })
     .populate("bsn")
@@ -212,7 +259,7 @@ mobileAppRouter.get("/lookup/patient/:id", ensureLogin.ensureLoggedIn("/app/logi
 });
 
 // GET route Edit Patient
-mobileAppRouter.get("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.get("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   Patients.find({ bsn: req.params.id })
     .populate("bsn")
     .populate("healthcareworker")
@@ -222,7 +269,7 @@ mobileAppRouter.get("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app
 });
 
 // POST route Edit Patient
-mobileAppRouter.post("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.post("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   const { status } = req.body;
   Patients.updateOne(
     { bsn: req.params.id },
@@ -235,7 +282,7 @@ mobileAppRouter.post("/lookup/patient/:id/edit", ensureLogin.ensureLoggedIn("/ap
 });
 
 // GET route my patient page
-mobileAppRouter.get("/patients", ensureLogin.ensureLoggedIn("/app/login"), (req, res, next) => {
+mobileAppRouter.get("/patients", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
   let userRegion = { region: req.user.region };
   if (req.user.role === "ADMIN") {
     userRegion = {};
