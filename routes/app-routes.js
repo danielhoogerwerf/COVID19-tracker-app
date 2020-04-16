@@ -177,7 +177,7 @@ mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app/login")
     })
     .then((data) => {
     
-      
+      console.log(data)
 
       res.render("app/lookup/app-lookup-results-patient", { results: data });
     })
