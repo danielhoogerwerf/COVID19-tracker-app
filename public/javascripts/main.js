@@ -115,16 +115,17 @@ console.log('passwords are not the same')
 }
 else {
   console.log('passwords are matching')
-  axios({
-    method: 'post',
-    url: "/app/newpassword",
-    data: {
-      username: username.value,
-      oldpassword: passwordold.value,
-      passnew1: password1.value,
-      passnew2: password2.value
-    }
-  });
+  document.forms["newPasswordForm"].submit();
+  // axios({
+  //   method: 'post',
+  //   url: "/app/newpassword",
+  //   data: {
+  //     username: username.value,
+  //     oldpassword: passwordold.value,
+  //     passnew1: password1.value,
+  //     passnew2: password2.value
+  //   }
+  // });
 }
   })
 }
