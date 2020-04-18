@@ -10,7 +10,7 @@ function checkPassword() {
           if (!same) {
             console.log("password not correct");
             const message = "Incorrect password";
-            res.render("app/app-login", { message, user: user.username });
+            res.render("app/app-login", { message, user: user[0].username });
             return;
           } else {
             if (user[0].passwordflag) {

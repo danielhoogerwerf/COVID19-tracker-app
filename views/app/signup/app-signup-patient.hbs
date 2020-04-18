@@ -41,29 +41,31 @@
   <option name="GGD Zuid-Limburg">GGD Zuid-Limburg</option>
   <option name="Veiligheids- en Gezondheidsregio Gelderland-Midden">Veiligheids- en Gezondheidsregio Gelderland-Midden</option>
 </select></div>
-<div class="form-group column">
-  <label>Gender: </label>
-  <input required type="radio" name="gender" value="Male" {{checkedRadio bsnResults.gender "Male"}}>
-  <label for="Male">Male</label>
-  <input required type="radio" name="gender"  value="Female" {{checkedRadio bsnResults.gender "Female"}}>
-  <label for="Female">Female</label>
-  <input required type="radio" name="gender"  value="Other" {{checkedRadio bsnResults.gender "Other"}}>
-  <label for="Other">Other</label>
+<div class="form-group row">
+  <label class="mr-3">Gender: </label>
+  <input required class="mx-2" type="radio" name="gender" value="Male" {{checkedRadio bsnResults.gender "Male"}}>
+  <label class="mr-3" for="Male">Male</label>
+  <input required class="mx-2" type="radio" name="gender"  value="Female" {{checkedRadio bsnResults.gender "Female"}}>
+  <label class="mr-3" for="Female">Female</label>
+  <input required class="mx-2" type="radio" name="gender"  value="Other" {{checkedRadio bsnResults.gender "Other"}}>
+  <label class="mr-3" for="Other">Other</label>
   </div>
 <div class="form-group row"><label>BSN: </label><input required name="bsn" class="form-control" type='text' value="{{bsnResults.bsnnumber}}"></div>
 <div class="form-group row"><label>Current status infection</label>
 <select name='status' class="form-control" required>
 <option name='Home'>Home</option>
-<option name='Hospitalized'>Hospitalized</option>
+<option name='Hospitalized' selected>Hospitalized</option>
 <option name='IC'>IC</option>
 <option name='Deceased'>Deceased</option>
 <option name='Recovered'>Recovered</option>
 </select>
 </div>
-<div ><button class="btn btn-primary" type="submit">Preview your input</button></div>
+<br />
+<div ><button class="btn btn-primary ml-n3" type="submit">Preview your input</button></div>
 </form>
 </div>
-               <p></p>
+</div>
+
 
 
            

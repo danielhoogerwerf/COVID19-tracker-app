@@ -36,6 +36,7 @@ mobileAppRouter.post(
   })
 );
 
+// POST route for forgot password
 mobileAppRouter.post("/password", (req, res, next) => {
   Users.find({ username: req.body.username })
     .then((user) => {
@@ -45,6 +46,7 @@ mobileAppRouter.post("/password", (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+// POST route for new password
 mobileAppRouter.post("/newpassword", (req, res, next) => {
   Users.findOne({ username: req.body.username })
     .then((user) => {
@@ -107,7 +109,7 @@ mobileAppRouter.get("/signup", ensureLogin.ensureLoggedIn("/app"), (req, res, ne
 
 // POST route Lookup person page
 mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-  const { birthdate } = req.body;
+  let { birthdate } = req.body;
   let { name } = req.body;
   if (!name) {
     name = "NoNameEntered!";
@@ -122,7 +124,6 @@ mobileAppRouter.post("/signup/lookup", ensureLogin.ensureLoggedIn("/app"), (req,
       { birthdate: birthdate },
     ],
   }).then((data) => {
-    console.log(data);
     res.render("app/signup/app-signup-lookup-person-result", { results: data });
   });
 });
@@ -182,10 +183,8 @@ mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app"),
         region: region,
       });
     })
-    .then((patient) => {
-      console.log("Patient created:", patient);
+    .then(() => {
       res.render("app/signup/app-signup-registration-complete");
-      patient = {};
     })
     .catch((err) => res.render("app/signup/app-signup-registration-fail", { err }));
 });
@@ -213,7 +212,6 @@ mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req,
 
 // POST route Lookup patient page
 mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-  console.log(req.body);
   let { birthdate } = req.body;
   let { name } = req.body;
   if (!name) {
@@ -222,18 +220,38 @@ mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req
   if (!birthdate) {
     birthdate = "1111/01/01";
   }
-  console.log(name, birthdate);
-  Patients.find({})
-    .populate({
-      path: "bsn",
-      match: {
-        $or: [
-          { $and: [{ name: { $ne: null } }, { name: { $regex: ".*?" + name, $options: "i" } }] },
-          { birthdate: birthdate },
-        ],
+  Patients.aggregate([
+    {
+      $lookup: {
+        from: "bsns",
+        localField: "bsn",
+        foreignField: "_id",
+        as: "bsn",
       },
-      select: "name birthdate gender bsnnumber",
-    })
+    },
+    {
+      $match: {
+        $or: [{ "bsn.name": new RegExp(".*" + name, "i") }, { "bsn.birthdate": new Date(birthdate) }],
+      },
+    },
+    {
+      $unwind: {
+        path: "$bsn",
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        "bsn.name": 1,
+        "bsn.birthdate": 1,
+        "bsn.gender": 1,
+        "bsn.bsnnumber": 1,
+        "bsn.id": {
+          $toString: "$bsn._id",
+        },
+      },
+    },
+  ])
     .then((data) => {
       res.render("app/lookup/app-lookup-results-patient", { results: data });
     })
@@ -300,7 +318,7 @@ mobileAppRouter.get("/patients", ensureLogin.ensureLoggedIn("/app"), (req, res, 
 // GET logout route
 mobileAppRouter.get("/logout", (req, res) => {
   req.session.destroy(() => {
-    res.redirect("/app");
+    res.redirect("/");
   });
 });
 

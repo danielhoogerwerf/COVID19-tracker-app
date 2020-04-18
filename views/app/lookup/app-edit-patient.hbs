@@ -5,7 +5,7 @@
 <h3> Edit patient status</h3>
 
 {{#each results}}
-<form class="user" action="/app/lookup/patient/{{bsn.0.id}}/edit" method="POST"> 
+<form class="user m-3" action="/app/lookup/patient/{{bsn.0.id}}/edit" method="POST"> 
 <div class="form-group row">
     <label>BSN</label>
 <input class="form-control" value='{{bsn.0.bsnnumber}}' disabled >
@@ -28,16 +28,16 @@
 <option name='Deceased'>Deceased</option>
 <option name='Recovered'>Recovered</option>
 </select>
+<br />
 <em>Last updated: {{formatDate ../updatedAt}}</em>
 </div>
 
 
-
-<button type="submit" class="btn btn-primary">Submit results</button>
+<button type="submit" class="btn btn-danger ml-n3">Save change in the database</button>
 </form>
 <br />
 {{/each}}
-<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}" class="btn btn-primary">Cancel changes and return to patient result</a></p>
+<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}" class="btn btn-info">Cancel change and return to patient result</a></p>
 
 
 </div>

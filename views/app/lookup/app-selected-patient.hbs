@@ -1,18 +1,15 @@
 
  {{> navbar}}
 <div class='form-container'> 
-<h3>Selected Patient Information</h3>
+<h3>Selected patient information</h3>
 <br />
 
 {{#if results}}
-
-
-
   <ul class="list-group list-group-flush"> 
       {{#each results}}
 
 <li class='list-group-item'><span> BSN</span><span style='float: right;'>{{bsn.0.bsnnumber}} </span></li>
-<li class='list-group-item'><span> Name</span><span style='float: right;'>{{formatDate bsn.0.birthdate}} </span></li>
+<li class='list-group-item'><span> Name</span><span style='float: right;'>{{bsn.0.name}} </span></li>
 <li class='list-group-item'><span> Birthdate</span><span style='float: right;'>{{formatDate bsn.0.birthdate}} </span></li>
 <li class='list-group-item'><span> Gender</span><span style='float: right;'>{{bsn.0.gender}} </span></li>
 <li class='list-group-item'><span> Status</span><span style='float: right;'>{{status}} </span></li>
@@ -21,9 +18,7 @@
          
           {{/each}}
 </ul> 
-<p></p>
-<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-primary">Edit status of patient</a></p><p></p>
-<p><a href="/app/lookup/patient/" class="btn btn-primary">Back to the lookup screen</a></p>
+<br />
 <h5>History of patient</h5>
 
   <ul class="list-group list-group-flush"> 
@@ -34,6 +29,10 @@
 {{else}}
 <p>This person is not a patient</p>
 {{/if}}
+
+<br />
+<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-warning">Edit status of patient</a></p><p></p>
+<p><a href="/app/lookup/patient/" class="btn btn-info">Back to the lookup screen</a></p>
 
 
 </div>
