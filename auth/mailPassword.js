@@ -5,11 +5,14 @@ const generatePassword = require("../auth/generatePassword");
 function mailPassword(userID, username) {
   const password = generatePassword();
   console.log(userID);
-  Users.findById(userID).then((user) => {});
+  //Users.findById(userID).then((user) => {console.log(user)});
 
   // Update the Password in the database
-  Users.findOneAndUpdate({ _id: userID }, { password: password.hash, passwordflag: true }, { new: true })
-    .then((user) => {
+  console.log(password.plain)
+  console.log(password.hash)
+  //Users.updateOne({ _id: userID }, { password: password.hash, passwordflag: true }, { new: true })
+  Users.updateOne({ _id: userID }, { $set: { password: password.hash, passwordflag: true } })
+     .then((user) => {
       // create reusable transporter object using the default SMTP transport
       let transporter = nodemailer.createTransport({
         service: "gmail",

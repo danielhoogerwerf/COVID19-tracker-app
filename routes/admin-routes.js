@@ -222,7 +222,7 @@ adminRouter.get("/patientlist", ensureLogin.ensureLoggedIn("/"), (req, res, next
 // GET route logout
 adminRouter.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/admin");
+  res.redirect("/");
 });
 
 module.exports = adminRouter;
