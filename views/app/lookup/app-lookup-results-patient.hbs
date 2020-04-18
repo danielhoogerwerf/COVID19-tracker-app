@@ -9,14 +9,15 @@
 <br />
 {{#if results}}
 
-<table role="table" class='table table-hover'>
+<table role="table" class='table-md w-100 table-hover font-smaller'>
   <thead role="rowgroup">
     <tr role="row">
       <th role="columnheader">BSN</th>
       <th role="columnheader">Name</th>
       <th role="columnheader">Birth date</th>
       <th role="columnheader">Gender</th>
-          </tr>
+      <th role="columnheader">&nbsp</th>
+      </tr>
   </thead>
   <tbody role="rowgroup">
 
@@ -27,14 +28,13 @@
       <td role="cell">{{bsn.name}}</td>
       <td role="cell">{{formatDate bsn.birthdate}}</td>
       <td role="cell">{{bsn.gender}}</td>
-      <td role="cell">{{status}}</td>
-      <td ><a class="btn btn-info" href="/app/lookup/patient/{{bsn.id}}">Select patient</a></td>
+      <td ><a class="btn btn-sm btn-info" href="/app/lookup/patient/{{bsn.id}}">Select patient</a></td>
           </tr>
 
 {{/each}}
 </tbody></table>
 {{/if}}
-<p><a href="/app/lookup/patient" class="btn btn-primary">Return to lookup screen</a></p>
+<p><a href="/app/lookup/patient" class="btn btn-sm btn-primary mt-2">Return to lookup screen</a></p>
 </div>
 
 

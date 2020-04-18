@@ -64,6 +64,39 @@ font-size: 16px;
   display: block;
 }
 
+.forgotUserName {
+  width: 100%;
+}
+
+/* Font sizes */
+.font-smaller {
+  font-size: 0.85em;
+}
+
+/* Admin Login Screen */
+.adminLoginContainer {
+  width: 100%;
+  height: 95vh;
+}
+
+.loginFooter {
+  height: 5vh;
+  background-color: rgb(0, 89, 182);
+}
+
+.adminAlertWidth {
+  width: 50vh;
+}
+
+.blueBackground {
+  background-color: rgb(0, 89, 182);
+}
+
+.loginBackground {
+  background-color: rgba(0, 123, 255, 1.0);
+  margin: 0 auto;
+  border-radius: 15px;
+}
 
 
 
