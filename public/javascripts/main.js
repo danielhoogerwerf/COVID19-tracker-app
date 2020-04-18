@@ -71,10 +71,11 @@ if (password1) {
     }
   });
 }
+
+
 // Compare the new passwords
 const submitNewPassword = document.getElementById("submitNewPassword");
 const passwordError = document.getElementById("passwordError")
-
 
 if (submitNewPassword) {
   submitNewPassword.addEventListener("click", (event) => {
@@ -83,29 +84,15 @@ if (submitNewPassword) {
     passwordError.innerHTML = '';
     
     if (password1.value.length < 8) {
-     
     passwordError.style.display = 'block';
     passwordError.innerHTML = 'New password has to be at least 8 characters long'
-  
     }
     else {
-
     if (password1.value !== password2.value ) {
       passwordError.style.display = 'block';
       passwordError.innerHTML = 'New passwords are not the same';
- 
     } else {
       document.forms["newPasswordForm"].submit();
-      // axios({
-      //   method: 'post',
-      //   url: "/app/newpassword",
-      //   data: {
-      //     username: username.value,
-      //     oldpassword: passwordold.value,
-      //     passnew1: password1.value,
-      //     passnew2: password2.value
-      //   }
-      // });
     }
   }
   });

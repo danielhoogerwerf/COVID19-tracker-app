@@ -2,23 +2,23 @@
  {{> navbar}}
  
  <div class='form-container'>
-<h3>Check patient in BRP</h3>
+<p class="mx-0 h3 d-flex justify-content-between">Search for a person <span class="h5 font-weight-light">{{#if currentUser}}{{currentUser}}{{/if}}</span></p>
 <br />
-{{#if currentUser}}<h5>Current username: {{currentUser}}</h5>{{/if}}
+Search for a (partial) name or on birth date:
 <br />
-
-<form action="/app/signup/lookup/" class="user" method="post">
+<form action="/app/signup/lookup/" class="user m-3" method="post">
 <div class="form-group row">
-<label>Last Name</label>
+<label class="font-weight-bold">Last Name</label>
 <input type='text' class="form-control" name='name'>
 </div>
 <div class="form-group row">
-<label>Birthdate</label>
+<label class="font-weight-bold">Birth date</label>
 <input type='date' class="form-control" name='birthdate'>
 </div>
-<button class="btn btn-primary" type="submit">Search</button>
+<br />
+<button class="btn btn-primary ml-n3" type="submit">Search for patient</button>
 </form>
 <br />
-<p><a href="/app/signup/patient/" class="btn btn-primary">Register a new patient</a></p>
-<p><a class="btn btn-primary" href="/app/home">Return to home screen</a></p>
+<p><a href="/app/signup/patient/" class="btn btn-danger">Register a new patient</a></p>
+<p><a class="btn btn-info" href="/app/home">Return to home screen</a></p>
 </div>

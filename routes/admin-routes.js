@@ -263,7 +263,7 @@ adminRouter.get('/patientlist-pagination',(req,res,next) => {
 // GET route logout
 adminRouter.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/admin");
+  res.redirect("/");
 });
 
 module.exports = adminRouter;
