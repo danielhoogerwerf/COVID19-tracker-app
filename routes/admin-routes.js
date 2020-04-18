@@ -209,6 +209,7 @@ adminRouter.get("/patientlist", ensureLogin.ensureLoggedIn("/"), (req, res, next
         value["regDate"] = date;
         value["birthDate"] = birthdate;
       });
+      
       res.render("admin-dashboard/admin-list-patients", {
         patients,
         currentUser: req.user.username,
@@ -218,6 +219,46 @@ adminRouter.get("/patientlist", ensureLogin.ensureLoggedIn("/"), (req, res, next
     })
     .catch((err) => console.log(err));
 });
+
+
+// GET route for list patients with pagination
+adminRouter.get('/patientlist-pagination',(req,res,next) => {
+  var pageNo = parseInt(req.query.pageNo)
+  var size = parseInt(req.query.size)
+  var query = {}
+  if(pageNo < 0 || pageNo === 0) {
+        response = {"error" : true,"message" : "invalid page number, should start with 1"};
+        return res.json(response)
+  }
+  query.skip = size * (pageNo - 1)
+  query.limit = size
+  // Find some documents
+       Patients.count({},function(err,totalCount) {
+         console.log(totalCount)
+             if(err) {
+               response = {"error" : true,"message" : "Error fetching data"}
+             }
+         Patients.find({},{},query,function(err,data) {
+              // Mongo command to fetch all data from collection.
+            if(err) {
+                response = {"error" : true,"message" : "Error fetching data"};
+            } else {
+                var totalPages = Math.ceil(totalCount / size)
+                response = {"error" : false,"message" : data,"pages":totalPages};
+            }
+            res.json(response);
+         });
+       })
+})
+
+
+
+
+
+
+
+
+
 
 // GET route logout
 adminRouter.get("/logout", (req, res) => {

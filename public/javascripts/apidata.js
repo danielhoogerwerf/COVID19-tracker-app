@@ -13,6 +13,10 @@ const apiFatalitiesData = () => {
     });
 };
 
+
+
+
+
 // Confirmed Infections Data
 const apiTotalData = () => {
   axios
@@ -39,6 +43,26 @@ const apiHospitalizedData = () => {
     });
 };
 
+// Hospitalized Data daily
+const apiHospitalizedDataToday = () => {
+
+  const currentDate = moment().format("YYYY MM DD");
+  
+  axios
+    .get(`/api/Hospitalized/${currentDate}`)
+    .then((response) => {
+      document.getElementById("dashboard-data-hospitalized-today").innerHTML = response.data.amount;
+    })
+    .catch((err) => {
+      console.log("Error while getting the data: ", err);
+      document.getElementById("dashboard-data-hospitalized").innerHTML = "ERROR";
+    });
+};
+
+
+
+
+
 // Intensive Care Data
 const apiICData = () => {
   axios
@@ -51,6 +75,25 @@ const apiICData = () => {
       document.getElementById("dashboard-data-ic").innerHTML = "ERROR";
     });
 };
+
+
+// IC Data daily
+const apiICDataToday = () => {
+
+  const currentDate = moment().format("YYYY MM DD");
+  
+  axios
+    .get(`/api/infections/IC/${currentDate}`)
+    .then((response) => {
+      document.getElementById("dashboard-data-ic-today").innerHTML = response.data.amount;
+    })
+    .catch((err) => {
+      console.log("Error while getting the data: ", err);
+      document.getElementById("dashboard-data-ic").innerHTML = "ERROR";
+    });
+};
+
+
 
 // Deceased Data
 const apiDeceasedData = () => {
@@ -65,6 +108,26 @@ const apiDeceasedData = () => {
     });
 };
 
+
+// Deceased Data daily
+const apiDeceasedDataToday = () => {
+
+  const currentDate = moment().format("YYYY MM DD");
+  
+  axios
+    .get(`/api/infections/Deceased/${currentDate}`)
+    .then((response) => {
+      document.getElementById("dashboard-data-deceased-today").innerHTML = response.data.amount;
+    })
+    .catch((err) => {
+      console.log("Error while getting the data: ", err);
+      document.getElementById("dashboard-data-deceased").innerHTML = "ERROR";
+    });
+};
+
+
+
+
 // Recovered Data
 const apiRecoveredData = () => {
   axios
@@ -77,6 +140,23 @@ const apiRecoveredData = () => {
       document.getElementById("dashboard-data-recovered").innerHTML = "ERROR";
     });
 };
+
+// Recovered Data daily
+const apiRecoveredDataToday = () => {
+
+  const currentDate = moment().format("YYYY MM DD");
+  
+  axios
+    .get(`/api/infections/Recovered/${currentDate}`)
+    .then((response) => {
+      document.getElementById("dashboard-data-recovered-today").innerHTML = response.data.amount;
+    })
+    .catch((err) => {
+      console.log("Error while getting the data: ", err);
+      document.getElementById("dashboard-data-recovered").innerHTML = "ERROR";
+    });
+};
+
 
 // ## Stacked bar chart Infections ##
 
@@ -110,14 +190,22 @@ window.addEventListener("DOMContentLoaded", () => {
   // Update Hospitalized Widget
   apiHospitalizedData();
 
+  apiHospitalizedDataToday();
+
   // Update Intensive Care Widget
   apiICData();
+
+  apiICDataToday();
 
   // Update Deceased Widget
   apiDeceasedData();
 
+  apiDeceasedDataToday();
+
   // Update Recovered Widget
   apiRecoveredData();
+
+  apiRecoveredDataToday();
 
   // Update Last Updates time
   document.getElementById("totals-last-update").innerHTML = currentDate;

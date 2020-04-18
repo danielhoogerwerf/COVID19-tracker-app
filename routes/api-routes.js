@@ -178,6 +178,8 @@ apiRoutes.get("/infections/:state", (req, res, next) => {
 apiRoutes.get("/infections/:state/:startDate", (req, res, next) => {
   const state = req.params.state;
   const relDate = req.params.startDate;
+  console.log(req.params.state)
+  console.log(req.params.startDate)
   Patients.aggregate([
     { $match: { $and: [{ status: state }, { "history.Date": { $gte: new Date(relDate) } }] } },
     { $project: { _id: 0, status: 1 } },

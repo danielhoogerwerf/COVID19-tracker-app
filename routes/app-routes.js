@@ -65,7 +65,7 @@ mobileAppRouter.post("/newpassword", (req, res, next) => {
             { new: true }
           ).then((user) => {
             console.log("password was updated from user:", user);
-            res.redirect("/app/home");
+            res.redirect("/app");
           });
         }
       });
