@@ -152,7 +152,8 @@ apiRoutes.get("/infections/fatalities", (req, res, next) => {
   Patients.find({ status: { $exists: true } }, { _id: 0, status: 1 }).then((data) => {
     const total = Object.keys(data).length;
     const deceased = Object.values(data).filter((word) => word.status === "Deceased").length;
-    res.json({ "percentage": (deceased / total) * 100 });
+    const result = ((deceased / total) * 100).toFixed(2);
+    res.json({ percentage: result });
   });
 });
 
@@ -176,6 +177,8 @@ apiRoutes.get("/infections/:state", (req, res, next) => {
 apiRoutes.get("/infections/:state/:startDate", (req, res, next) => {
   const state = req.params.state;
   const relDate = req.params.startDate;
+  console.log(req.params.state)
+  console.log(req.params.startDate)
   Patients.aggregate([
     { $match: { $and: [{ status: state }, { "history.Date": { $gte: new Date(relDate) } }] } },
     { $project: { _id: 0, status: 1 } },

@@ -1,0 +1,134 @@
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3"></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/home">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Home</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+     
+
+      <!-- Nav Item - Pages Collapse Menu -->
+           <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/dashboard">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      
+      
+
+      <!-- Nav Item - Charts -->
+      {{#if admin}}
+<li class="nav-item">
+        <a class="nav-link" href="/admin/userlist">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Userlist</span></a>
+      </li>
+{{/if}}   
+
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/patientlist">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Patients</span></a>
+      </li>
+ <li class="nav-item">
+        <a class="nav-link" href="/admin/logout">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Logout</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+     
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+   {{> navbaradmin}}
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+<h2>Patient list</h2>
+     <table class="table table-striped">
+  <thead >
+    <tr>
+      <th scope="col">BSN</th>
+      <th scope="col">Name</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Birthdate</th>
+      <th scope="col">Status</th>
+      <th scope="col">GGD region</th>
+      <th scope="col">Register date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each patients}}
+    <tr>
+      <td> {{bsn.0.bsnnumber}}</td>
+      <td>{{bsn.0.name}}</td>
+      <td>{{bsn.0.gender}}</td>
+       <td>{{birthDate}}</td>
+       <td>{{status}}</td>        
+      <td>{{region}}</td> 
+      <td>{{regDate}}</td>
+    </tr>
+    
+     {{/each}}
+  </tbody>
+</table>
+
+<form action="/admin/patientlist-pagination" method="GET">
+
+
+
+
+</form>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © COVID-19</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+
+
