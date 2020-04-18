@@ -69,10 +69,66 @@ navBarToggle.addEventListener("click", function() {
 
 }
 
+// Password strength
 
 
+var strength = {
+        0: "Worst ☹",
+        1: "Bad ☹",
+        2: "Weak ☹",
+        3: "Good ☺",
+        4: "Strong ☻"
+}
 
+const username = document.getElementById('username');
+const passwordold = document.getElementById('passwordold');
+const password1 = document.getElementById('passwordnew1');
+const password2 = document.getElementById('passwordnew2');
+const meter = document.getElementById('password-strength-meter');
+const text = document.getElementById('password-strength-text');
 
+if (password1) {
+password1.addEventListener('input', function()
+{
+    var val = password1.value;
+    var result = zxcvbn(val);
+    
+    // Update the password strength meter
+    meter.value = result.score;
+   
+    // Update the text indicator
+    if(val !== "") {
+        text.innerHTML = "Strength: " + "<strong>" + strength[result.score] + "</strong>" + "<span class='feedback'>" + result.feedback.warning + " " + result.feedback.suggestions + "</span"; 
+    }
+    else {
+        text.innerHTML = "";
+    }
+});
+}
+// Compare the new passwords
+const submitNewPassword = document.getElementById('submitNewPassword')
+if (submitNewPassword) {
+submitNewPassword.addEventListener('click', event => {
+  event.preventDefault();
+if (password1.value !== password2.value){
+console.log('passwords are not the same')
+}
+else {
+  console.log('passwords are matching')
+  document.forms["newPasswordForm"].submit();
+  // axios({
+  //   method: 'post',
+  //   url: "/app/newpassword",
+  //   data: {
+  //     username: username.value,
+  //     oldpassword: passwordold.value,
+  //     passnew1: password1.value,
+  //     passnew2: password2.value
+  //   }
+  // });
+}
+  })
+}
 
 // Infection chart for the dashboard
 window.addEventListener("DOMContentLoaded", stackedChart());

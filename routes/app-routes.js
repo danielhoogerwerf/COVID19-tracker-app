@@ -4,13 +4,14 @@ const mobileAppRouter = express.Router();
 const ensureLogin = require("connect-ensure-login");
 const passport = require("passport");
 const moment = require("moment");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const bcryptSalt = 10;
 
 // checkRoles middleware
 const checkRoles = require("../auth/checkRoles");
-const generatePassword = require('../auth/generatePassword')
-const mailPassword = require('../auth/mailPassword')
-const checkPassword = require('../auth/checkPassword')
+const generatePassword = require("../auth/generatePassword");
+const mailPassword = require("../auth/mailPassword");
+const checkPassword = require("../auth/checkPassword");
 
 // Models declarations
 const Users = require("../models/users");
@@ -24,10 +25,10 @@ mobileAppRouter.get("/", (req, res, next) => {
   res.render("app/app-login", { message: req.flash("error") });
 });
 
-
 // POST route Login page app
 mobileAppRouter.post(
-  "/",checkPassword(),
+  "/",
+  checkPassword(),
   passport.authenticate("local", {
     successRedirect: "/app/home",
     failureRedirect: "/app",
@@ -35,53 +36,46 @@ mobileAppRouter.post(
   })
 );
 
-mobileAppRouter.post('/password',(req,res,next) => {
-Users.find({username:req.body.username})
-.then(user => {
-mailPassword(user[0]._id,req.body.username)
-res.render("app/app-login");
-})
-.catch(err => console.log(err))
-})
+mobileAppRouter.post("/password", (req, res, next) => {
+  Users.find({ username: req.body.username })
+    .then((user) => {
+      mailPassword(user[0]._id, req.body.username);
+      res.render("app/app-login");
+    })
+    .catch((err) => console.log(err));
+});
 
-mobileAppRouter.post('/newpassword',(req,res,next) => {
-
-Users.find({username: req.body.username})
-.then(user => {
-console.log(user[0].password)
-console.log(req.body.passwordold)
-bcrypt.compare(user[0].password,req.body.passwordold,(err, same) => {
-    if (!same) {
-      const errorMessage = 'Incorrect password';
-      res.render('app/app-login-change-password',{errorMessage,user:user[0].username})
-    } else {
-      console.log("password is matching");
-
-      if (req.body.passwordnew1 !== req.body.passwordnew2) {
-
-      console.log('Please make sure your new passwords are matching')
-
-      }
-      else {
-      
-
-      }
-
- 
-    }
-
-
-})
-
-
-})
-})
+mobileAppRouter.post("/newpassword", (req, res, next) => {
+  Users.findOne({ username: req.body.username })
+    .then((user) => {
+      // Check of old passwords match
+      bcrypt.compare(req.body.passwordold, user.password, (err, same) => {
+        if (!same) {
+          console.log("password not correct");
+          const errorMessage = "Incorrect password";
+          res.render("app/app-login-change-password", { errorMessage: errorMessage, user: user.username });
+        } else {
+          const salt = bcrypt.genSaltSync(bcryptSalt);
+          const hashPass = bcrypt.hashSync(req.body.passwordnew1, salt);
+          Users.findOneAndUpdate(
+            { username: req.body.username },
+            { password: hashPass, passwordflag: false },
+            { new: true }
+          ).then((user) => {
+            console.log("password was updated from user:", user);
+            res.redirect("/app/home")
+          });
+        }
+      });
+    })
+    .catch((err) => console.log(err));
+});
 
 // ## HOME SCREEN ##
 
 // GET route home page
 mobileAppRouter.get("/home", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-    res.render("app/app-home",{currentUser:req.user});
+  res.render("app/app-home", { currentUser: req.user });
 });
 
 // ## SIGN UP PROCESS ##
@@ -172,7 +166,7 @@ mobileAppRouter.post("/signup/patient", ensureLogin.ensureLoggedIn("/app"), (req
 
 // Step 4 - POST route Confirmation page
 mobileAppRouter.post("/signup/confirmation", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-  const { name, birthdate, region, gender, bsnnumber, status } = req.body; 
+  const { name, birthdate, region, gender, bsnnumber, status } = req.body;
   BSN.create({
     bsnnumber: bsnnumber,
     name: name,
@@ -219,7 +213,7 @@ mobileAppRouter.get("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req,
 
 // POST route Lookup patient page
 mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
   let { birthdate } = req.body;
   let { name } = req.body;
   if (!name) {
@@ -228,7 +222,7 @@ mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req
   if (!birthdate) {
     birthdate = "1111/01/01";
   }
-  console.log(name, birthdate)
+  console.log(name, birthdate);
   Patients.find({})
     .populate({
       path: "bsn",
@@ -241,7 +235,6 @@ mobileAppRouter.post("/lookup/patient", ensureLogin.ensureLoggedIn("/app"), (req
       select: "name birthdate gender bsnnumber",
     })
     .then((data) => {
-
       res.render("app/lookup/app-lookup-results-patient", { results: data });
     })
     .catch((e) => next(e));
