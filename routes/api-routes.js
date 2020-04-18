@@ -80,60 +80,61 @@ apiRoutes.get("/infections/overview/totals/:startDate", (req, res, next) => {
   // then group using the history.date and the history.state, and sum the results
   // Then reformat the group data using $project for the api results and sort it.
   Patients.aggregate([
-      {
-        $unwind: {
-          path: "$history",
+    {
+      $unwind: {
+        path: "$history",
+      },
+    },
+    {
+      $match: {
+        "history.Date": {
+          $gte: new Date(relDate),
         },
       },
-      {
-        $match: {
-          "history.Date": {
-            $gte: new Date(relDate),
-          },
-        },
-      },
-      {
-        $group: {
-          _id: {
-            date: {
-              $dateToString: {
-                format: "%Y-%m-%d",
-                date: "$history.Date",
-              },
+    },
+    {
+      $group: {
+        _id: {
+          date: {
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: "$history.Date",
             },
-            state: "$history.Status",
           },
-          sum: {
-            $sum: 1,
-          },
+          state: "$history.Status",
+        },
+        sum: {
+          $sum: 1,
         },
       },
-      {
-        $project: {
-          _id: 0,
-          date: "$_id.date",
-          state: "$_id.state",
-          amount: "$sum",
-        },
+    },
+    {
+      $project: {
+        _id: 0,
+        date: "$_id.date",
+        state: "$_id.state",
+        amount: "$sum",
       },
-      {
-        $sort: {
-          date: 1,
-          state: 1,
-        },
+    },
+    {
+      $sort: {
+        date: 1,
+        state: 1,
       },
+    },
   ]).then((data) => {
     if (!data[0]) {
       res.json({ error: "No data available for chosen period." });
     } else {
-      let workingDate
+      let workingDate;
       let statusData = {};
       let results = {};
       data.forEach((arr) => {
-        workingDate === arr.date ? (Object.assign(statusData, { [arr.state]: arr.amount })) : (statusData = {}, workingDate = arr.date);
+        workingDate === arr.date
+          ? Object.assign(statusData, { [arr.state]: arr.amount })
+          : ((statusData = {}), (workingDate = arr.date));
         Object.assign(statusData, { [arr.state]: arr.amount });
         Object.assign(results, { [arr.date]: statusData });
-        
       });
       res.json(results);
     }
@@ -142,7 +143,7 @@ apiRoutes.get("/infections/overview/totals/:startDate", (req, res, next) => {
 
 // Total count of Patients
 apiRoutes.get("/infections/totals", (req, res, next) => {
-  Patients.count().then((data) => {
+  Patients.countDocuments().then((data) => {
     res.json({ totals: data });
   });
 });
@@ -152,7 +153,8 @@ apiRoutes.get("/infections/fatalities", (req, res, next) => {
   Patients.find({ status: { $exists: true } }, { _id: 0, status: 1 }).then((data) => {
     const total = Object.keys(data).length;
     const deceased = Object.values(data).filter((word) => word.status === "Deceased").length;
-    res.json({ "percentage": (deceased / total) * 100 });
+    const result = ((deceased / total) * 100).toFixed(2);
+    res.json({ percentage: result });
   });
 });
 
