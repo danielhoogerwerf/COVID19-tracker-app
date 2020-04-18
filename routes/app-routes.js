@@ -5,6 +5,7 @@ const ensureLogin = require("connect-ensure-login");
 const passport = require("passport");
 const moment = require("moment");
 const bcrypt = require("bcrypt")
+const bcryptSalt = 10;
 
 // checkRoles middleware
 const checkRoles = require("../auth/checkRoles");
@@ -45,36 +46,33 @@ res.render("app/app-login");
 })
 
 mobileAppRouter.post('/newpassword',(req,res,next) => {
-
-Users.find({username: req.body.username})
+Users.findOne({username: req.body.username})
 .then(user => {
-console.log(user[0].password)
-console.log(req.body.passwordold)
-bcrypt.compare(user[0].password,req.body.passwordold,(err, same) => {
-    if (!same) {
-      const errorMessage = 'Incorrect password';
-      res.render('app/app-login-change-password',{errorMessage,user:user[0].username})
-    } else {
-      console.log("password is matching");
-
-      if (req.body.passwordnew1 !== req.body.passwordnew2) {
-
-      console.log('Please make sure your new passwords are matching')
-
-      }
-      else {
-      
-
-      }
-
  
+  // Check of old passwords match
+  bcrypt.compare(req.body.oldpassword,user.password,(err, same) => {
+    if (!same) {
+      console.log('password not correct')
+      const errorMessage = 'Incorrect password';
+      res.render('app/app-login-change-password',{errorMessage:errorMessage,user:user.username})
+      } 
+    else {
+      const salt     = bcrypt.genSaltSync(bcryptSalt);
+      const hashPass = bcrypt.hashSync(req.body.passnew1, salt);
+      Users.findOneAndUpdate({username: req.body.username},
+      {password:hashPass,
+      passwordflag:false},{new: true} )
+      .then(user => {
+      console.log('password was updated from user:', user);  
+      console.log("lalala") 
+      res.send("bla bla bla");
+       });    
     }
-
-
+  });
+    
+             
 })
-
-
-})
+.catch(err => console.log(err))
 })
 
 // ## HOME SCREEN ##

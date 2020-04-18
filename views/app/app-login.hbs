@@ -1,6 +1,12 @@
  
 
  {{> navbar}}
+
+
+{{#if newPasswordMessage}}
+<div class="alert alert-succes mt-2" role="alert"> {{newPasswordMessage}}</div>
+  {{/if}}
+
  <div class='form-container'>
 <form class="user" action="/app" method="post">
   <div class="form-group row">

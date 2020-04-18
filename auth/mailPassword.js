@@ -3,16 +3,21 @@ const Users = require("../models/users");
 const generatePassword = require('../auth/generatePassword')
 
 
-async function mailPassword(userID,username) {
+function mailPassword(userID,username) {
   
-    const password = generatePassword()
-    
-    // Update the Password in the database
-    Users.findOneAndUpdate(
+const password = generatePassword()
+console.log(userID)
+Users.findById(userID)
+.then(user => {
+
+});
+
+// Update the Password in the database
+Users.findOneAndUpdate(
       {_id:userID},
-       {password:password.hash,passwordflag:true})
-      .then(user => console.log('User:',user))
-  
+       {password:password.hash,passwordflag:true},{new: true,})
+.then(user => {
+      
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       service: 'gmail',    
@@ -21,9 +26,9 @@ async function mailPassword(userID,username) {
         pass: process.env.GMAIL // generated ethereal password
       }
     });
-  
+    
     // send mail with defined transport object
-    let mailOptions = await transporter.sendMail({
+    let mailOptions = transporter.sendMail({
       from: 'dutchcovid19tracker@gmail.com', // sender address
       to: username, // list of receivers
       subject: "Your COVI-19 password", // Subject line
@@ -37,6 +42,10 @@ async function mailPassword(userID,username) {
       else
         console.log(info);
    });
+
+
+})
+.catch(err => console.log(err))
   }
 
 
