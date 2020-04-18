@@ -10,12 +10,23 @@
  <div class='form-container'>
 <form class="user" action="/app" method="post">
   <div class="form-group row">
-<label>Username</label>
-<input type="text" class="form-control" name="username">
+<label class="font-weight-bold">Username</label>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">@</span>
+  </div>
+  <input type="text" name="username" class="form-control" placeholder="E-mail address" aria-label="Username" aria-describedby="basic-addon1">
+</div>
 </div>
 <div class="form-group row">
-<label>Password</label>
-<input class="form-control" type="password" name="password">
+<label class="font-weight-bold">Password</label>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="fa fa-ellipsis-h"></i></span>
+  </div>
+  <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+</div>
+{{!-- <input class="form-control" type="password" name="password"> --}}
 </div>
 <button type="submit" class="btn btn-primary ml-n3" >Submit credentials</button>
 </form>
@@ -43,14 +54,24 @@
         <!-- Modal body -->
         <div class="modal-body">
           <form action="/app/password" method="POST">
-         Send an new password to <input type="email" name='username'>
-         <button type="submit" class="btn btn-primary" id='delete-modal'>Confirm</button>
+         Send an new password to the following e-mail address:
+         <div class="input-group mb-3">
+        <div class="input-group-prepend">
+         <span class="input-group-text" id="basic-addon1">@</span>
+          </div>
+          <input type="email" name='username' class="form-control forgotUserName" placeholder="E-mail address" aria-label="Username" aria-describedby="basic-addon1">
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="submit" id='delete-modal'>Send</button>
+            </div>
+        </div>
+         {{!-- <p><input id="forgotUserName" class="input-group-text forgotUserName" type="email" name='username' ></p> --}}
+         {{!-- <button type="submit" class="btn btn-warning" id='delete-modal'>Send password</button> --}}
          </form>
         </div>
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-info" data-dismiss="modal">Cancel and close this window</button>
         </div>
         
       </div>

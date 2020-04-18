@@ -5,7 +5,7 @@
 <br />
 
 {{#if results}}
-  <ul class="list-group list-group-flush"> 
+  <ul class="list-group list-group-flush font-smaller"> 
       {{#each results}}
 
 <li class='list-group-item'><span> BSN</span><span style='float: right;'>{{bsn.0.bsnnumber}} </span></li>
@@ -21,7 +21,7 @@
 <br />
 <h5>History of patient</h5>
 
-  <ul class="list-group list-group-flush"> 
+  <ul class="list-group list-group-flush font-smaller"> 
 {{#each results.0.history}}
 <li class='list-group-item'><span> {{Status}}</span><span style='float: right;'>{{formatDate Date}} </span></li>
 {{/each}}
@@ -31,8 +31,8 @@
 {{/if}}
 
 <br />
-<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-warning">Edit status of patient</a></p><p></p>
-<p><a href="/app/lookup/patient/" class="btn btn-info">Back to the lookup screen</a></p>
+<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-sm btn-warning">Edit status of patient</a>
+<a href="/app/lookup/patient/" class="btn btn-sm btn-info float-right">Back to the lookup screen</a></p>
 
 
 </div>

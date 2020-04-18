@@ -78,7 +78,7 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-<h2>Userlist</h2>
+<h2>App User List</h2>
 
 {{#if saveMessage}}
 <div class="alert alert-success" role="alert">
@@ -86,9 +86,10 @@
 </div>
 {{/if}}
 
-<a href="/admin/userlist/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Add a user</a>
+<a href="/admin/userlist/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right"> Add a user</a>
+<br />
     <p></p>
-     <table class="table table-sm table-striped font-weight-light">
+     <table class="table table-sm table-striped font-weight-light font-smaller">
   <thead >
     <tr>
       <th scope="col">#</th>
@@ -150,6 +151,8 @@
       </div>
       <!-- End of Main Content -->
 
+    </div>
+    <!-- End of Content Wrapper -->
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
@@ -159,10 +162,6 @@
         </div>
       </footer>
       <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
   </div>
 
 

@@ -33,11 +33,11 @@
 </div>
 
 
-<button type="submit" class="btn btn-danger ml-n3">Save change in the database</button>
+<button type="submit" class="btn btn-sm btn-danger ml-n3">Save change</button>
+<a href="/app/lookup/patient/{{bsn.0.id}}" class="btn btn-sm btn-info float-right">Cancel change</a>
 </form>
-<br />
 {{/each}}
-<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}" class="btn btn-info">Cancel change and return to patient result</a></p>
+
 
 
 </div>
