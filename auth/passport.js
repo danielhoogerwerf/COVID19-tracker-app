@@ -13,17 +13,17 @@ passport.serializeUser((user, callback) => {
 
 passport.deserializeUser((id, callback) => {
   User.findById(id)
-    .then(user => {
+    .then((user) => {
       callback(null, user);
     })
-    .catch(error => {
+    .catch((error) => {
       callback(error);
     });
 });
 
 passport.use(
   new LocalStrategy((username, password, next) => {
-    User.findOne({ username }).then(user => {
+    User.findOne({ username }).then((user) => {
       if (!user) {
         return next(null, false, { message: "Incorrect Username" });
       }

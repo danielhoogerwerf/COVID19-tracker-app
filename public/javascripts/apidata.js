@@ -78,3 +78,47 @@ const apiRecoveredData = () => {
     });
 };
 
+// ## Stacked bar chart Infections ##
+
+// Moment date declarations
+const pastMonth = moment().subtract(15, "days").format("YYYY-MM-DD");
+const currentDate = moment().format("DD MMM YYYY, HH:mm:ss");
+
+const stackedChart = () => {
+  axios
+    .get(`/api/infections/overview/totals/${pastMonth}`)
+    .then((response) => {
+      outbreakChart(response.data);
+    })
+    .catch((err) => console.log("Error while getting the data: ", err));
+};
+
+
+// When content is loaded, fill the dashboard with real data from the local API
+// Functions are defined in apidata.js
+
+window.addEventListener("DOMContentLoaded", () => {
+  // Create the infection chart
+  stackedChart();
+
+  // Update Fatalities Widget
+  apiFatalitiesData();
+
+  // Update Totals Widget
+  apiTotalData();
+
+  // Update Hospitalized Widget
+  apiHospitalizedData();
+
+  // Update Intensive Care Widget
+  apiICData();
+
+  // Update Deceased Widget
+  apiDeceasedData();
+
+  // Update Recovered Widget
+  apiRecoveredData();
+
+  // Update Last Updates time
+  document.getElementById("totals-last-update").innerHTML = currentDate;
+});
