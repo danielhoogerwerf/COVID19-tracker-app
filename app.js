@@ -16,7 +16,7 @@ const moment = require("moment");
 // Database connection
 mongoose
   .connect(process.env.MONGODB_URL, {
-  //.connect("mongodb://localhost/covid19-tracker-app", {
+    //.connect("mongodb://localhost/covid19-tracker-app", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -64,6 +64,7 @@ app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 // Register partials directory
 hbs.registerPartials(__dirname + "/views/partials");
 
+
 // ## Handlebar helpers ##
 
 // Handlebars momentJS date helper
@@ -75,12 +76,11 @@ hbs.registerHelper("formatDate", (datetime) => {
   }
 });
 
-
-
 // Handlebars Form Radio Checked helper
-hbs.registerHelper("checkedRadio",  (result, gender) => {
+hbs.registerHelper("checkedRadio", (result, gender) => {
   return result === gender ? "checked" : null;
 });
+
 
 // ## Routes ##
 
@@ -98,6 +98,6 @@ app.use("/app", appRoutes);
 
 // API route
 const apiRoutes = require("./routes/api-routes");
-app.use("/api", apiRoutes)
+app.use("/api", apiRoutes);
 
 module.exports = app;

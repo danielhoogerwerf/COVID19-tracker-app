@@ -1,18 +1,14 @@
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
-
 function generatePassword() {
-   
-const randomPassword = Math.random().toString(36).slice(-8);
-const salt     = bcrypt.genSaltSync(bcryptSalt);
-const hashPass = bcrypt.hashSync(randomPassword, salt);
+  const randomPassword = Math.random().toString(36).slice(-8);
+  const salt = bcrypt.genSaltSync(bcryptSalt);
+  const hashPass = bcrypt.hashSync(randomPassword, salt);
 
-const objPassword = {plain:randomPassword ,hash: hashPass}
+  const objPassword = { plain: randomPassword, hash: hashPass };
 
-return objPassword;
+  return objPassword;
+}
 
-  }
-  
-  module.exports = generatePassword;
-  
+module.exports = generatePassword;
