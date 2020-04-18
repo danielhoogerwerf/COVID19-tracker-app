@@ -6,10 +6,14 @@ const UsersSchema = new Schema(
   {
     username: String,
     password: String,
+    passwordflag: {
+      type: Boolean,
+      default: false,
+    },
     role: {
       type: String,
       enum: ["GUEST", "HEALTHWORKER", "ADMIN"],
-      default: "GUEST"
+      default: "GUEST",
     },
     region: {
       type: String,
@@ -37,15 +41,15 @@ const UsersSchema = new Schema(
         "GGD Zaanstreek-Waterland",
         "GGD Zeeland",
         "GGD Zuid-Limburg",
-        "Veiligheids- en Gezondheidsregio Gelderland-Midden"
+        "Veiligheids- en Gezondheidsregio Gelderland-Midden",
       ],
-      required: true
-    }
+      required: true,
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-const Users = mongoose.model('User', UsersSchema);
-module.exports = Users
+const Users = mongoose.model("User", UsersSchema);
+module.exports = Users;

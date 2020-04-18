@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const moment = require("moment")
+const moment = require("moment");
 
 // Models
 const Users = require("../models/users");
@@ -49,6 +49,7 @@ const fakeUsers = [
 
 const randomNumber = () => Math.floor(Math.random() * 25);
 const fakeDate = () => moment().subtract(randomNumber(), "days").utc().format();
+let counter = 0;
 
 mongoose
   .connect(process.env.MONGODB_URL, {
@@ -76,6 +77,8 @@ mongoose
               age: element.age,
               gender: element.gender,
             }).then((bsn) => {
+              console.log(`${counter} - Loading BSN data.`);
+              counter++;
               const registerStatus = fakeStatus[Math.floor(Math.random() * fakeStatus.length)];
               Patients.create({
                 bsn: bsn._id,
@@ -84,7 +87,8 @@ mongoose
                 status: registerStatus,
                 region: fakeRegion[Math.floor(Math.random() * fakeRegion.length)],
               }).then(() => {
-                console.log("All finished succesfully.");
+                console.log(`${counter} - loading patients.`);
+                counter++;
               });
             });
           });

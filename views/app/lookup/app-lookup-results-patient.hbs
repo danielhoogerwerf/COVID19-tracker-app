@@ -5,36 +5,36 @@
 <h1>
  Results of search   
 </h1>
-<h5>Select the patient you wish to check</h5>
+<p>Select the patient you wish to check</p>
 <br />
 {{#if results}}
 
-<table role="table" class='mrtable'>
+<table role="table" class='table-md w-100 table-hover font-smaller'>
   <thead role="rowgroup">
     <tr role="row">
       <th role="columnheader">BSN</th>
       <th role="columnheader">Name</th>
       <th role="columnheader">Birth date</th>
       <th role="columnheader">Gender</th>
-          </tr>
+      <th role="columnheader">&nbsp</th>
+      </tr>
   </thead>
   <tbody role="rowgroup">
 
 {{#each results}}
 
 <tr role="row">
-      <td role="cell">{{bsn.0.bsnnumber}}</td>
-      <td role="cell">{{bsn.0.name}}</td>
-      <td role="cell">{{formatDate bsn.0.birthdate}}</td>
-      <td role="cell">{{bsn.0.gender}}</td>
-      <td role="cell">{{status}}</td>
-      <td ><a class="btn btn-info" href="/app/lookup/patient/{{bsn.0.id}}">Select</a></td>
+      <td role="cell">{{bsn.bsnnumber}}</td>
+      <td role="cell">{{bsn.name}}</td>
+      <td role="cell">{{formatDate bsn.birthdate}}</td>
+      <td role="cell">{{bsn.gender}}</td>
+      <td ><a class="btn btn-sm btn-info" href="/app/lookup/patient/{{bsn.id}}">Select patient</a></td>
           </tr>
 
 {{/each}}
 </tbody></table>
 {{/if}}
-<p><a href="/app/lookup/patient" class="btn btn-primary">Return to search menu</a></p>
+<p><a href="/app/lookup/patient" class="btn btn-sm btn-primary mt-2">Return to lookup screen</a></p>
 </div>
 
 

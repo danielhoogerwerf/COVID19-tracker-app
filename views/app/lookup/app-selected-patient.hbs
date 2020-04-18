@@ -1,28 +1,39 @@
 
  {{> navbar}}
 <div class='form-container'> 
-<h3>Selected Patient Information</h3>
+<h3>Selected patient information</h3>
 <br />
-<p><a href="/app/lookup/patient/" class="btn btn-primary">Back to the lookup screen</a></p>
+
 {{#if results}}
-<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-danger">Edit status of patient</a></p>
-{{#each results}}
-<p>BSN: {{bsn.0.bsnnumber}}</p>
-<p>Name: {{bsn.0.name}}</p>
-<p>Birth Date: {{formatDate bsn.0.birthdate}}</p>
-<p>Age: {{bsn.0.age}}</p>
-<p>Gender: {{bsn.0.gender}}</p>
-<p>Status: {{status}}</p>
-<p>Region: {{region}}</p>
-<p>Healthcare Worker: {{healthcareworker.0.username}}</p>
+  <ul class="list-group list-group-flush font-smaller"> 
+      {{#each results}}
+
+<li class='list-group-item'><span> BSN</span><span style='float: right;'>{{bsn.0.bsnnumber}} </span></li>
+<li class='list-group-item'><span> Name</span><span style='float: right;'>{{bsn.0.name}} </span></li>
+<li class='list-group-item'><span> Birthdate</span><span style='float: right;'>{{formatDate bsn.0.birthdate}} </span></li>
+<li class='list-group-item'><span> Gender</span><span style='float: right;'>{{bsn.0.gender}} </span></li>
+<li class='list-group-item'><span> Status</span><span style='float: right;'>{{status}} </span></li>
+<li class='list-group-item'><span> Region</span><span style='float: right;'>{{region}} </span></li>
+<li class='list-group-item'><span>Healthcare worker</span><span style='float: right;'>{{healthcareworker.0.username}}</span></li>
+         
+          {{/each}}
+</ul> 
 <br />
-{{/each}}
 <h5>History of patient</h5>
+
+  <ul class="list-group list-group-flush font-smaller"> 
 {{#each results.0.history}}
-<p>{{formatDate Date}}: {{Status}}</p>
+<li class='list-group-item'><span> {{Status}}</span><span style='float: right;'>{{formatDate Date}} </span></li>
 {{/each}}
+</ul> 
 {{else}}
 <p>This person is not a patient</p>
 {{/if}}
+
+<br />
+<p><a href="/app/lookup/patient/{{results.0.bsn.0.id}}/edit" class="btn btn-sm btn-warning">Edit status of patient</a>
+<a href="/app/lookup/patient/" class="btn btn-sm btn-info float-right">Back to the lookup screen</a></p>
+
+
 </div>
 

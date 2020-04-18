@@ -64,6 +64,39 @@ font-size: 16px;
   display: block;
 }
 
+.forgotUserName {
+  width: 100%;
+}
+
+/* Font sizes */
+.font-smaller {
+  font-size: 0.85em;
+}
+
+/* Admin Login Screen */
+.adminLoginContainer {
+  width: 100%;
+  height: 95vh;
+}
+
+.loginFooter {
+  height: 5vh;
+  background-color: rgb(0, 89, 182);
+}
+
+.adminAlertWidth {
+  width: 50vh;
+}
+
+.blueBackground {
+  background-color: rgb(0, 89, 182);
+}
+
+.loginBackground {
+  background-color: rgba(0, 123, 255, 1.0);
+  margin: 0 auto;
+  border-radius: 15px;
+}
 
 
 
@@ -181,3 +214,45 @@ font-weight:bold;
 padding-left: 2px; 
 padding-right: 2px;  
 }
+
+ /*
+ Password strength styling
+  */
+
+   
+  meter {
+      /* Reset the default appearance */
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+              
+    margin: 0 auto 1em;
+    width: 100%;
+    height: .5em;
+      
+      /* Applicable only to Firefox */
+    background: none;
+    background-color: #f8f9fa
+  }
+  
+  meter::-webkit-meter-bar {
+    background: none;
+    background-color: #f8f9fa
+  }
+  
+  meter[value="1"]::-webkit-meter-optimum-value { background: red; }
+  meter[value="2"]::-webkit-meter-optimum-value { background: yellow; }
+  meter[value="3"]::-webkit-meter-optimum-value { background: orange; }
+  meter[value="4"]::-webkit-meter-optimum-value { background: green; }
+  
+  meter[value="1"]::-moz-meter-bar { background: red; }
+  meter[value="2"]::-moz-meter-bar { background: yellow; }
+  meter[value="3"]::-moz-meter-bar { background: orange; }
+  meter[value="4"]::-moz-meter-bar { background: green; }
+  
+  .feedback {
+    color: #f8f9fa;
+    font-size: 90%;
+    padding: 0 .25em;
+    margin-top: 1em;
+  }

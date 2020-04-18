@@ -15,7 +15,7 @@
 
 {{#if results}}
 
-<table role="table" class='mrtable'>
+<table role="table" class='table-md w-100 table-hover font-smaller'>
   <thead role="rowgroup">
     <tr role="row">
       <th role="columnheader">BSN</th>
@@ -36,7 +36,7 @@
       <td role="cell">{{name}}</td>
       <td role="cell">{{formatDate birthdate}}</td>
       <td role="cell">{{gender}}</td>
-      <td ><a class="btn btn-primary btn-sm mt-1 mb-2" href="/app/signup/patient/{{id}}">Select person</a></td>
+      <td ><a class="btn btn-info btn-sm btn-sm mt-1 mb-2" href="/app/signup/lookup/{{id}}">Select person</a></td>
           </tr>
 
 {{/each}}

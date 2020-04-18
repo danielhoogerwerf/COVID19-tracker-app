@@ -51,12 +51,12 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Patients</span></a>
       </li>
-
  <li class="nav-item">
         <a class="nav-link" href="/admin/logout">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Logout</span></a>
       </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -70,73 +70,47 @@
       <!-- Main Content -->
       <div id="content">
 
+        <!-- Topbar -->
    {{> navbaradmin}}
+        <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">      
+        <div class="container-fluid">
+<h2>Patient list</h2>
+     <table class="table table-striped">
+  <thead >
+    <tr>
+      <th scope="col">BSN</th>
+      <th scope="col">Name</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Birthdate</th>
+      <th scope="col">Status</th>
+      <th scope="col">GGD region</th>
+      <th scope="col">Register date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each patients}}
+    <tr>
+      <td> {{bsn.0.bsnnumber}}</td>
+      <td>{{bsn.0.name}}</td>
+      <td>{{bsn.0.gender}}</td>
+       <td>{{birthDate}}</td>
+       <td>{{status}}</td>        
+      <td>{{region}}</td> 
+      <td>{{regDate}}</td>
+    </tr>
+    
+     {{/each}}
+  </tbody>
+</table>
 
-{{#if saveMessage}}
-<div class="alert alert-success" role="alert">
- {{saveMessage}}
-</div>
-{{/if}}
-<br />
-
-    <div class="row">        
-          <div class="col-fluid">
-            <div class="ml-5 mb-4">
-                <h1 class="h4 text-gray-900 mb-4 ml-n3">Add a user record</h1>
-              <form class="user" action="/admin/userlist/add-user" method="post">
-                <div class="form-group row">
-                              <input type="email" name='username' class="form-control" id="exampleFirstName" placeholder="E-mail">
-                                        </div>
-                               <div class="form-group row">
-                 <select name='region' class="form-control">
-            {{#each region}}
-       <option  name="{{this}}">{{this}} </option>
-      {{/each}}
-        </select>             
-               </div>
-<div class="form-group row">
-                 <select name='role' class="form-control">
-            {{#each roles}}
-       <option  name="{{this}}">{{this}} </option>
-      {{/each}}
-        </select>            
-               </div>
-               <br />
-               <button class="btn btn-danger ml-n3" type="submit">Add user</button>
-               <a href="/admin/userlist" class="btn btn-primary mr-n3 float-right">Cancel and back to user list</a>
-               </form>   
-               <p></p>
-{{#if errorMessage}}
-<div class="alert alert-warning" role="alert">
- {{errorMessage}}
-</div>
-{{/if}}
-
-                   
-            </div>
-          </div>
-           <div class="col-lg-7 d-none d-lg-block"></div>
-        </div>
+<form action="/admin/patientlist-pagination" method="GET">
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-              </div>
- 
+</form>
         <!-- /.container-fluid -->
 
       </div>

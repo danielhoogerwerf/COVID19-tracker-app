@@ -78,7 +78,7 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-<h2>Userlist</h2>
+<h2>App User List</h2>
 
 {{#if saveMessage}}
 <div class="alert alert-success" role="alert">
@@ -86,9 +86,10 @@
 </div>
 {{/if}}
 
-<a href="/admin/userlist/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Add a user</a>
+<a href="/admin/userlist/add-user" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right"> Add a user</a>
+<br />
     <p></p>
-     <table class="table table-striped">
+     <table class="table table-sm table-striped font-weight-light font-smaller">
   <thead >
     <tr>
       <th scope="col">#</th>
@@ -107,23 +108,51 @@
    <td><a href="/admin/userlist/{{this.id}}/edit" style="float: right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
    </td>
       <td><a href="/admin/userlist/{{this.id}}/mail" style="float: right"><i class="fa fa-envelope-square" aria-hidden="true"></i></a></td>
-   <td><a href="/admin/userlist/{{this.id}}/delete" style="float: right"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
 
-   
+<td><a href="#myModal" data-toggle="modal" data-username='{{this.username}}' data-delete-id='/admin/userlist/{{this.id}}/delete' class='delete-button'> <i class="fa fa-trash" aria-hidden="true"></i></a></td>
+ 
    </tr>
-
-
-
    {{/each}}
 
   </tbody>
 </table>
+
+<!-- Modal -->
+<!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Delete user</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+         Are you sure you want to delete user <b><span id='user-delete'> </span></b> from the userlist?<p></p>
+         <a href="" class="btn btn-danger" id='delete-modal'>Confirm deletion</a>
+
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
  
         <!-- /.container-fluid -->
 
       </div>
       <!-- End of Main Content -->
 
+    </div>
+    <!-- End of Content Wrapper -->
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
@@ -133,10 +162,6 @@
         </div>
       </footer>
       <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
   </div>
 
 
