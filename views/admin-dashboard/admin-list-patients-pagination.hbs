@@ -76,7 +76,7 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-<h2>Patient list</h2>
+<h2>Patient list with pagination</h2>
      <table class="table table-striped">
   <thead >
     <tr>
@@ -90,18 +90,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each patients}}
-    <tr>
-      <td> {{bsn.0.bsnnumber}}</td>
-      <td>{{bsn.0.name}}</td>
-      <td>{{bsn.0.gender}}</td>
-       <td>{{birthDate}}</td>
-       <td>{{status}}</td>        
-      <td>{{region}}</td> 
-      <td>{{regDate}}</td>
-    </tr>
     
-     {{/each}}
   </tbody>
 </table>
 
@@ -131,4 +120,4 @@
 
   </div>
 
-
+<script src="/javascripts/pagination.js"></script>
