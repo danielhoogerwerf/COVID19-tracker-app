@@ -1,25 +1,43 @@
 
+<div class="adminLoginContainer ">
 
- <div class='form-container'>
- 
-<h3 class='d-inline'>COVID-19 Dashboard</h3> 
-         
-<br />
-<div class="m-3">
+ <div class='blueBackground d-flex flex-column justify-content-center align-items-center h-100'>
+      <div class="row mb-3">
+ <img class='covid-logo' src="/images/covid-19-logo.png"><h3 class='d-inline text-light '>COVID-19 Tracker App</h3> 
+    </div>
+    <div class='form-container loginBackground h-60'>
+<div class="m-3 text-light row">
 <form class="user" action="/admin" method="post">
   <div class="form-group row">
-<label>Username</label>
-<input type="text" class="form-control" name="username">
+<label class="font-weight-bold">Username</label>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">@</span>
+  </div>
+  <input type="text" name="username" class="form-control" placeholder="E-mail address" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+{{!-- <input type="text" class="form-control" name="username"> --}}
 </div>
 <div class="form-group row">
-<label>Password</label>
-<input class="form-control" type="password" name="password">
+<label class="font-weight-bold">Password</label>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="fa fa-ellipsis-h"></i></span>
+  </div>
+  <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+</div>
+{{!-- <input class="form-control" type="password" name="password"> --}}
+</div>
+<button type="submit" class="btn btn-light mr-n3 float-right" >Sumbit login data</button>
+</form>
+</div>
 </div>
 {{#if message}}
-<div class="alert alert-warning ml-n3" role="alert">{{ message }}</div>
+<div class="alert alert-danger adminAlertWidth" role="alert">{{ message }}</div>
 {{/if}}
-<button type="submit" class="btn btn-primary ml-n3" >Sumbit login data</button>
-</form>
-<p></p>
-
 </div>
+      <!-- Footer -->
+      <footer class="loginFooter d-flex align-items-center justify-content-center">
+            <span class="font-smaller text-light">Copyright © Daniel Hoogerwerf & Friso Homan, 2020</span>
+      </footer>
+      <!-- End of Footer -->

@@ -36,7 +36,7 @@
 
 {{#if results}}
 
-<table role="table" class='table table-sm table-hover'>
+<table role="table" class='table-md w-100 table-hover font-smaller'>
   <thead role="rowgroup">
     <tr role="row">
       <th role="columnheader">BSN</th>
@@ -59,7 +59,7 @@
       <td role="cell">{{status}}</td>
       <td role="cell">{{region}}</td>
       <td role="cell">{{healthcareworker.0.username}}</td>
-      <td ><a class="btn btn-info btn-sm mt-1 mb-2" href="/app/lookup/patient/{{bsn.0.id}}">Select patient</a></td>
+      <td ><a class="btn btn-sm btn-info btn-sm mt-1 mb-2" href="/app/lookup/patient/{{bsn.0.id}}">Select patient</a></td>
           </tr>
 {{/each}}
 {{/if}}
