@@ -218,32 +218,32 @@ adminRouter.post("/userlist/add-user", ensureLogin.ensureLoggedIn("/"), (req, re
 });
 
 // GET route for list patients
-adminRouter.get("/patientlist", ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
-  Patients.find()
-    .populate("bsn")
-    .populate("healthcareworker")
-    .then((patients) => {
-      // format date fields table
-      patients.forEach((value) => {
-        let date = moment(value.createdAt).format("MMMM Do YYYY, h:mm:ss a");
-        let birthdate = moment(value.bsn[0].birthdate).format("MMMM Do YYYY");
-        value["regDate"] = date;
-        value["birthDate"] = birthdate;
-      });
-      
-      res.render("admin-dashboard/admin-list-patients", {
-        patients,
-        currentUser: req.user.username,
-        admin: req.user.role,
-        message: req.flash("error"),
-      });
-    })
-    .catch((err) => console.log(err));
-});
+//adminRouter.get("/patientlist", ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
+//  Patients.find()
+ //   .populate("bsn")
+  //  .populate("healthcareworker")
+ //   .then((patients) => {
+ //     // format date fields table
+ //     patients.forEach((value) => {
+ //       let date = moment(value.createdAt).format("MMMM Do YYYY, h:mm:ss a");
+ //       let birthdate = moment(value.bsn[0].birthdate).format("MMMM Do YYYY");
+ //       value["regDate"] = date;
+ //       value["birthDate"] = birthdate;
+  //    });
+ //     
+  //    res.render("admin-dashboard/admin-list-patients", {
+  //      patients,
+ //       currentUser: req.user.username,
+   //     admin: req.user.role,
+   //     message: req.flash("error"),
+   //   });
+ //   })
+ //   .catch((err) => console.log(err));
+//});
 
 // GET route for list patients with pagination
-adminRouter.get("/patientlist-pagination", ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
-res.render("admin-dashboard/admin-list-patients-pagination")
+adminRouter.get("/patientlist", ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
+res.render("admin-dashboard/admin-list-patients")
 })
 
 // GET route logout

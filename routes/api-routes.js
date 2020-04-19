@@ -243,7 +243,7 @@ apiRoutes.get("/infections/:state/:startDate", (req, res, next) => {
 
 
 // GET route for list patients with pagination
-apiRoutes.get('/patientlist-pagination',(req,res,next) => {
+apiRoutes.get('/patientlist',(req,res,next) => {
   var pageNo = parseInt(req.query.pageNo)
   var size = parseInt(req.query.size)
   var query = {}
