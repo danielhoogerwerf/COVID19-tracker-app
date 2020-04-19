@@ -80,11 +80,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex flex-row align-items-center mb-0">
-            <h3 class="h3">TOTAL CASES</h3>
-            <p class="mx-3 align-self-end text-muted">Last updated: <span id="totals-last-update">4th of april, 14:00hr GMT</span></p>
-            </div>
-            
+          
                 
 
                      
@@ -93,92 +89,100 @@
           <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Confirmed infections</div>
+                <div class="card-body ">
+                 
+                    <div class="col mr-2 flexbox-card" >
+<div>          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Confirmed infections</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="dashboard-data-total">Loading</div>
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Confirmed infections today</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="dashboard-data-total-today">Loading</div>
+                      <span id="dashboard-data-total-today">Loading </span> new cases today
+                                     
+                    </div>
+                    <div>
+                  <img class='dashboard-icon' src="/images/iconfinder_research-virus-coronavirus-microbiology-science-medical_5729692 (1).png" alt="">
+
+                    </div>
+            
+                    
+                    
+                    
                     </div>
                    
-                  </div>
+                
                 </div>
               </div>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
+                <div class="card-body flexbox-card">
+                 
+                  
+                      <div>
                       <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Hospitalized</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="dashboard-data-hospitalized">Loading</div>
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Hospitalized today</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="dashboard-data-hospitalized-today">Loading</div>
+                       <span id="dashboard-data-hospitalized-today">Loading </span> new cases today
+                      </div>
+<div>
 
-                    </div>
-                   
-                  </div>
+<img class='dashboard-icon' src="/images/iconfinder_hospital-building-nursing-healthcare-medical_5729680 (1).png" alt="">
+                   </div>
+                    </div>                
                 </div>
-              </div>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
+                <div class="card-body flexbox-card">    
+                              <div>
                       <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Intensive care</div>
                       <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="dashboard-data-ic">Loading</div>
-                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Intensive care today</div>
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="dashboard-data-ic-today">Loading</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          
-                        </div>
-                  
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
+                       <span id="dashboard-data-ic-today">Loading </span> new cases today
+                                                  
                 </div>
+                <div>
+
+                  <img class='dashboard-icon' src="/images/iconfinder_25_operation_theater_medical_hospital_4307843.png" alt="">
+                </div>
+                 </div>
               </div>
-            </div>            
+            </div>       
           </div>
 
           <!-- Content Row -->
           <div class="row">           
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-secondary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
+                <div class="card-body flexbox-card">
+                 
+                  <div>
                       <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Deceased</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="dashboard-data-deceased">Loading</div>
-                      <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Deceased Today</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="dashboard-data-deceased-today">Loading</div>
+                      <span id="dashboard-data-deceased-today">Loading </span> new cases today
+                        
+                   </div>
+                    <div>
+ <img class='dashboard-icon' src="/images/iconfinder_death-coronavirus-infection-skull-coffin_5729671 (1).png">
                     </div>
                     
-                  </div>
+                   
                 </div>
               </div>
             </div>
 
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
+                <div class="card-body flexbox-card">
+                
+                      <div>
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Recovered</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="dashboard-data-recovered">Loading</div>
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Recovered Today</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800" id="dashboard-data-recovered-today">Loading</div>
+                      <span id="dashboard-data-recovered-today">Loading </span> new cases today
+                      
                     </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
+                  
+                   <div>
+<img  class='dashboard-icon' src="/images/iconfinder_recovered-immune-strong-healthy-revive_5969362 (1).png" alt="">
+
+                   </div>
+              
                 </div>
               </div>
             </div>
@@ -186,27 +190,23 @@
         
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
+                <div class="card-body flexbox-card">
+                 <div>
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Fatality rate </div>
                       <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="dashboard-data-fatalities">Loading</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          
-                        </div>
-                        
                       </div>
+                   <div>
+<img class='dashboard-icon' src="/images/iconfinder_ic_aspect_ratio_48px_3669451.png" alt="">
+
+                   </div>
+
                     </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
+                   
                   </div>
-                </div>
-              </div>
+              
             </div>            
           </div>
-
+    <p class="mx-3 align-self-end text-muted">Last updated: <span id="totals-last-update"></span></p>
           <!-- Content Row -->
 
           <div class="row">
@@ -249,96 +249,8 @@
               </div>
             </div>
           </div>
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-            NEW CASES LAST 24hr<br>
-            Last updated: 4th of april, 14:00hr GMT
 
-                     </div>
-          <div class="row">
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Confirmed infections</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">1275</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Hospitalized</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">345</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Intensive care</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">84</div>
-                        </div>
-                  
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>            
-          </div>
-             
-<div class="row">           
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-secondary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Deceased</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">45</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Recovered</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">98</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      
 
         
            

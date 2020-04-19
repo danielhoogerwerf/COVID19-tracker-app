@@ -65,8 +65,20 @@ font-size: 16px;
 }
 
 
+img.dashboard-icon {
 
+width: 40px;
+height: auto;
 
+}
+
+.flexbox-card {
+
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+
+}
 
   /*
 	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.

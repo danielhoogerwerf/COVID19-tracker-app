@@ -148,6 +148,58 @@ apiRoutes.get("/infections/totals", (req, res, next) => {
   });
 });
 
+
+// Total count of Patients
+apiRoutes.get("/infections/totals/:dateId", (req, res, next) => {
+  const relDate = req.params.dateId;
+  Patients.aggregate([
+    {
+      $unwind: {
+        path: "$history",
+      },
+    },
+    {
+      $match: {
+        "history.Date": {
+          $gte: new Date(relDate),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        amount: {
+          $sum: 1,
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        amount: 1,
+      },
+    },
+  ]).then((data) => {
+      let jsonData;
+      if (!data[0]) {
+        jsonData = 0;
+      } else {
+        jsonData = data[0].amount;
+      }
+      res.json({ "total": jsonData });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
 // Fatality Percentage
 apiRoutes.get("/infections/fatalities", (req, res, next) => {
   Patients.find({ status: { $exists: true } }, { _id: 0, status: 1 }).then((data) => {
