@@ -30,6 +30,28 @@ const apiTotalData = () => {
     });
 };
 
+// Confirmed Infections Data Today
+const apiTotalDataToday = () => {
+
+  const currentDate = moment().format("YYYY MM DD");
+  
+  axios
+    .get(`/api/infections/totals/${currentDate}`)
+    .then((response) => {
+      console.log(response.data.total)
+      document.getElementById("dashboard-data-total-today").innerHTML = response.data.total;
+    })
+    .catch((err) => {
+      console.log("Error while getting the data: ", err);
+      document.getElementById("dashboard-data-total").innerHTML = "ERROR";
+    });
+};
+
+
+
+
+
+
 // Hospitalized Data
 const apiHospitalizedData = () => {
   axios
@@ -49,7 +71,7 @@ const apiHospitalizedDataToday = () => {
   const currentDate = moment().format("YYYY MM DD");
   
   axios
-    .get(`/api/Hospitalized/${currentDate}`)
+    .get(`/api/infections/Hospitalized/${currentDate}`)
     .then((response) => {
       document.getElementById("dashboard-data-hospitalized-today").innerHTML = response.data.amount;
     })
@@ -184,9 +206,10 @@ window.addEventListener("DOMContentLoaded", () => {
   // Update Fatalities Widget
   apiFatalitiesData();
 
-  // Update Totals Widget
+    // Update Totals Widget
   apiTotalData();
 
+  apiTotalDataToday();
   // Update Hospitalized Widget
   apiHospitalizedData();
 
@@ -210,3 +233,5 @@ window.addEventListener("DOMContentLoaded", () => {
   // Update Last Updates time
   document.getElementById("totals-last-update").innerHTML = currentDate;
 });
+
+

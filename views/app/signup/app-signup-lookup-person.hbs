@@ -2,13 +2,14 @@
  {{> navbar}}
  
  <div class='form-container'>
-<p class="mx-0 h3 d-flex justify-content-between">Search for a person <span class="h5 font-weight-light">{{#if currentUser}}{{currentUser}}{{/if}}</span></p>
-<br />
-Search for a (partial) name or on birth date:
+<p class="mx-0 h3 d-flex justify-content-between">Step 1 - Search<span class="h5 font-weight-light">{{#if currentUser}}{{currentUser}}{{/if}}</span></p>
+Before you can register a patient, please search for the person in the government database.
+<br /><br />
+Please provide a (partial) name of the person, or the birth date:
 <br />
 <form action="/app/signup/lookup/" class="user m-3" method="post">
 <div class="form-group row">
-<label class="font-weight-bold">Last Name</label>
+<label class="font-weight-bold">Name</label>
 <input type='text' class="form-control" name='name'>
 </div>
 <div class="form-group row">
@@ -16,9 +17,12 @@ Search for a (partial) name or on birth date:
 <input type='date' class="form-control" name='birthdate'>
 </div>
 <br />
-<button class="btn btn-primary ml-n3" type="submit">Search for patient</button>
+<div class="text-center">
+<button class="btn btn-primary w-100" type="submit">Search for the person in the database</button>
+<br />
+<a class="btn btn-info w-100 mt-4" href="/app/home">Return to home screen</a>
+</div>
 </form>
 <br />
-<p><a href="/app/signup/patient/" class="btn btn-danger">Register a new patient</a>
-<a class="btn btn-info float-right" href="/app/home">Return to home screen</a></p>
+{{!-- <p><a href="/app/signup/patient/" class="btn btn-danger">Register a new patient</a> --}}
 </div>

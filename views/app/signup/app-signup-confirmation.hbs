@@ -10,32 +10,34 @@
 <form method="POST" class="user" action="/app/signup/confirmation">
 <div class="form-group row">
 <label for="name">Name</label>
-<input   class="form-control" name="name" value="{{patient.name}}" readonly="readonly"> 
+<input   class="form-control form-control-sm" name="name" value="{{patient.name}}" readonly="readonly"> 
 </div>
 <div class="form-group row">
     <label for="birthdate">Birthdate</label>
-<input   class="form-control" name="birthdate" value="{{patient.birthdate}}" readonly="readonly" > 
+<input   class="form-control form-control-sm" name="birthdate" value="{{patient.birthdate}}" readonly="readonly" > 
 </div>
 
 <div class="form-group row">
     <label for="region">GGD Region</label>
-<input  class="form-control" name="region" value="{{patient.region}}" readonly="readonly">
+<input  class="form-control form-control-sm" name="region" value="{{patient.region}}" readonly="readonly">
 </div>
 <div class="form-group row">
     <label for="gender">Gender</label>
-<input  class="form-control" name="gender" value="{{patient.gender}}" readonly="readonly">
+<input  class="form-control form-control-sm" name="gender" value="{{patient.gender}}" readonly="readonly">
 </div>
 <div class="form-group row">
     <label for='bsn'>BSN</label>
-<input   class="form-control" name="bsnnumber" value="{{patient.bsn}}" readonly="readonly">
+<input   class="form-control form-control-sm" name="bsnnumber" value="{{patient.bsn}}" readonly="readonly">
 </div>
 <div class="form-group row">
     <label for='status'>Patient status</label>
-<input   class="form-control" name="status" value="{{patient.status}}" readonly="readonly">
+<input   class="form-control form-control-sm" name="status" value="{{patient.status}}" readonly="readonly">
 </div>
+<div class="text-center">
 <div class="ml-n3">Are these details correct?</div>
-<button type="submit" class="btn btn-danger ml-n3">Yes, save the information</button>
-</form>
+<button type="submit" class="btn btn-danger w-100 mt-2">Yes, save the information</button>
 <br />
-<div><a href="javascript:history.back()" class="btn btn-info ml-n3">No, edit the details</a></div>
+<div><a href="javascript:history.back()" class="btn btn-info w-100 mt-3">No, edit the details again</a></div>
+</form>
+</div>
 </div>

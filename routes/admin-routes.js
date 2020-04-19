@@ -39,11 +39,30 @@ adminRouter.post(
 
 // GET route for admin homepage
 adminRouter.get("/home", ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
-  res.render("admin-dashboard/admin-home", {
-    currentUser: req.user.username,
-    admin: req.user.role,
-    message: req.flash("error"),
+const users = Users.find().sort({'createdAt': -1}).limit(5)
+const patients = Patients.find().populate("bsn").sort({'createdAt': -1}).limit(5)  
+Promise.all([users, patients]).then(values => { 
+  let regDateUser;
+    values[0].forEach((value) => {
+    regDateUser = moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+       value["regDateUser"] = regDateUser;       
   });
+  let regDatePatient;
+  values[1].forEach((value) => {
+    regDatePatient = moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+       value["regDatePatient"] = regDatePatient;  
+  });
+    res.render("admin-dashboard/admin-home", {
+      currentUser: req.user.username,
+      admin: req.user.role,
+      users:values[0],
+      patients: values[1],
+      regDateUser:regDateUser,
+      regDatePatient:regDatePatient,
+      message: req.flash("error"),
+    }) 
+  }).  
+  catch(err => console.log(err))
 });
 
 // get route for admin Dashboard
@@ -114,9 +133,11 @@ adminRouter.post("/userlist/:id/update", ensureLogin.ensureLoggedIn("/"), (req, 
 
 // GET route for admin userlist to mail password to a user
 adminRouter.get("/userlist/:id/mail", ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
+  
+  console.log('USERID:',req.params.id)
   Users.findById(req.params.id)
     .then((user) => {
-      // async..await is not allowed in global scope, must use a wrapper
+    
       mailPassword(req.params.id, user.username).catch(console.error);
       res.render("admin-dashboard/admin-list-mail-sended", {
         mailUser: user.username,
@@ -220,45 +241,10 @@ adminRouter.get("/patientlist", ensureLogin.ensureLoggedIn("/"), (req, res, next
     .catch((err) => console.log(err));
 });
 
-
 // GET route for list patients with pagination
-adminRouter.get('/patientlist-pagination',(req,res,next) => {
-  var pageNo = parseInt(req.query.pageNo)
-  var size = parseInt(req.query.size)
-  var query = {}
-  if(pageNo < 0 || pageNo === 0) {
-        response = {"error" : true,"message" : "invalid page number, should start with 1"};
-        return res.json(response)
-  }
-  query.skip = size * (pageNo - 1)
-  query.limit = size
-  // Find some documents
-       Patients.count({},function(err,totalCount) {
-         console.log(totalCount)
-             if(err) {
-               response = {"error" : true,"message" : "Error fetching data"}
-             }
-         Patients.find({},{},query,function(err,data) {
-              // Mongo command to fetch all data from collection.
-            if(err) {
-                response = {"error" : true,"message" : "Error fetching data"};
-            } else {
-                var totalPages = Math.ceil(totalCount / size)
-                response = {"error" : false,"message" : data,"pages":totalPages};
-            }
-            res.json(response);
-         });
-       })
+adminRouter.get("/patientlist-pagination", ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
+res.render("admin-dashboard/admin-list-patients-pagination")
 })
-
-
-
-
-
-
-
-
-
 
 // GET route logout
 adminRouter.get("/logout", (req, res) => {
