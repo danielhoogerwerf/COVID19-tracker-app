@@ -39,27 +39,19 @@ adminRouter.post(
 
 // GET route for admin homepage
 adminRouter.get("/home", ensureLogin.ensureLoggedIn("/"), (req, res, next) => {
-
 const users = Users.find().sort({'createdAt': -1}).limit(5)
-const patients = Patients.find().populate("bsn").sort({'createdAt': -1}).limit(5)
-
-
-
-  
+const patients = Patients.find().populate("bsn").sort({'createdAt': -1}).limit(5)  
 Promise.all([users, patients]).then(values => { 
   let regDateUser;
     values[0].forEach((value) => {
     regDateUser = moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a');
        value["regDateUser"] = regDateUser;       
   });
-
   let regDatePatient;
   values[1].forEach((value) => {
     regDatePatient = moment(value.createdAt).format('MMMM Do YYYY, h:mm:ss a');
        value["regDatePatient"] = regDatePatient;  
   });
-
-console.log(regDatePatient)
     res.render("admin-dashboard/admin-home", {
       currentUser: req.user.username,
       admin: req.user.role,

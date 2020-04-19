@@ -233,3 +233,5 @@ window.addEventListener("DOMContentLoaded", () => {
   // Update Last Updates time
   document.getElementById("totals-last-update").innerHTML = currentDate;
 });
+
+
