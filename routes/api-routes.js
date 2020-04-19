@@ -148,7 +148,9 @@ apiRoutes.get("/infections/totals", (req, res, next) => {
   });
 });
 
+
 // Total count of Patients per date
+
 apiRoutes.get("/infections/totals/:dateId", (req, res, next) => {
   const relDate = req.params.dateId;
   Patients.aggregate([
@@ -188,6 +190,7 @@ apiRoutes.get("/infections/totals/:dateId", (req, res, next) => {
       res.json({ "total": jsonData });
   });
 });
+
 
 // Fatality Percentage
 apiRoutes.get("/infections/fatalities", (req, res, next) => {
