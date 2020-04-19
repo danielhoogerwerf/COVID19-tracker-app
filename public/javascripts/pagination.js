@@ -1,17 +1,21 @@
 
-console.log('Patients')
 // Confirmed Infections Data
 const apiTotalPatients = () => {
   axios
-    .get(`/admin/patients-pagination`)
+    .get(`/api/patientlist-pagination`)
     .then((response) => {
-      console.log(response)
+     response
+const patients = response.data.message
+patients.forEach(element => {
+    console.log(element)    
+});
     })
     .catch((err) => {
-      console.log("Error while getting the data: ", err);
-    
+      console.log("Error while getting the data: ", err);    
     });
 };
 
-
+window.addEventListener("DOMContentLoaded", () => {
 apiTotalPatients()
+
+});
