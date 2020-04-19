@@ -3,7 +3,7 @@
  
 <div class='form-container'> 
 
-<h3> Lookup person</h3>
+<h3>Step 2 - Select</h3>
 <br />
 {{#if patientIsRegistered}}
 <p>Patient is already registered!</p>
@@ -14,7 +14,7 @@
 
 
 {{#if results}}
-
+<p>Please select the person you want to register.</p>
 <table role="table" class='table-md w-100 table-hover font-smaller'>
   <thead role="rowgroup">
     <tr role="row">
@@ -36,7 +36,7 @@
       <td role="cell">{{name}}</td>
       <td role="cell">{{formatDate birthdate}}</td>
       <td role="cell">{{gender}}</td>
-      <td ><a class="btn btn-info btn-sm btn-sm mt-1 mb-2" href="/app/signup/lookup/{{id}}">Select person</a></td>
+      <td ><a class="btn btn-info btn-sm btn-sm mt-1 mb-2" href="/app/signup/lookup/{{id}}">Register selected person</a></td>
           </tr>
 
 {{/each}}
@@ -44,9 +44,11 @@
 
 {{else}}
 <br />
-<p>You're search did not provide any results.</p>
+<div class="text-center">
+<p>The person you are searching for does not exists in the government database.</p>
+<p><a href="/app/signup/patient/" class="btn btn-danger">Register the person and as a new patient</a></p>
+</div>
 {{/if}}
-<p><a href="/app/signup/patient/" class="btn btn-danger">Register a new patient?</a></p>
 {{/if}}
 
 </div>
