@@ -89,7 +89,7 @@
                 </div>
                   <div class="card-body">
                     <p>
-            This is the COVID-19 tracker for the Netherlands</p>
+            This is the COVID-19 tracker for the Netherlands. Go to the <a href="/admin/dashboard"> dashboard</a>  to get a overview for all cases of Covid-19 infections in the Netherlands.</p>
            </div>
               </div>
 
@@ -110,7 +110,32 @@
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">New patients</h6>
                 </div>
-            
+            <div class="card-body">
+<table class="table table-sm table-striped font-weight-light font-smaller">
+  <thead >
+    <tr>
+     
+      <th scope="col">Name</th>
+      <th scope="col">GGD region</th>
+      <th scope="col">Status</th>
+      <th scope="col">Registration date</th>
+       
+    </tr>
+  </thead>
+  <tbody id='userlist'>
+                 {{#each patients}}
+                  <tr><td>{{bsn.0.name}}</td><td>{{this.region}}</td><td>{{this.status}}</td><td>{{regDatePatient}}</td></tr>
+                  
+                  {{/each}}
+                  </tbody>
+</table>
+                  <a class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-left' href="/admin/patientlist">All patients</a>
+                </div>
+
+
+
+
+
               </div>
 
 
@@ -124,8 +149,25 @@
                   <h6 class="m-0 font-weight-bold text-primary">New users</h6>
                 </div>
                 <div class="card-body">
-                 
-                  <a href="/admin/userlist">All users</a>
+<table class="table table-sm table-striped font-weight-light font-smaller">
+  <thead >
+    <tr>
+     
+      <th scope="col">username</th>
+      <th scope="col">GGD region</th>
+      <th scope="col">Role</th>
+      <th scope="col">Registration date</th>
+       
+    </tr>
+  </thead>
+  <tbody id='userlist'>
+                 {{#each users}}
+                  <tr><td>{{this.username}}</td><td>{{this.region}}</td><td>{{this.role}}</td><td>{{regDateUser}}</td></tr>
+                  
+                  {{/each}}
+                  </tbody>
+</table>
+                  <a class='d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-left' href="/admin/userlist">All users</a>
                 </div>
               </div>
 
