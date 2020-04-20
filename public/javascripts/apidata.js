@@ -38,7 +38,7 @@ const apiTotalDataToday = () => {
   axios
     .get(`/api/infections/totals/${currentDate}`)
     .then((response) => {
-      console.log(response.data.total)
+      // console.log(response.data.total)
       document.getElementById("dashboard-data-total-today").innerHTML = response.data.total;
     })
     .catch((err) => {
