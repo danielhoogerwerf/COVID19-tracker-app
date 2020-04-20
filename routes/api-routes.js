@@ -148,7 +148,6 @@ apiRoutes.get("/infections/totals", (req, res, next) => {
   });
 });
 
-
 // Total count of Patients per date
 
 apiRoutes.get("/infections/totals/:dateId", (req, res, next) => {
@@ -181,16 +180,15 @@ apiRoutes.get("/infections/totals/:dateId", (req, res, next) => {
       },
     },
   ]).then((data) => {
-      let jsonData;
-      if (!data[0]) {
-        jsonData = 0;
-      } else {
-        jsonData = data[0].amount;
-      }
-      res.json({ "total": jsonData });
+    let jsonData;
+    if (!data[0]) {
+      jsonData = 0;
+    } else {
+      jsonData = data[0].amount;
+    }
+    res.json({ total: jsonData });
   });
 });
-
 
 // Fatality Percentage
 apiRoutes.get("/infections/fatalities", (req, res, next) => {
@@ -222,8 +220,7 @@ apiRoutes.get("/infections/:state", (req, res, next) => {
 apiRoutes.get("/infections/:state/:startDate", (req, res, next) => {
   const state = req.params.state;
   const relDate = req.params.startDate;
-  console.log(req.params.state);
-  console.log(req.params.startDate);
+
   Patients.aggregate([
     { $match: { $and: [{ status: state }, { "history.Date": { $gte: new Date(relDate) } }] } },
     { $project: { _id: 0, status: 1 } },
@@ -239,44 +236,35 @@ apiRoutes.get("/infections/:state/:startDate", (req, res, next) => {
   });
 });
 
-
-
-
 // GET route for list patients with pagination
-apiRoutes.get('/patientlist', (req,res,next) => {
-  var pageNo = parseInt(req.query.pageNo)
-  var size = parseInt(req.query.size)
-  var query = {}
-  if(pageNo < 0 || pageNo === 0) {
-        response = {"error" : true,"message" : "invalid page number, should start with 1"};
-        return res.json(response)
+apiRoutes.get("/patientlist", (req, res, next) => {
+  let pageNo = parseInt(req.query.pageNo);
+  let size = parseInt(req.query.size);
+  let query = {};
+  if (pageNo < 0 || pageNo === 0) {
+    response = { error: true, message: "invalid page number, should start with 1" };
+    return res.json(response);
   }
-  query.skip = size * (pageNo - 1)
-  query.limit = size
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
   // Find some documents
-       Patients.count({},function(err,totalCount) {
-         console.log(totalCount)
-             if(err) {
-               response = {"error" : true,"message" : "Error fetching data"}
-             }
-         Patients.find({},{},query).populate('bsn')
-         .then(data => {                         
-          const totalPages = Math.ceil(totalCount / size)
-          response = {"error" : false,"message" : data,"pages":totalPages};
-            res.json(response);
-         })
-         .catch(err => {
-          response = {"error" : true,"message" : "Error fetching data"};
-          res.json(response);
-         })
-         
-       })
-      
-
-
-})
-
-
-
+  Patients.count({}, function (err, totalCount) {
+    console.log(totalCount);
+    if (err) {
+      response = { error: true, message: "Error fetching data" };
+    }
+    Patients.find({}, {}, query)
+      .populate("bsn")
+      .then((data) => {
+        const totalPages = Math.ceil(totalCount / size);
+        response = { error: false, message: data, pages: totalPages };
+        res.json(response);
+      })
+      .catch((err) => {
+        response = { error: true, message: "Error fetching data" };
+        res.json(response);
+      });
+  });
+});
 
 module.exports = apiRoutes;
