@@ -2,17 +2,17 @@
 const colorScheme = (colour) => {
   switch (colour) {
     case "Deceased":
-      return "#212529";
+      return "#858796";
     case "Home":
-      return "#248db2";
+      return "#ff8800";
     case "Hospitalized":
-      return "#f6c23";
+      return "#ffc206";
     case "IC":
-      return "#e74a3b";
+      return "#dc3546";
     case "Recovered":
-      return "#1cc88a";
+      return "#1cc98a";
     default:
-      return "#6fa24e";
+      return "#4f74df";
   }
 };
 

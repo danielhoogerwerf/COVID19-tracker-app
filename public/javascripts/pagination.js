@@ -48,12 +48,12 @@ class Paginate {
     if (this.currentPage >= this.totalPages) {
       $next.classList.add("disabled");
     }
-    console.log(this.currentPage);
+    //console.log(this.currentPage);
   }
 
   changeSizeInput(size) {
     this.currentSize = size;
-    console.log(this.currentSize);
+    //console.log(this.currentSize);
     this.getQueryData(this.currentPage, this.currentSize);
   }
 
@@ -130,7 +130,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   $sizeUsers.addEventListener("change", (event) => {
-    console.log(event.target.value);
+    //console.log(event.target.value);
     paginate.changeSizeInput(event.target.value);
   });
 });
