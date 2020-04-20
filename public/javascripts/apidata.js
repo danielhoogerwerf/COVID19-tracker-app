@@ -13,10 +13,6 @@ const apiFatalitiesData = () => {
     });
 };
 
-
-
-
-
 // Confirmed Infections Data
 const apiTotalData = () => {
   axios
@@ -32,13 +28,12 @@ const apiTotalData = () => {
 
 // Confirmed Infections Data Today
 const apiTotalDataToday = () => {
-
   const currentDate = moment().format("YYYY MM DD");
-  
+
   axios
     .get(`/api/infections/totals/${currentDate}`)
     .then((response) => {
-      console.log(response.data.total)
+      // console.log(response.data.total)
       document.getElementById("dashboard-data-total-today").innerHTML = response.data.total;
     })
     .catch((err) => {
@@ -46,11 +41,6 @@ const apiTotalDataToday = () => {
       document.getElementById("dashboard-data-total").innerHTML = "ERROR";
     });
 };
-
-
-
-
-
 
 // Hospitalized Data
 const apiHospitalizedData = () => {
@@ -67,9 +57,8 @@ const apiHospitalizedData = () => {
 
 // Hospitalized Data daily
 const apiHospitalizedDataToday = () => {
-
   const currentDate = moment().format("YYYY MM DD");
-  
+
   axios
     .get(`/api/infections/Hospitalized/${currentDate}`)
     .then((response) => {
@@ -80,10 +69,6 @@ const apiHospitalizedDataToday = () => {
       document.getElementById("dashboard-data-hospitalized").innerHTML = "ERROR";
     });
 };
-
-
-
-
 
 // Intensive Care Data
 const apiICData = () => {
@@ -98,12 +83,10 @@ const apiICData = () => {
     });
 };
 
-
 // IC Data daily
 const apiICDataToday = () => {
-
   const currentDate = moment().format("YYYY MM DD");
-  
+
   axios
     .get(`/api/infections/IC/${currentDate}`)
     .then((response) => {
@@ -114,8 +97,6 @@ const apiICDataToday = () => {
       document.getElementById("dashboard-data-ic").innerHTML = "ERROR";
     });
 };
-
-
 
 // Deceased Data
 const apiDeceasedData = () => {
@@ -130,12 +111,10 @@ const apiDeceasedData = () => {
     });
 };
 
-
 // Deceased Data daily
 const apiDeceasedDataToday = () => {
-
   const currentDate = moment().format("YYYY MM DD");
-  
+
   axios
     .get(`/api/infections/Deceased/${currentDate}`)
     .then((response) => {
@@ -146,9 +125,6 @@ const apiDeceasedDataToday = () => {
       document.getElementById("dashboard-data-deceased").innerHTML = "ERROR";
     });
 };
-
-
-
 
 // Recovered Data
 const apiRecoveredData = () => {
@@ -165,9 +141,8 @@ const apiRecoveredData = () => {
 
 // Recovered Data daily
 const apiRecoveredDataToday = () => {
-
   const currentDate = moment().format("YYYY MM DD");
-  
+
   axios
     .get(`/api/infections/Recovered/${currentDate}`)
     .then((response) => {
@@ -178,7 +153,6 @@ const apiRecoveredDataToday = () => {
       document.getElementById("dashboard-data-recovered").innerHTML = "ERROR";
     });
 };
-
 
 // ## Stacked bar chart Infections ##
 
@@ -195,7 +169,6 @@ const stackedChart = () => {
     .catch((err) => console.log("Error while getting the data: ", err));
 };
 
-
 // When content is loaded, fill the dashboard with real data from the local API
 // Functions are defined in apidata.js
 
@@ -206,7 +179,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Update Fatalities Widget
   apiFatalitiesData();
 
-    // Update Totals Widget
+  // Update Totals Widget
   apiTotalData();
 
   apiTotalDataToday();
@@ -233,5 +206,3 @@ window.addEventListener("DOMContentLoaded", () => {
   // Update Last Updates time
   document.getElementById("totals-last-update").innerHTML = currentDate;
 });
-
-
