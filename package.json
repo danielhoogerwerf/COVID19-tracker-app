@@ -21,7 +21,6 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "hbs": "^4.1.1",
-    "jade": "~1.11.0",
     "minimist": "^1.2.5",
     "moment": "^2.24.0",
     "mongo-connect": "0.0.6",
