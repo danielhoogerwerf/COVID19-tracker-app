@@ -157,7 +157,7 @@ const apiRecoveredDataToday = () => {
 // ## Stacked bar chart Infections ##
 
 // Moment date declarations
-const pastMonth = moment().subtract(15, "days").format("YYYY-MM-DD");
+const pastMonth = moment().subtract(1, "years").format("YYYY-MM-DD");
 const currentDate = moment().format("DD MMM YYYY, HH:mm:ss");
 
 const stackedChart = () => {
