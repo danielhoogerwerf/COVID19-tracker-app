@@ -21,7 +21,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "hbs": "^4.1.1",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "moment": "^2.28.0",
     "mongo-connect": "0.0.6",
     "mongoose": "^5.10.5",
